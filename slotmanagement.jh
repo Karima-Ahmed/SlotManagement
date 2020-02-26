@@ -1,0 +1,27 @@
+entity SlotTemplate {
+	facilitatorNo BigDecimal,
+    facilitatorType BigDecimal,
+    capacity BigDecimal,
+    timeFrame BigDecimal,
+    assetType BigDecimal,
+    breakTime BigDecimal
+}
+entity SlotInstance {
+    userId BigDecimal,
+    timeFrom Date,
+    timeTo Date,
+    assetId BigDecimal   
+}
+
+entity SlotReservationDetails {
+	applicantId BigDecimal,
+    applicantType BigDecimal,
+    status BigDecimal
+}
+relationship ManyToOne {
+  SlotInstance{tempId} to SlotTemplate
+}
+
+relationship ManyToOne {
+  SlotReservationDetails{slotId} to SlotInstance
+}
