@@ -1,0 +1,11 @@
+version: '2'
+services:
+  slotmanagement-postgresql:
+    image: postgres:12.1
+    # volumes:
+    #     - ~/volumes/jhipster/SlotManagement/postgresql/:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=SlotManagement
+      - POSTGRES_PASSWORD=
+    ports:
+      - 5432:5432
