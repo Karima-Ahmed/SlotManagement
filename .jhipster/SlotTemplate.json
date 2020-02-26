@@ -1,0 +1,41 @@
+{
+    "name": "SlotTemplate",
+    "fields": [
+        {
+            "fieldName": "facilitatorNo",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "facilitatorType",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "capacity",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "timeFrame",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "assetType",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "breakTime",
+            "fieldType": "BigDecimal"
+        }
+    ],
+    "relationships": [],
+    "changelogDate": "20200226135400",
+    "entityTableName": "slot_template",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "SlotManagement",
+    "applications": "*",
+    "microserviceName": "SlotManagement"
+}

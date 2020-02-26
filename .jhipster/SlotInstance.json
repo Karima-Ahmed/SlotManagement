@@ -1,0 +1,41 @@
+{
+    "name": "SlotInstance",
+    "fields": [
+        {
+            "fieldName": "userId",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "timeFrom",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "timeTo",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "assetId",
+            "fieldType": "BigDecimal"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "slotTemplate",
+            "otherEntityRelationshipName": "slotInstance",
+            "relationshipName": "tempId",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20200226135500",
+    "entityTableName": "slot_instance",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "SlotManagement",
+    "applications": "*",
+    "microserviceName": "SlotManagement"
+}
