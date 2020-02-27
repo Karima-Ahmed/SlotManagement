@@ -27,7 +27,7 @@
             <column name="asset_id" type="decimal(21,2)">
                 <constraints nullable="true" />
             </column>
-            <column name="temp_id" type="bigint">
+            <column name="temp_id_id" type="bigint">
                 <constraints nullable="true" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->

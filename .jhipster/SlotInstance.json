@@ -23,7 +23,7 @@
             "relationshipType": "many-to-one",
             "otherEntityName": "slotTemplate",
             "otherEntityRelationshipName": "slotInstance",
-            "relationshipName": "temp",
+            "relationshipName": "tempId",
             "otherEntityField": "id"
         }
     ],
