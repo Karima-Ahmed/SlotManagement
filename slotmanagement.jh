@@ -19,7 +19,7 @@ entity SlotReservationDetails {
     status BigDecimal
 }
 relationship ManyToOne {
-  SlotInstance{tempId} to SlotTemplate
+  SlotInstance{temp} to SlotTemplate
 }
 
 relationship ManyToOne {

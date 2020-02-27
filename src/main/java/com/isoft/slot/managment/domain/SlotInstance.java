@@ -36,7 +36,7 @@ public class SlotInstance implements Serializable {
 
     @ManyToOne
     @JsonIgnoreProperties("slotInstances")
-    private SlotTemplate tempId;
+    private SlotTemplate temp;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -99,17 +99,17 @@ public class SlotInstance implements Serializable {
         this.assetId = assetId;
     }
 
-    public SlotTemplate getTempId() {
-        return tempId;
+    public SlotTemplate getTemp() {
+        return temp;
     }
 
-    public SlotInstance tempId(SlotTemplate slotTemplate) {
-        this.tempId = slotTemplate;
+    public SlotInstance temp(SlotTemplate slotTemplate) {
+        this.temp = slotTemplate;
         return this;
     }
 
-    public void setTempId(SlotTemplate slotTemplate) {
-        this.tempId = slotTemplate;
+    public void setTemp(SlotTemplate slotTemplate) {
+        this.temp = slotTemplate;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
