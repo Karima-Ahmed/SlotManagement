@@ -8,8 +8,8 @@ entity SlotTemplate {
 }
 entity SlotInstance {
     userId BigDecimal,
-    timeFrom Date,
-    timeTo Date,
+    timeFrom LocalDate ,
+    timeTo LocalDate ,
     assetId BigDecimal   
 }
 
