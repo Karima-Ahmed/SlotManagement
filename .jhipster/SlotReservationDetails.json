@@ -1,0 +1,37 @@
+{
+    "name": "SlotReservationDetails",
+    "fields": [
+        {
+            "fieldName": "applicantId",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "applicantType",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "status",
+            "fieldType": "BigDecimal"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "slotInstance",
+            "otherEntityRelationshipName": "slotReservationDetails",
+            "relationshipName": "slotId",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20200227080600",
+    "entityTableName": "slot_reservation_details",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "SlotManagement",
+    "applications": "*",
+    "microserviceName": "SlotManagement"
+}
