@@ -1,27 +1,79 @@
 entity SlotTemplate {
-	facilitatorNo BigDecimal,
-    facilitatorType BigDecimal,
     capacity BigDecimal,
     timeFrame BigDecimal,
-    assetType BigDecimal,
-    breakTime BigDecimal
+    breakTime BigDecimal,
+    dayStartTime LocalDate,
+    dayEndTime   LocalDate,
+    descAr String,
+    descEn String,
+    centerId BigDecimal
 }
+
+entity SlotTemplateAssets {
+count BigDecimal,
+type BigDecimal
+}
+
+relationship ManyToOne {
+  SlotTemplateAssets{slotTemp} to SlotTemplate
+}
+
+entity SlotTemplateFacilitators{
+count BigDecimal,
+type BigDecimal
+}
+
+relationship ManyToOne {
+  SlotTemplateFacilitators{slotTemp} to SlotTemplate
+}
+
 entity SlotInstance {
-    userId BigDecimal,
+    descAr String,
+    descEn String,
+    timeFrame BigDecimal,
+    breakTime BigDecimal,
     timeFrom LocalDate ,
     timeTo LocalDate ,
-    assetId BigDecimal   
+    centerId BigDecimal,
+    availableCapacity BigDecimal
+}
+
+entity SlotFacilitators{
+userId BigDecimal
+}
+
+relationship ManyToOne {
+  SlotFacilitators{slot} to SlotInstance
+}
+
+entity SlotAssets{
+
+}
+
+relationship ManyToOne {
+  SlotAssets{slot} to SlotInstance
+}
+
+entity Assets{
+type BigDecimal,
+centerId BigDecimal
+}
+
+relationship ManyToOne {
+  SlotAssets{asset} to Assets
 }
 
 entity SlotReservationDetails {
 	applicantId BigDecimal,
-    applicantType BigDecimal,
-    status BigDecimal
+    status BigDecimal,
+    timeFrom LocalDate ,
+    timeTo LocalDate ,
+    requestNo BigDecimal
 }
 relationship ManyToOne {
-  SlotInstance{tempId} to SlotTemplate
+  SlotInstance{temp} to SlotTemplate
 }
 
 relationship ManyToOne {
-  SlotReservationDetails{slotId} to SlotInstance
+  SlotReservationDetails{slot} to SlotInstance
 }

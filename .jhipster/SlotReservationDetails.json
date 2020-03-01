@@ -6,11 +6,19 @@
             "fieldType": "BigDecimal"
         },
         {
-            "fieldName": "applicantType",
+            "fieldName": "status",
             "fieldType": "BigDecimal"
         },
         {
-            "fieldName": "status",
+            "fieldName": "timeFrom",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "timeTo",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "requestNo",
             "fieldType": "BigDecimal"
         }
     ],
@@ -19,7 +27,7 @@
             "relationshipType": "many-to-one",
             "otherEntityName": "slotInstance",
             "otherEntityRelationshipName": "slotReservationDetails",
-            "relationshipName": "slotId",
+            "relationshipName": "slot",
             "otherEntityField": "id"
         }
     ],

@@ -4,13 +4,13 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
     <!--
-        Added the constraints for entity SlotInstance.
+        Added the constraints for entity SlotTemplateAssets.
     -->
-    <changeSet id="20200227080500-2" author="jhipster">
+    <changeSet id="20200301133400-2" author="jhipster">
         
-        <addForeignKeyConstraint baseColumnNames="temp_id"
-                                 baseTableName="slot_instance"
-                                 constraintName="fk_slot_instance_temp_id"
+        <addForeignKeyConstraint baseColumnNames="slot_temp_id"
+                                 baseTableName="slot_template_assets"
+                                 constraintName="fk_slot_template_assets_slot_temp_id"
                                  referencedColumnNames="id"
                                  referencedTableName="slot_template"/>
 

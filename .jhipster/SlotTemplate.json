@@ -2,14 +2,6 @@
     "name": "SlotTemplate",
     "fields": [
         {
-            "fieldName": "facilitatorNo",
-            "fieldType": "BigDecimal"
-        },
-        {
-            "fieldName": "facilitatorType",
-            "fieldType": "BigDecimal"
-        },
-        {
             "fieldName": "capacity",
             "fieldType": "BigDecimal"
         },
@@ -18,11 +10,27 @@
             "fieldType": "BigDecimal"
         },
         {
-            "fieldName": "assetType",
+            "fieldName": "breakTime",
             "fieldType": "BigDecimal"
         },
         {
-            "fieldName": "breakTime",
+            "fieldName": "dayStartTime",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "dayEndTime",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "descAr",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "descEn",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "centerId",
             "fieldType": "BigDecimal"
         }
     ],

@@ -1,11 +1,11 @@
-id;user_id;time_from;time_to;asset_id
-1;98628;2020-02-26;2020-02-27;78354
-2;22039;2020-02-26;2020-02-27;12897
-3;34470;2020-02-26;2020-02-26;52634
-4;34258;2020-02-26;2020-02-27;8430
-5;49500;2020-02-26;2020-02-26;38412
-6;90383;2020-02-27;2020-02-26;66853
-7;57256;2020-02-26;2020-02-27;75291
-8;87196;2020-02-26;2020-02-26;92936
-9;92566;2020-02-26;2020-02-27;88816
-10;7140;2020-02-26;2020-02-26;85605
+id;desc_ar;desc_en;time_frame;break_time;time_from;time_to;center_id;available_capacity
+1;compress digital Yuan Renminbi;holistic;51401;52634;2020-02-26;2020-02-26;6960;8430
+2;Rand Loti iterate;quantifying;57256;97148;2020-02-27;2020-02-26;87196;87308
+3;Factors Arkansas;Unbranded Rubber Pizza encompassing Berkshire;31662;12606;2020-02-27;2020-02-26;45632;80257
+4;recontextualize;back-end;79252;6576;2020-02-27;2020-02-26;25558;28458
+5;Lao People's Democratic Republic;digital Mobility East Caribbean Dollar;74167;46733;2020-02-27;2020-02-26;65939;86813
+6;Unbranded Concrete Chips;Rubber;369;95694;2020-02-26;2020-02-27;55661;83519
+7;Cotton Tasty EXE;Buckinghamshire success Rustic Frozen Keyboard;25457;27587;2020-02-26;2020-02-26;73905;41980
+8;Toys;Personal Loan Account USB viral;77303;89240;2020-02-26;2020-02-26;17540;87754
+9;Forward Incredible Wooden Keyboard approach;synthesizing deliverables Bedfordshire;53113;53472;2020-02-26;2020-02-26;8619;60399
+10;Gorgeous;Small Plastic Soap Malagasy Ariary payment;87908;60540;2020-02-27;2020-02-27;19946;190

@@ -21,6 +21,8 @@ import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.List;
 
 import static com.isoft.slot.managment.web.rest.TestUtil.createFormattingConversionService;
@@ -38,11 +40,17 @@ public class SlotReservationDetailsResourceIT {
     private static final BigDecimal DEFAULT_APPLICANT_ID = new BigDecimal(1);
     private static final BigDecimal UPDATED_APPLICANT_ID = new BigDecimal(2);
 
-    private static final BigDecimal DEFAULT_APPLICANT_TYPE = new BigDecimal(1);
-    private static final BigDecimal UPDATED_APPLICANT_TYPE = new BigDecimal(2);
-
     private static final BigDecimal DEFAULT_STATUS = new BigDecimal(1);
     private static final BigDecimal UPDATED_STATUS = new BigDecimal(2);
+
+    private static final LocalDate DEFAULT_TIME_FROM = LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_TIME_FROM = LocalDate.now(ZoneId.systemDefault());
+
+    private static final LocalDate DEFAULT_TIME_TO = LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_TIME_TO = LocalDate.now(ZoneId.systemDefault());
+
+    private static final BigDecimal DEFAULT_REQUEST_NO = new BigDecimal(1);
+    private static final BigDecimal UPDATED_REQUEST_NO = new BigDecimal(2);
 
     @Autowired
     private SlotReservationDetailsRepository slotReservationDetailsRepository;
@@ -87,8 +95,10 @@ public class SlotReservationDetailsResourceIT {
     public static SlotReservationDetails createEntity(EntityManager em) {
         SlotReservationDetails slotReservationDetails = new SlotReservationDetails()
             .applicantId(DEFAULT_APPLICANT_ID)
-            .applicantType(DEFAULT_APPLICANT_TYPE)
-            .status(DEFAULT_STATUS);
+            .status(DEFAULT_STATUS)
+            .timeFrom(DEFAULT_TIME_FROM)
+            .timeTo(DEFAULT_TIME_TO)
+            .requestNo(DEFAULT_REQUEST_NO);
         return slotReservationDetails;
     }
     /**
@@ -100,8 +110,10 @@ public class SlotReservationDetailsResourceIT {
     public static SlotReservationDetails createUpdatedEntity(EntityManager em) {
         SlotReservationDetails slotReservationDetails = new SlotReservationDetails()
             .applicantId(UPDATED_APPLICANT_ID)
-            .applicantType(UPDATED_APPLICANT_TYPE)
-            .status(UPDATED_STATUS);
+            .status(UPDATED_STATUS)
+            .timeFrom(UPDATED_TIME_FROM)
+            .timeTo(UPDATED_TIME_TO)
+            .requestNo(UPDATED_REQUEST_NO);
         return slotReservationDetails;
     }
 
@@ -126,8 +138,10 @@ public class SlotReservationDetailsResourceIT {
         assertThat(slotReservationDetailsList).hasSize(databaseSizeBeforeCreate + 1);
         SlotReservationDetails testSlotReservationDetails = slotReservationDetailsList.get(slotReservationDetailsList.size() - 1);
         assertThat(testSlotReservationDetails.getApplicantId()).isEqualTo(DEFAULT_APPLICANT_ID);
-        assertThat(testSlotReservationDetails.getApplicantType()).isEqualTo(DEFAULT_APPLICANT_TYPE);
         assertThat(testSlotReservationDetails.getStatus()).isEqualTo(DEFAULT_STATUS);
+        assertThat(testSlotReservationDetails.getTimeFrom()).isEqualTo(DEFAULT_TIME_FROM);
+        assertThat(testSlotReservationDetails.getTimeTo()).isEqualTo(DEFAULT_TIME_TO);
+        assertThat(testSlotReservationDetails.getRequestNo()).isEqualTo(DEFAULT_REQUEST_NO);
     }
 
     @Test
@@ -162,8 +176,10 @@ public class SlotReservationDetailsResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(slotReservationDetails.getId().intValue())))
             .andExpect(jsonPath("$.[*].applicantId").value(hasItem(DEFAULT_APPLICANT_ID.intValue())))
-            .andExpect(jsonPath("$.[*].applicantType").value(hasItem(DEFAULT_APPLICANT_TYPE.intValue())))
-            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.intValue())));
+            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.intValue())))
+            .andExpect(jsonPath("$.[*].timeFrom").value(hasItem(DEFAULT_TIME_FROM.toString())))
+            .andExpect(jsonPath("$.[*].timeTo").value(hasItem(DEFAULT_TIME_TO.toString())))
+            .andExpect(jsonPath("$.[*].requestNo").value(hasItem(DEFAULT_REQUEST_NO.intValue())));
     }
     
     @Test
@@ -178,8 +194,10 @@ public class SlotReservationDetailsResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(slotReservationDetails.getId().intValue()))
             .andExpect(jsonPath("$.applicantId").value(DEFAULT_APPLICANT_ID.intValue()))
-            .andExpect(jsonPath("$.applicantType").value(DEFAULT_APPLICANT_TYPE.intValue()))
-            .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.intValue()));
+            .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.intValue()))
+            .andExpect(jsonPath("$.timeFrom").value(DEFAULT_TIME_FROM.toString()))
+            .andExpect(jsonPath("$.timeTo").value(DEFAULT_TIME_TO.toString()))
+            .andExpect(jsonPath("$.requestNo").value(DEFAULT_REQUEST_NO.intValue()));
     }
 
     @Test
@@ -204,8 +222,10 @@ public class SlotReservationDetailsResourceIT {
         em.detach(updatedSlotReservationDetails);
         updatedSlotReservationDetails
             .applicantId(UPDATED_APPLICANT_ID)
-            .applicantType(UPDATED_APPLICANT_TYPE)
-            .status(UPDATED_STATUS);
+            .status(UPDATED_STATUS)
+            .timeFrom(UPDATED_TIME_FROM)
+            .timeTo(UPDATED_TIME_TO)
+            .requestNo(UPDATED_REQUEST_NO);
 
         restSlotReservationDetailsMockMvc.perform(put("/api/slot-reservation-details")
             .contentType(TestUtil.APPLICATION_JSON)
@@ -217,8 +237,10 @@ public class SlotReservationDetailsResourceIT {
         assertThat(slotReservationDetailsList).hasSize(databaseSizeBeforeUpdate);
         SlotReservationDetails testSlotReservationDetails = slotReservationDetailsList.get(slotReservationDetailsList.size() - 1);
         assertThat(testSlotReservationDetails.getApplicantId()).isEqualTo(UPDATED_APPLICANT_ID);
-        assertThat(testSlotReservationDetails.getApplicantType()).isEqualTo(UPDATED_APPLICANT_TYPE);
         assertThat(testSlotReservationDetails.getStatus()).isEqualTo(UPDATED_STATUS);
+        assertThat(testSlotReservationDetails.getTimeFrom()).isEqualTo(UPDATED_TIME_FROM);
+        assertThat(testSlotReservationDetails.getTimeTo()).isEqualTo(UPDATED_TIME_TO);
+        assertThat(testSlotReservationDetails.getRequestNo()).isEqualTo(UPDATED_REQUEST_NO);
     }
 
     @Test

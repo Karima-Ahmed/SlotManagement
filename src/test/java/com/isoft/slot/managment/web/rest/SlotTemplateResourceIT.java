@@ -21,6 +21,8 @@ import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.List;
 
 import static com.isoft.slot.managment.web.rest.TestUtil.createFormattingConversionService;
@@ -35,23 +37,29 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = {SecurityBeanOverrideConfiguration.class, SlotManagementApp.class})
 public class SlotTemplateResourceIT {
 
-    private static final BigDecimal DEFAULT_FACILITATOR_NO = new BigDecimal(1);
-    private static final BigDecimal UPDATED_FACILITATOR_NO = new BigDecimal(2);
-
-    private static final BigDecimal DEFAULT_FACILITATOR_TYPE = new BigDecimal(1);
-    private static final BigDecimal UPDATED_FACILITATOR_TYPE = new BigDecimal(2);
-
     private static final BigDecimal DEFAULT_CAPACITY = new BigDecimal(1);
     private static final BigDecimal UPDATED_CAPACITY = new BigDecimal(2);
 
     private static final BigDecimal DEFAULT_TIME_FRAME = new BigDecimal(1);
     private static final BigDecimal UPDATED_TIME_FRAME = new BigDecimal(2);
 
-    private static final BigDecimal DEFAULT_ASSET_TYPE = new BigDecimal(1);
-    private static final BigDecimal UPDATED_ASSET_TYPE = new BigDecimal(2);
-
     private static final BigDecimal DEFAULT_BREAK_TIME = new BigDecimal(1);
     private static final BigDecimal UPDATED_BREAK_TIME = new BigDecimal(2);
+
+    private static final LocalDate DEFAULT_DAY_START_TIME = LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_DAY_START_TIME = LocalDate.now(ZoneId.systemDefault());
+
+    private static final LocalDate DEFAULT_DAY_END_TIME = LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_DAY_END_TIME = LocalDate.now(ZoneId.systemDefault());
+
+    private static final String DEFAULT_DESC_AR = "AAAAAAAAAA";
+    private static final String UPDATED_DESC_AR = "BBBBBBBBBB";
+
+    private static final String DEFAULT_DESC_EN = "AAAAAAAAAA";
+    private static final String UPDATED_DESC_EN = "BBBBBBBBBB";
+
+    private static final BigDecimal DEFAULT_CENTER_ID = new BigDecimal(1);
+    private static final BigDecimal UPDATED_CENTER_ID = new BigDecimal(2);
 
     @Autowired
     private SlotTemplateRepository slotTemplateRepository;
@@ -95,12 +103,14 @@ public class SlotTemplateResourceIT {
      */
     public static SlotTemplate createEntity(EntityManager em) {
         SlotTemplate slotTemplate = new SlotTemplate()
-            .facilitatorNo(DEFAULT_FACILITATOR_NO)
-            .facilitatorType(DEFAULT_FACILITATOR_TYPE)
             .capacity(DEFAULT_CAPACITY)
             .timeFrame(DEFAULT_TIME_FRAME)
-            .assetType(DEFAULT_ASSET_TYPE)
-            .breakTime(DEFAULT_BREAK_TIME);
+            .breakTime(DEFAULT_BREAK_TIME)
+            .dayStartTime(DEFAULT_DAY_START_TIME)
+            .dayEndTime(DEFAULT_DAY_END_TIME)
+            .descAr(DEFAULT_DESC_AR)
+            .descEn(DEFAULT_DESC_EN)
+            .centerId(DEFAULT_CENTER_ID);
         return slotTemplate;
     }
     /**
@@ -111,12 +121,14 @@ public class SlotTemplateResourceIT {
      */
     public static SlotTemplate createUpdatedEntity(EntityManager em) {
         SlotTemplate slotTemplate = new SlotTemplate()
-            .facilitatorNo(UPDATED_FACILITATOR_NO)
-            .facilitatorType(UPDATED_FACILITATOR_TYPE)
             .capacity(UPDATED_CAPACITY)
             .timeFrame(UPDATED_TIME_FRAME)
-            .assetType(UPDATED_ASSET_TYPE)
-            .breakTime(UPDATED_BREAK_TIME);
+            .breakTime(UPDATED_BREAK_TIME)
+            .dayStartTime(UPDATED_DAY_START_TIME)
+            .dayEndTime(UPDATED_DAY_END_TIME)
+            .descAr(UPDATED_DESC_AR)
+            .descEn(UPDATED_DESC_EN)
+            .centerId(UPDATED_CENTER_ID);
         return slotTemplate;
     }
 
@@ -140,12 +152,14 @@ public class SlotTemplateResourceIT {
         List<SlotTemplate> slotTemplateList = slotTemplateRepository.findAll();
         assertThat(slotTemplateList).hasSize(databaseSizeBeforeCreate + 1);
         SlotTemplate testSlotTemplate = slotTemplateList.get(slotTemplateList.size() - 1);
-        assertThat(testSlotTemplate.getFacilitatorNo()).isEqualTo(DEFAULT_FACILITATOR_NO);
-        assertThat(testSlotTemplate.getFacilitatorType()).isEqualTo(DEFAULT_FACILITATOR_TYPE);
         assertThat(testSlotTemplate.getCapacity()).isEqualTo(DEFAULT_CAPACITY);
         assertThat(testSlotTemplate.getTimeFrame()).isEqualTo(DEFAULT_TIME_FRAME);
-        assertThat(testSlotTemplate.getAssetType()).isEqualTo(DEFAULT_ASSET_TYPE);
         assertThat(testSlotTemplate.getBreakTime()).isEqualTo(DEFAULT_BREAK_TIME);
+        assertThat(testSlotTemplate.getDayStartTime()).isEqualTo(DEFAULT_DAY_START_TIME);
+        assertThat(testSlotTemplate.getDayEndTime()).isEqualTo(DEFAULT_DAY_END_TIME);
+        assertThat(testSlotTemplate.getDescAr()).isEqualTo(DEFAULT_DESC_AR);
+        assertThat(testSlotTemplate.getDescEn()).isEqualTo(DEFAULT_DESC_EN);
+        assertThat(testSlotTemplate.getCenterId()).isEqualTo(DEFAULT_CENTER_ID);
     }
 
     @Test
@@ -179,12 +193,14 @@ public class SlotTemplateResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(slotTemplate.getId().intValue())))
-            .andExpect(jsonPath("$.[*].facilitatorNo").value(hasItem(DEFAULT_FACILITATOR_NO.intValue())))
-            .andExpect(jsonPath("$.[*].facilitatorType").value(hasItem(DEFAULT_FACILITATOR_TYPE.intValue())))
             .andExpect(jsonPath("$.[*].capacity").value(hasItem(DEFAULT_CAPACITY.intValue())))
             .andExpect(jsonPath("$.[*].timeFrame").value(hasItem(DEFAULT_TIME_FRAME.intValue())))
-            .andExpect(jsonPath("$.[*].assetType").value(hasItem(DEFAULT_ASSET_TYPE.intValue())))
-            .andExpect(jsonPath("$.[*].breakTime").value(hasItem(DEFAULT_BREAK_TIME.intValue())));
+            .andExpect(jsonPath("$.[*].breakTime").value(hasItem(DEFAULT_BREAK_TIME.intValue())))
+            .andExpect(jsonPath("$.[*].dayStartTime").value(hasItem(DEFAULT_DAY_START_TIME.toString())))
+            .andExpect(jsonPath("$.[*].dayEndTime").value(hasItem(DEFAULT_DAY_END_TIME.toString())))
+            .andExpect(jsonPath("$.[*].descAr").value(hasItem(DEFAULT_DESC_AR)))
+            .andExpect(jsonPath("$.[*].descEn").value(hasItem(DEFAULT_DESC_EN)))
+            .andExpect(jsonPath("$.[*].centerId").value(hasItem(DEFAULT_CENTER_ID.intValue())));
     }
     
     @Test
@@ -198,12 +214,14 @@ public class SlotTemplateResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(slotTemplate.getId().intValue()))
-            .andExpect(jsonPath("$.facilitatorNo").value(DEFAULT_FACILITATOR_NO.intValue()))
-            .andExpect(jsonPath("$.facilitatorType").value(DEFAULT_FACILITATOR_TYPE.intValue()))
             .andExpect(jsonPath("$.capacity").value(DEFAULT_CAPACITY.intValue()))
             .andExpect(jsonPath("$.timeFrame").value(DEFAULT_TIME_FRAME.intValue()))
-            .andExpect(jsonPath("$.assetType").value(DEFAULT_ASSET_TYPE.intValue()))
-            .andExpect(jsonPath("$.breakTime").value(DEFAULT_BREAK_TIME.intValue()));
+            .andExpect(jsonPath("$.breakTime").value(DEFAULT_BREAK_TIME.intValue()))
+            .andExpect(jsonPath("$.dayStartTime").value(DEFAULT_DAY_START_TIME.toString()))
+            .andExpect(jsonPath("$.dayEndTime").value(DEFAULT_DAY_END_TIME.toString()))
+            .andExpect(jsonPath("$.descAr").value(DEFAULT_DESC_AR))
+            .andExpect(jsonPath("$.descEn").value(DEFAULT_DESC_EN))
+            .andExpect(jsonPath("$.centerId").value(DEFAULT_CENTER_ID.intValue()));
     }
 
     @Test
@@ -227,12 +245,14 @@ public class SlotTemplateResourceIT {
         // Disconnect from session so that the updates on updatedSlotTemplate are not directly saved in db
         em.detach(updatedSlotTemplate);
         updatedSlotTemplate
-            .facilitatorNo(UPDATED_FACILITATOR_NO)
-            .facilitatorType(UPDATED_FACILITATOR_TYPE)
             .capacity(UPDATED_CAPACITY)
             .timeFrame(UPDATED_TIME_FRAME)
-            .assetType(UPDATED_ASSET_TYPE)
-            .breakTime(UPDATED_BREAK_TIME);
+            .breakTime(UPDATED_BREAK_TIME)
+            .dayStartTime(UPDATED_DAY_START_TIME)
+            .dayEndTime(UPDATED_DAY_END_TIME)
+            .descAr(UPDATED_DESC_AR)
+            .descEn(UPDATED_DESC_EN)
+            .centerId(UPDATED_CENTER_ID);
 
         restSlotTemplateMockMvc.perform(put("/api/slot-templates")
             .contentType(TestUtil.APPLICATION_JSON)
@@ -243,12 +263,14 @@ public class SlotTemplateResourceIT {
         List<SlotTemplate> slotTemplateList = slotTemplateRepository.findAll();
         assertThat(slotTemplateList).hasSize(databaseSizeBeforeUpdate);
         SlotTemplate testSlotTemplate = slotTemplateList.get(slotTemplateList.size() - 1);
-        assertThat(testSlotTemplate.getFacilitatorNo()).isEqualTo(UPDATED_FACILITATOR_NO);
-        assertThat(testSlotTemplate.getFacilitatorType()).isEqualTo(UPDATED_FACILITATOR_TYPE);
         assertThat(testSlotTemplate.getCapacity()).isEqualTo(UPDATED_CAPACITY);
         assertThat(testSlotTemplate.getTimeFrame()).isEqualTo(UPDATED_TIME_FRAME);
-        assertThat(testSlotTemplate.getAssetType()).isEqualTo(UPDATED_ASSET_TYPE);
         assertThat(testSlotTemplate.getBreakTime()).isEqualTo(UPDATED_BREAK_TIME);
+        assertThat(testSlotTemplate.getDayStartTime()).isEqualTo(UPDATED_DAY_START_TIME);
+        assertThat(testSlotTemplate.getDayEndTime()).isEqualTo(UPDATED_DAY_END_TIME);
+        assertThat(testSlotTemplate.getDescAr()).isEqualTo(UPDATED_DESC_AR);
+        assertThat(testSlotTemplate.getDescEn()).isEqualTo(UPDATED_DESC_EN);
+        assertThat(testSlotTemplate.getCenterId()).isEqualTo(UPDATED_CENTER_ID);
     }
 
     @Test
