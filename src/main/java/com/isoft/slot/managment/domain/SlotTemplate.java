@@ -5,6 +5,7 @@ import javax.persistence.*;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 /**
  * A SlotTemplate.
@@ -20,23 +21,29 @@ public class SlotTemplate implements Serializable {
     @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
 
-    @Column(name = "facilitator_no", precision = 21, scale = 2)
-    private BigDecimal facilitatorNo;
-
-    @Column(name = "facilitator_type", precision = 21, scale = 2)
-    private BigDecimal facilitatorType;
-
     @Column(name = "capacity", precision = 21, scale = 2)
     private BigDecimal capacity;
 
     @Column(name = "time_frame", precision = 21, scale = 2)
     private BigDecimal timeFrame;
 
-    @Column(name = "asset_type", precision = 21, scale = 2)
-    private BigDecimal assetType;
-
     @Column(name = "break_time", precision = 21, scale = 2)
     private BigDecimal breakTime;
+
+    @Column(name = "day_start_time")
+    private LocalDate dayStartTime;
+
+    @Column(name = "day_end_time")
+    private LocalDate dayEndTime;
+
+    @Column(name = "desc_ar")
+    private String descAr;
+
+    @Column(name = "desc_en")
+    private String descEn;
+
+    @Column(name = "center_id", precision = 21, scale = 2)
+    private BigDecimal centerId;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -45,32 +52,6 @@ public class SlotTemplate implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public BigDecimal getFacilitatorNo() {
-        return facilitatorNo;
-    }
-
-    public SlotTemplate facilitatorNo(BigDecimal facilitatorNo) {
-        this.facilitatorNo = facilitatorNo;
-        return this;
-    }
-
-    public void setFacilitatorNo(BigDecimal facilitatorNo) {
-        this.facilitatorNo = facilitatorNo;
-    }
-
-    public BigDecimal getFacilitatorType() {
-        return facilitatorType;
-    }
-
-    public SlotTemplate facilitatorType(BigDecimal facilitatorType) {
-        this.facilitatorType = facilitatorType;
-        return this;
-    }
-
-    public void setFacilitatorType(BigDecimal facilitatorType) {
-        this.facilitatorType = facilitatorType;
     }
 
     public BigDecimal getCapacity() {
@@ -99,19 +80,6 @@ public class SlotTemplate implements Serializable {
         this.timeFrame = timeFrame;
     }
 
-    public BigDecimal getAssetType() {
-        return assetType;
-    }
-
-    public SlotTemplate assetType(BigDecimal assetType) {
-        this.assetType = assetType;
-        return this;
-    }
-
-    public void setAssetType(BigDecimal assetType) {
-        this.assetType = assetType;
-    }
-
     public BigDecimal getBreakTime() {
         return breakTime;
     }
@@ -123,6 +91,71 @@ public class SlotTemplate implements Serializable {
 
     public void setBreakTime(BigDecimal breakTime) {
         this.breakTime = breakTime;
+    }
+
+    public LocalDate getDayStartTime() {
+        return dayStartTime;
+    }
+
+    public SlotTemplate dayStartTime(LocalDate dayStartTime) {
+        this.dayStartTime = dayStartTime;
+        return this;
+    }
+
+    public void setDayStartTime(LocalDate dayStartTime) {
+        this.dayStartTime = dayStartTime;
+    }
+
+    public LocalDate getDayEndTime() {
+        return dayEndTime;
+    }
+
+    public SlotTemplate dayEndTime(LocalDate dayEndTime) {
+        this.dayEndTime = dayEndTime;
+        return this;
+    }
+
+    public void setDayEndTime(LocalDate dayEndTime) {
+        this.dayEndTime = dayEndTime;
+    }
+
+    public String getDescAr() {
+        return descAr;
+    }
+
+    public SlotTemplate descAr(String descAr) {
+        this.descAr = descAr;
+        return this;
+    }
+
+    public void setDescAr(String descAr) {
+        this.descAr = descAr;
+    }
+
+    public String getDescEn() {
+        return descEn;
+    }
+
+    public SlotTemplate descEn(String descEn) {
+        this.descEn = descEn;
+        return this;
+    }
+
+    public void setDescEn(String descEn) {
+        this.descEn = descEn;
+    }
+
+    public BigDecimal getCenterId() {
+        return centerId;
+    }
+
+    public SlotTemplate centerId(BigDecimal centerId) {
+        this.centerId = centerId;
+        return this;
+    }
+
+    public void setCenterId(BigDecimal centerId) {
+        this.centerId = centerId;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
@@ -146,12 +179,14 @@ public class SlotTemplate implements Serializable {
     public String toString() {
         return "SlotTemplate{" +
             "id=" + getId() +
-            ", facilitatorNo=" + getFacilitatorNo() +
-            ", facilitatorType=" + getFacilitatorType() +
             ", capacity=" + getCapacity() +
             ", timeFrame=" + getTimeFrame() +
-            ", assetType=" + getAssetType() +
             ", breakTime=" + getBreakTime() +
+            ", dayStartTime='" + getDayStartTime() + "'" +
+            ", dayEndTime='" + getDayEndTime() + "'" +
+            ", descAr='" + getDescAr() + "'" +
+            ", descEn='" + getDescEn() + "'" +
+            ", centerId=" + getCenterId() +
             "}";
     }
 }

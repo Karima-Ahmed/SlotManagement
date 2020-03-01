@@ -6,6 +6,7 @@ import javax.persistence.*;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 /**
  * A SlotReservationDetails.
@@ -24,15 +25,21 @@ public class SlotReservationDetails implements Serializable {
     @Column(name = "applicant_id", precision = 21, scale = 2)
     private BigDecimal applicantId;
 
-    @Column(name = "applicant_type", precision = 21, scale = 2)
-    private BigDecimal applicantType;
-
     @Column(name = "status", precision = 21, scale = 2)
     private BigDecimal status;
 
+    @Column(name = "time_from")
+    private LocalDate timeFrom;
+
+    @Column(name = "time_to")
+    private LocalDate timeTo;
+
+    @Column(name = "request_no", precision = 21, scale = 2)
+    private BigDecimal requestNo;
+
     @ManyToOne
     @JsonIgnoreProperties("slotReservationDetails")
-    private SlotInstance slotId;
+    private SlotInstance slot;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -56,19 +63,6 @@ public class SlotReservationDetails implements Serializable {
         this.applicantId = applicantId;
     }
 
-    public BigDecimal getApplicantType() {
-        return applicantType;
-    }
-
-    public SlotReservationDetails applicantType(BigDecimal applicantType) {
-        this.applicantType = applicantType;
-        return this;
-    }
-
-    public void setApplicantType(BigDecimal applicantType) {
-        this.applicantType = applicantType;
-    }
-
     public BigDecimal getStatus() {
         return status;
     }
@@ -82,17 +76,56 @@ public class SlotReservationDetails implements Serializable {
         this.status = status;
     }
 
-    public SlotInstance getSlotId() {
-        return slotId;
+    public LocalDate getTimeFrom() {
+        return timeFrom;
     }
 
-    public SlotReservationDetails slotId(SlotInstance slotInstance) {
-        this.slotId = slotInstance;
+    public SlotReservationDetails timeFrom(LocalDate timeFrom) {
+        this.timeFrom = timeFrom;
         return this;
     }
 
-    public void setSlotId(SlotInstance slotInstance) {
-        this.slotId = slotInstance;
+    public void setTimeFrom(LocalDate timeFrom) {
+        this.timeFrom = timeFrom;
+    }
+
+    public LocalDate getTimeTo() {
+        return timeTo;
+    }
+
+    public SlotReservationDetails timeTo(LocalDate timeTo) {
+        this.timeTo = timeTo;
+        return this;
+    }
+
+    public void setTimeTo(LocalDate timeTo) {
+        this.timeTo = timeTo;
+    }
+
+    public BigDecimal getRequestNo() {
+        return requestNo;
+    }
+
+    public SlotReservationDetails requestNo(BigDecimal requestNo) {
+        this.requestNo = requestNo;
+        return this;
+    }
+
+    public void setRequestNo(BigDecimal requestNo) {
+        this.requestNo = requestNo;
+    }
+
+    public SlotInstance getSlot() {
+        return slot;
+    }
+
+    public SlotReservationDetails slot(SlotInstance slotInstance) {
+        this.slot = slotInstance;
+        return this;
+    }
+
+    public void setSlot(SlotInstance slotInstance) {
+        this.slot = slotInstance;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
@@ -117,8 +150,10 @@ public class SlotReservationDetails implements Serializable {
         return "SlotReservationDetails{" +
             "id=" + getId() +
             ", applicantId=" + getApplicantId() +
-            ", applicantType=" + getApplicantType() +
             ", status=" + getStatus() +
+            ", timeFrom='" + getTimeFrom() + "'" +
+            ", timeTo='" + getTimeTo() + "'" +
+            ", requestNo=" + getRequestNo() +
             "}";
     }
 }

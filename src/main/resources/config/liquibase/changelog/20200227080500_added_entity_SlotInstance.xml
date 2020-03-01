@@ -15,7 +15,16 @@
             <column name="id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="user_id" type="decimal(21,2)">
+            <column name="desc_ar" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="desc_en" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="time_frame" type="decimal(21,2)">
+                <constraints nullable="true" />
+            </column>
+            <column name="break_time" type="decimal(21,2)">
                 <constraints nullable="true" />
             </column>
             <column name="time_from" type="date">
@@ -24,10 +33,13 @@
             <column name="time_to" type="date">
                 <constraints nullable="true" />
             </column>
-            <column name="asset_id" type="decimal(21,2)">
+            <column name="center_id" type="decimal(21,2)">
                 <constraints nullable="true" />
             </column>
-            <column name="temp_id_id" type="bigint">
+            <column name="available_capacity" type="decimal(21,2)">
+                <constraints nullable="true" />
+            </column>
+            <column name="temp_id" type="bigint">
                 <constraints nullable="true" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
@@ -53,10 +65,14 @@
                   separator=";"
                   tableName="slot_instance">
             <column name="id" type="numeric"/>
-            <column name="user_id" type="numeric"/>
+            <column name="desc_ar" type="string"/>
+            <column name="desc_en" type="string"/>
+            <column name="time_frame" type="numeric"/>
+            <column name="break_time" type="numeric"/>
             <column name="time_from" type="date"/>
             <column name="time_to" type="date"/>
-            <column name="asset_id" type="numeric"/>
+            <column name="center_id" type="numeric"/>
+            <column name="available_capacity" type="numeric"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here, do not remove-->
         </loadData>
     </changeSet>

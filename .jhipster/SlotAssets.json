@@ -1,0 +1,31 @@
+{
+    "name": "SlotAssets",
+    "fields": [],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "slotInstance",
+            "otherEntityRelationshipName": "slotAssets",
+            "relationshipName": "slot",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "assets",
+            "otherEntityRelationshipName": "slotAssets",
+            "relationshipName": "asset",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20200301133800",
+    "entityTableName": "slot_assets",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "SlotManagement",
+    "applications": "*",
+    "microserviceName": "SlotManagement"
+}

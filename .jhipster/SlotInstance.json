@@ -2,7 +2,19 @@
     "name": "SlotInstance",
     "fields": [
         {
-            "fieldName": "userId",
+            "fieldName": "descAr",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "descEn",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "timeFrame",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "breakTime",
             "fieldType": "BigDecimal"
         },
         {
@@ -14,7 +26,11 @@
             "fieldType": "LocalDate"
         },
         {
-            "fieldName": "assetId",
+            "fieldName": "centerId",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "availableCapacity",
             "fieldType": "BigDecimal"
         }
     ],
@@ -23,7 +39,7 @@
             "relationshipType": "many-to-one",
             "otherEntityName": "slotTemplate",
             "otherEntityRelationshipName": "slotInstance",
-            "relationshipName": "tempId",
+            "relationshipName": "temp",
             "otherEntityField": "id"
         }
     ],

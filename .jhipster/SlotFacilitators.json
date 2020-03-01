@@ -1,0 +1,29 @@
+{
+    "name": "SlotFacilitators",
+    "fields": [
+        {
+            "fieldName": "userId",
+            "fieldType": "BigDecimal"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "slotInstance",
+            "otherEntityRelationshipName": "slotFacilitators",
+            "relationshipName": "slot",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20200301133700",
+    "entityTableName": "slot_facilitators",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "SlotManagement",
+    "applications": "*",
+    "microserviceName": "SlotManagement"
+}

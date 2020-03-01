@@ -1,0 +1,25 @@
+{
+    "name": "Assets",
+    "fields": [
+        {
+            "fieldName": "type",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "centerId",
+            "fieldType": "BigDecimal"
+        }
+    ],
+    "relationships": [],
+    "changelogDate": "20200301133900",
+    "entityTableName": "assets",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "SlotManagement",
+    "applications": "*",
+    "microserviceName": "SlotManagement"
+}

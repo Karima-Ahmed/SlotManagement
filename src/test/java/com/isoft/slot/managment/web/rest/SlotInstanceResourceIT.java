@@ -37,8 +37,17 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = {SecurityBeanOverrideConfiguration.class, SlotManagementApp.class})
 public class SlotInstanceResourceIT {
 
-    private static final BigDecimal DEFAULT_USER_ID = new BigDecimal(1);
-    private static final BigDecimal UPDATED_USER_ID = new BigDecimal(2);
+    private static final String DEFAULT_DESC_AR = "AAAAAAAAAA";
+    private static final String UPDATED_DESC_AR = "BBBBBBBBBB";
+
+    private static final String DEFAULT_DESC_EN = "AAAAAAAAAA";
+    private static final String UPDATED_DESC_EN = "BBBBBBBBBB";
+
+    private static final BigDecimal DEFAULT_TIME_FRAME = new BigDecimal(1);
+    private static final BigDecimal UPDATED_TIME_FRAME = new BigDecimal(2);
+
+    private static final BigDecimal DEFAULT_BREAK_TIME = new BigDecimal(1);
+    private static final BigDecimal UPDATED_BREAK_TIME = new BigDecimal(2);
 
     private static final LocalDate DEFAULT_TIME_FROM = LocalDate.ofEpochDay(0L);
     private static final LocalDate UPDATED_TIME_FROM = LocalDate.now(ZoneId.systemDefault());
@@ -46,8 +55,11 @@ public class SlotInstanceResourceIT {
     private static final LocalDate DEFAULT_TIME_TO = LocalDate.ofEpochDay(0L);
     private static final LocalDate UPDATED_TIME_TO = LocalDate.now(ZoneId.systemDefault());
 
-    private static final BigDecimal DEFAULT_ASSET_ID = new BigDecimal(1);
-    private static final BigDecimal UPDATED_ASSET_ID = new BigDecimal(2);
+    private static final BigDecimal DEFAULT_CENTER_ID = new BigDecimal(1);
+    private static final BigDecimal UPDATED_CENTER_ID = new BigDecimal(2);
+
+    private static final BigDecimal DEFAULT_AVAILABLE_CAPACITY = new BigDecimal(1);
+    private static final BigDecimal UPDATED_AVAILABLE_CAPACITY = new BigDecimal(2);
 
     @Autowired
     private SlotInstanceRepository slotInstanceRepository;
@@ -91,10 +103,14 @@ public class SlotInstanceResourceIT {
      */
     public static SlotInstance createEntity(EntityManager em) {
         SlotInstance slotInstance = new SlotInstance()
-            .userId(DEFAULT_USER_ID)
+            .descAr(DEFAULT_DESC_AR)
+            .descEn(DEFAULT_DESC_EN)
+            .timeFrame(DEFAULT_TIME_FRAME)
+            .breakTime(DEFAULT_BREAK_TIME)
             .timeFrom(DEFAULT_TIME_FROM)
             .timeTo(DEFAULT_TIME_TO)
-            .assetId(DEFAULT_ASSET_ID);
+            .centerId(DEFAULT_CENTER_ID)
+            .availableCapacity(DEFAULT_AVAILABLE_CAPACITY);
         return slotInstance;
     }
     /**
@@ -105,10 +121,14 @@ public class SlotInstanceResourceIT {
      */
     public static SlotInstance createUpdatedEntity(EntityManager em) {
         SlotInstance slotInstance = new SlotInstance()
-            .userId(UPDATED_USER_ID)
+            .descAr(UPDATED_DESC_AR)
+            .descEn(UPDATED_DESC_EN)
+            .timeFrame(UPDATED_TIME_FRAME)
+            .breakTime(UPDATED_BREAK_TIME)
             .timeFrom(UPDATED_TIME_FROM)
             .timeTo(UPDATED_TIME_TO)
-            .assetId(UPDATED_ASSET_ID);
+            .centerId(UPDATED_CENTER_ID)
+            .availableCapacity(UPDATED_AVAILABLE_CAPACITY);
         return slotInstance;
     }
 
@@ -132,10 +152,14 @@ public class SlotInstanceResourceIT {
         List<SlotInstance> slotInstanceList = slotInstanceRepository.findAll();
         assertThat(slotInstanceList).hasSize(databaseSizeBeforeCreate + 1);
         SlotInstance testSlotInstance = slotInstanceList.get(slotInstanceList.size() - 1);
-        assertThat(testSlotInstance.getUserId()).isEqualTo(DEFAULT_USER_ID);
+        assertThat(testSlotInstance.getDescAr()).isEqualTo(DEFAULT_DESC_AR);
+        assertThat(testSlotInstance.getDescEn()).isEqualTo(DEFAULT_DESC_EN);
+        assertThat(testSlotInstance.getTimeFrame()).isEqualTo(DEFAULT_TIME_FRAME);
+        assertThat(testSlotInstance.getBreakTime()).isEqualTo(DEFAULT_BREAK_TIME);
         assertThat(testSlotInstance.getTimeFrom()).isEqualTo(DEFAULT_TIME_FROM);
         assertThat(testSlotInstance.getTimeTo()).isEqualTo(DEFAULT_TIME_TO);
-        assertThat(testSlotInstance.getAssetId()).isEqualTo(DEFAULT_ASSET_ID);
+        assertThat(testSlotInstance.getCenterId()).isEqualTo(DEFAULT_CENTER_ID);
+        assertThat(testSlotInstance.getAvailableCapacity()).isEqualTo(DEFAULT_AVAILABLE_CAPACITY);
     }
 
     @Test
@@ -169,10 +193,14 @@ public class SlotInstanceResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(slotInstance.getId().intValue())))
-            .andExpect(jsonPath("$.[*].userId").value(hasItem(DEFAULT_USER_ID.intValue())))
+            .andExpect(jsonPath("$.[*].descAr").value(hasItem(DEFAULT_DESC_AR)))
+            .andExpect(jsonPath("$.[*].descEn").value(hasItem(DEFAULT_DESC_EN)))
+            .andExpect(jsonPath("$.[*].timeFrame").value(hasItem(DEFAULT_TIME_FRAME.intValue())))
+            .andExpect(jsonPath("$.[*].breakTime").value(hasItem(DEFAULT_BREAK_TIME.intValue())))
             .andExpect(jsonPath("$.[*].timeFrom").value(hasItem(DEFAULT_TIME_FROM.toString())))
             .andExpect(jsonPath("$.[*].timeTo").value(hasItem(DEFAULT_TIME_TO.toString())))
-            .andExpect(jsonPath("$.[*].assetId").value(hasItem(DEFAULT_ASSET_ID.intValue())));
+            .andExpect(jsonPath("$.[*].centerId").value(hasItem(DEFAULT_CENTER_ID.intValue())))
+            .andExpect(jsonPath("$.[*].availableCapacity").value(hasItem(DEFAULT_AVAILABLE_CAPACITY.intValue())));
     }
     
     @Test
@@ -186,10 +214,14 @@ public class SlotInstanceResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(slotInstance.getId().intValue()))
-            .andExpect(jsonPath("$.userId").value(DEFAULT_USER_ID.intValue()))
+            .andExpect(jsonPath("$.descAr").value(DEFAULT_DESC_AR))
+            .andExpect(jsonPath("$.descEn").value(DEFAULT_DESC_EN))
+            .andExpect(jsonPath("$.timeFrame").value(DEFAULT_TIME_FRAME.intValue()))
+            .andExpect(jsonPath("$.breakTime").value(DEFAULT_BREAK_TIME.intValue()))
             .andExpect(jsonPath("$.timeFrom").value(DEFAULT_TIME_FROM.toString()))
             .andExpect(jsonPath("$.timeTo").value(DEFAULT_TIME_TO.toString()))
-            .andExpect(jsonPath("$.assetId").value(DEFAULT_ASSET_ID.intValue()));
+            .andExpect(jsonPath("$.centerId").value(DEFAULT_CENTER_ID.intValue()))
+            .andExpect(jsonPath("$.availableCapacity").value(DEFAULT_AVAILABLE_CAPACITY.intValue()));
     }
 
     @Test
@@ -213,10 +245,14 @@ public class SlotInstanceResourceIT {
         // Disconnect from session so that the updates on updatedSlotInstance are not directly saved in db
         em.detach(updatedSlotInstance);
         updatedSlotInstance
-            .userId(UPDATED_USER_ID)
+            .descAr(UPDATED_DESC_AR)
+            .descEn(UPDATED_DESC_EN)
+            .timeFrame(UPDATED_TIME_FRAME)
+            .breakTime(UPDATED_BREAK_TIME)
             .timeFrom(UPDATED_TIME_FROM)
             .timeTo(UPDATED_TIME_TO)
-            .assetId(UPDATED_ASSET_ID);
+            .centerId(UPDATED_CENTER_ID)
+            .availableCapacity(UPDATED_AVAILABLE_CAPACITY);
 
         restSlotInstanceMockMvc.perform(put("/api/slot-instances")
             .contentType(TestUtil.APPLICATION_JSON)
@@ -227,10 +263,14 @@ public class SlotInstanceResourceIT {
         List<SlotInstance> slotInstanceList = slotInstanceRepository.findAll();
         assertThat(slotInstanceList).hasSize(databaseSizeBeforeUpdate);
         SlotInstance testSlotInstance = slotInstanceList.get(slotInstanceList.size() - 1);
-        assertThat(testSlotInstance.getUserId()).isEqualTo(UPDATED_USER_ID);
+        assertThat(testSlotInstance.getDescAr()).isEqualTo(UPDATED_DESC_AR);
+        assertThat(testSlotInstance.getDescEn()).isEqualTo(UPDATED_DESC_EN);
+        assertThat(testSlotInstance.getTimeFrame()).isEqualTo(UPDATED_TIME_FRAME);
+        assertThat(testSlotInstance.getBreakTime()).isEqualTo(UPDATED_BREAK_TIME);
         assertThat(testSlotInstance.getTimeFrom()).isEqualTo(UPDATED_TIME_FROM);
         assertThat(testSlotInstance.getTimeTo()).isEqualTo(UPDATED_TIME_TO);
-        assertThat(testSlotInstance.getAssetId()).isEqualTo(UPDATED_ASSET_ID);
+        assertThat(testSlotInstance.getCenterId()).isEqualTo(UPDATED_CENTER_ID);
+        assertThat(testSlotInstance.getAvailableCapacity()).isEqualTo(UPDATED_AVAILABLE_CAPACITY);
     }
 
     @Test
