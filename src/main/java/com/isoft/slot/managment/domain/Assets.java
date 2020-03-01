@@ -1,5 +1,6 @@
 package com.isoft.slot.managment.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 
@@ -25,6 +26,10 @@ public class Assets implements Serializable {
 
     @Column(name = "center_id", precision = 21, scale = 2)
     private BigDecimal centerId;
+
+    @ManyToOne
+    @JsonIgnoreProperties("assets")
+    private SlotAssets asset;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -59,6 +64,19 @@ public class Assets implements Serializable {
 
     public void setCenterId(BigDecimal centerId) {
         this.centerId = centerId;
+    }
+
+    public SlotAssets getAsset() {
+        return asset;
+    }
+
+    public Assets asset(SlotAssets slotAssets) {
+        this.asset = slotAssets;
+        return this;
+    }
+
+    public void setAsset(SlotAssets slotAssets) {
+        this.asset = slotAssets;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

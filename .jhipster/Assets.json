@@ -10,7 +10,15 @@
             "fieldType": "BigDecimal"
         }
     ],
-    "relationships": [],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "slotAssets",
+            "otherEntityRelationshipName": "assets",
+            "relationshipName": "asset",
+            "otherEntityField": "id"
+        }
+    ],
     "changelogDate": "20200301133900",
     "entityTableName": "assets",
     "dto": "no",
