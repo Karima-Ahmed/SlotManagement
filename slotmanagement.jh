@@ -60,7 +60,7 @@ centerId BigDecimal
 }
 
 relationship ManyToOne {
-  SlotAssets{asset} to Assets
+  Assets{asset} to SlotAssets
 }
 
 entity SlotReservationDetails {

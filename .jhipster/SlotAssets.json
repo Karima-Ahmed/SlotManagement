@@ -8,13 +8,6 @@
             "otherEntityRelationshipName": "slotAssets",
             "relationshipName": "slot",
             "otherEntityField": "id"
-        },
-        {
-            "relationshipType": "many-to-one",
-            "otherEntityName": "assets",
-            "otherEntityRelationshipName": "slotAssets",
-            "relationshipName": "asset",
-            "otherEntityField": "id"
         }
     ],
     "changelogDate": "20200301133800",

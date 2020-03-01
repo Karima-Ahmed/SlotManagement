@@ -29,5 +29,6 @@
     <include file="config/liquibase/changelog/20200301133500_added_entity_constraints_SlotTemplateFacilitators.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20200301133700_added_entity_constraints_SlotFacilitators.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20200301133800_added_entity_constraints_SlotAssets.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200301133900_added_entity_constraints_Assets.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
 </databaseChangeLog>

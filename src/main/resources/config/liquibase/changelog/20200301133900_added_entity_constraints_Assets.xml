@@ -4,15 +4,15 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
     <!--
-        Added the constraints for entity SlotAssets.
+        Added the constraints for entity Assets.
     -->
-    <changeSet id="20200301133800-2" author="jhipster">
+    <changeSet id="20200301133900-2" author="jhipster">
         
-        <addForeignKeyConstraint baseColumnNames="slot_id"
-                                 baseTableName="slot_assets"
-                                 constraintName="fk_slot_assets_slot_id"
+        <addForeignKeyConstraint baseColumnNames="asset_id"
+                                 baseTableName="assets"
+                                 constraintName="fk_assets_asset_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="slot_instance"/>
+                                 referencedTableName="slot_assets"/>
 
     </changeSet>
 </databaseChangeLog>
