@@ -32,6 +32,10 @@
         {
             "fieldName": "centerId",
             "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "status",
+            "fieldType": "BigDecimal"
         }
     ],
     "relationships": [],

@@ -29,7 +29,7 @@ public class Assets implements Serializable {
 
     @ManyToOne
     @JsonIgnoreProperties("assets")
-    private SlotAssets asset;
+    private SlotAssets slotAsset;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -66,17 +66,17 @@ public class Assets implements Serializable {
         this.centerId = centerId;
     }
 
-    public SlotAssets getAsset() {
-        return asset;
+    public SlotAssets getSlotAsset() {
+        return slotAsset;
     }
 
-    public Assets asset(SlotAssets slotAssets) {
-        this.asset = slotAssets;
+    public Assets slotAsset(SlotAssets slotAssets) {
+        this.slotAsset = slotAssets;
         return this;
     }
 
-    public void setAsset(SlotAssets slotAssets) {
-        this.asset = slotAssets;
+    public void setSlotAsset(SlotAssets slotAssets) {
+        this.slotAsset = slotAssets;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

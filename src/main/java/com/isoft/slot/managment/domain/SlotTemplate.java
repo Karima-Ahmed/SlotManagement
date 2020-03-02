@@ -45,6 +45,9 @@ public class SlotTemplate implements Serializable {
     @Column(name = "center_id", precision = 21, scale = 2)
     private BigDecimal centerId;
 
+    @Column(name = "status", precision = 21, scale = 2)
+    private BigDecimal status;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -157,6 +160,19 @@ public class SlotTemplate implements Serializable {
     public void setCenterId(BigDecimal centerId) {
         this.centerId = centerId;
     }
+
+    public BigDecimal getStatus() {
+        return status;
+    }
+
+    public SlotTemplate status(BigDecimal status) {
+        this.status = status;
+        return this;
+    }
+
+    public void setStatus(BigDecimal status) {
+        this.status = status;
+    }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
@@ -187,6 +203,7 @@ public class SlotTemplate implements Serializable {
             ", descAr='" + getDescAr() + "'" +
             ", descEn='" + getDescEn() + "'" +
             ", centerId=" + getCenterId() +
+            ", status=" + getStatus() +
             "}";
     }
 }

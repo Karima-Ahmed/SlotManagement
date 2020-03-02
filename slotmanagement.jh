@@ -6,7 +6,8 @@ entity SlotTemplate {
     dayEndTime   LocalDate,
     descAr String,
     descEn String,
-    centerId BigDecimal
+    centerId BigDecimal,
+    status BigDecimal
 }
 
 entity SlotTemplateAssets {
@@ -60,7 +61,7 @@ centerId BigDecimal
 }
 
 relationship ManyToOne {
-  Assets{asset} to SlotAssets
+  Assets{slotAsset} to SlotAssets
 }
 
 entity SlotReservationDetails {
