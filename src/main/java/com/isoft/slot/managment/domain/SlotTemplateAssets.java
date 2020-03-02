@@ -16,6 +16,18 @@ public class SlotTemplateAssets implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    public enum AssetType{
+        CAR(new BigDecimal(1)),
+        COMPUTER(new BigDecimal(2)),
+        LECTURE(new BigDecimal(3));
+
+        public static final String DOMAIN_CODE = "AssetType";
+
+        private BigDecimal value;
+        AssetType(BigDecimal value) {this.value = value;}
+        public BigDecimal getValue() {return value;}
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")

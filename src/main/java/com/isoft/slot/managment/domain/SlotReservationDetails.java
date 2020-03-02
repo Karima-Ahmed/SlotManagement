@@ -17,6 +17,19 @@ public class SlotReservationDetails implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    public enum SlotStatus{
+        AVAILABLE(new BigDecimal(1)),
+        PRE_RESERVED(new BigDecimal(2)),
+        RESERVED(new BigDecimal(3)),
+        BUSY(new BigDecimal(4));
+
+        public static final String DOMAIN_CODE = "SlotStatus";
+
+        private BigDecimal value;
+        SlotStatus(BigDecimal value) {this.value = value;}
+        public BigDecimal getValue() {return value;}
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")

@@ -16,6 +16,16 @@ public class SlotTemplate implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    public enum slotTempStatus{
+        Active(new BigDecimal(1)),
+        INACTIVE(new BigDecimal(2));
+
+        public static final String DOMAIN_CODE = "slotTempStatus";
+
+        private BigDecimal value;
+        slotTempStatus(BigDecimal value) {this.value = value;}
+        public BigDecimal getValue() {return value;}
+    }
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")

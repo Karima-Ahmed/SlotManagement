@@ -16,6 +16,18 @@ public class SlotTemplateFacilitators implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    public enum FacilitatorType{
+        LECTURER(new BigDecimal(1)),
+        ASSISTANT(new BigDecimal(2)),
+        TRAINER(new BigDecimal(3));
+
+        public static final String DOMAIN_CODE = "FacilitatorType";
+
+        private BigDecimal value;
+        FacilitatorType(BigDecimal value) {this.value = value;}
+        public BigDecimal getValue() {return value;}
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")

@@ -44,14 +44,15 @@ spring:
       indent-output: true
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:postgresql://localhost:5432/SlotManagement
-    username: SlotManagement
-    password:
+    url: jdbc:postgresql://192.168.1.18:5432/demo?currentSchema=slotmgmnt
+    username: postgres
+    password: postgres
     hikari:
       poolName: Hikari
       auto-commit: false
   jpa:
     database-platform: io.github.jhipster.domain.util.FixedPostgreSQL10Dialect
+    database: POSTGRESQL
     show-sql: true
     properties:
       hibernate.id.new_generator_mappings: true
@@ -59,6 +60,10 @@ spring:
       hibernate.cache.use_second_level_cache: false
       hibernate.cache.use_query_cache: false
       hibernate.generate_statistics: false
+      hibernate.jdbc.time_zone: UTC
+    hibernate:
+      default_schema: slotmgmnt
+      ddl-auto: create
   liquibase:
     # Remove 'faker' if you do not want the sample data to be loaded automatically
     contexts: dev, faker
