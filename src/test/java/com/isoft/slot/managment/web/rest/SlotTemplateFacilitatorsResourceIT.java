@@ -38,8 +38,8 @@ public class SlotTemplateFacilitatorsResourceIT {
     private static final BigDecimal DEFAULT_COUNT = new BigDecimal(1);
     private static final BigDecimal UPDATED_COUNT = new BigDecimal(2);
 
-    private static final BigDecimal DEFAULT_TYPE = new BigDecimal(1);
-    private static final BigDecimal UPDATED_TYPE = new BigDecimal(2);
+    private static final BigDecimal DEFAULT_FACILITATOR_TYPE = new BigDecimal(1);
+    private static final BigDecimal UPDATED_FACILITATOR_TYPE = new BigDecimal(2);
 
     @Autowired
     private SlotTemplateFacilitatorsRepository slotTemplateFacilitatorsRepository;
@@ -84,7 +84,7 @@ public class SlotTemplateFacilitatorsResourceIT {
     public static SlotTemplateFacilitators createEntity(EntityManager em) {
         SlotTemplateFacilitators slotTemplateFacilitators = new SlotTemplateFacilitators()
             .count(DEFAULT_COUNT)
-            .type(DEFAULT_TYPE);
+            .facilitatorType(DEFAULT_FACILITATOR_TYPE);
         return slotTemplateFacilitators;
     }
     /**
@@ -96,7 +96,7 @@ public class SlotTemplateFacilitatorsResourceIT {
     public static SlotTemplateFacilitators createUpdatedEntity(EntityManager em) {
         SlotTemplateFacilitators slotTemplateFacilitators = new SlotTemplateFacilitators()
             .count(UPDATED_COUNT)
-            .type(UPDATED_TYPE);
+            .facilitatorType(UPDATED_FACILITATOR_TYPE);
         return slotTemplateFacilitators;
     }
 
@@ -121,7 +121,7 @@ public class SlotTemplateFacilitatorsResourceIT {
         assertThat(slotTemplateFacilitatorsList).hasSize(databaseSizeBeforeCreate + 1);
         SlotTemplateFacilitators testSlotTemplateFacilitators = slotTemplateFacilitatorsList.get(slotTemplateFacilitatorsList.size() - 1);
         assertThat(testSlotTemplateFacilitators.getCount()).isEqualTo(DEFAULT_COUNT);
-        assertThat(testSlotTemplateFacilitators.getType()).isEqualTo(DEFAULT_TYPE);
+        assertThat(testSlotTemplateFacilitators.getFacilitatorType()).isEqualTo(DEFAULT_FACILITATOR_TYPE);
     }
 
     @Test
@@ -156,7 +156,7 @@ public class SlotTemplateFacilitatorsResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(slotTemplateFacilitators.getId().intValue())))
             .andExpect(jsonPath("$.[*].count").value(hasItem(DEFAULT_COUNT.intValue())))
-            .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE.intValue())));
+            .andExpect(jsonPath("$.[*].facilitatorType").value(hasItem(DEFAULT_FACILITATOR_TYPE.intValue())));
     }
     
     @Test
@@ -171,7 +171,7 @@ public class SlotTemplateFacilitatorsResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(slotTemplateFacilitators.getId().intValue()))
             .andExpect(jsonPath("$.count").value(DEFAULT_COUNT.intValue()))
-            .andExpect(jsonPath("$.type").value(DEFAULT_TYPE.intValue()));
+            .andExpect(jsonPath("$.facilitatorType").value(DEFAULT_FACILITATOR_TYPE.intValue()));
     }
 
     @Test
@@ -196,7 +196,7 @@ public class SlotTemplateFacilitatorsResourceIT {
         em.detach(updatedSlotTemplateFacilitators);
         updatedSlotTemplateFacilitators
             .count(UPDATED_COUNT)
-            .type(UPDATED_TYPE);
+            .facilitatorType(UPDATED_FACILITATOR_TYPE);
 
         restSlotTemplateFacilitatorsMockMvc.perform(put("/api/slot-template-facilitators")
             .contentType(TestUtil.APPLICATION_JSON)
@@ -208,7 +208,7 @@ public class SlotTemplateFacilitatorsResourceIT {
         assertThat(slotTemplateFacilitatorsList).hasSize(databaseSizeBeforeUpdate);
         SlotTemplateFacilitators testSlotTemplateFacilitators = slotTemplateFacilitatorsList.get(slotTemplateFacilitatorsList.size() - 1);
         assertThat(testSlotTemplateFacilitators.getCount()).isEqualTo(UPDATED_COUNT);
-        assertThat(testSlotTemplateFacilitators.getType()).isEqualTo(UPDATED_TYPE);
+        assertThat(testSlotTemplateFacilitators.getFacilitatorType()).isEqualTo(UPDATED_FACILITATOR_TYPE);
     }
 
     @Test
