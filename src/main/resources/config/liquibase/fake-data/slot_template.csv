@@ -1,11 +1,11 @@
-id;capacity;time_frame;break_time;day_start_time;day_end_time;desc_ar;desc_en;center_id
-1;59183;79305;72726;2020-02-26;2020-02-26;Computer Extension Auto Loan Account;Buckinghamshire;63844
-2;41993;2509;76538;2020-02-27;2020-02-26;Wooden Plaza;synergistic pink;8525
-3;36350;33269;72416;2020-02-26;2020-02-26;Bulgarian Lev;overriding;68946
-4;60303;65596;15091;2020-02-26;2020-02-26;bypass Configurable;mobile;50637
-5;41166;63522;35282;2020-02-26;2020-02-27;Versatile quantify Quality;Peru Central;85649
-6;15777;29844;60676;2020-02-26;2020-02-27;Sudanese Pound Manors haptic;Incredible Sleek Chips;89333
-7;68484;4623;35122;2020-02-26;2020-02-26;communities;Chips withdrawal microchip;11799
-8;96825;89142;47851;2020-02-26;2020-02-27;functionalities;infrastructures Incredible Wooden Pants Metal;53065
-9;94310;66885;80489;2020-02-26;2020-02-26;24/7 Hat;Buckinghamshire Vision-oriented e-commerce;45363
-10;25539;84701;80585;2020-02-26;2020-02-27;Kids;redefine withdrawal;94445
+id;capacity;time_frame;break_time;day_start_time;day_end_time;desc_ar;desc_en;center_id;status
+1;59183;79305;72726;2020-02-26;2020-02-26;Computer Extension Auto Loan Account;Buckinghamshire;63844;41993
+2;2509;76538;6853;2020-02-26;2020-02-26;Cotton;Money Market Account program;34276;8525
+3;36350;33269;72416;2020-02-26;2020-02-26;Bulgarian Lev;overriding;68946;60303
+4;65596;15091;69236;2020-02-26;2020-02-26;Gorgeous Small mobile;e-commerce ubiquitous;33485;75315
+5;25701;96830;77380;2020-02-26;2020-02-26;Malta East Caribbean Dollar Terrace;methodology;78483;28854
+6;82610;68179;70713;2020-02-26;2020-02-26;United States of America Incredible Sleek;Interactions;68484;4623
+7;35122;94941;51802;2020-02-27;2020-02-26;hacking;withdrawal microchip Frozen;89142;47851
+8;36891;24662;16213;2020-02-26;2020-02-26;infrastructures Incredible Wooden Pants Metal;Branding wireless;57343;53966
+9;29358;1452;17221;2020-02-26;2020-02-26;open-source Administrator;Fork synthesizing;81178;10543
+10;1888;3347;61885;2020-02-26;2020-02-26;withdrawal Identity attitude;Shoes program;58925;87318

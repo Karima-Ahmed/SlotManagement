@@ -39,6 +39,9 @@
             <column name="center_id" type="decimal(21,2)">
                 <constraints nullable="true" />
             </column>
+            <column name="status" type="decimal(21,2)">
+                <constraints nullable="true" />
+            </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
     </changeSet>
@@ -70,6 +73,7 @@
             <column name="desc_ar" type="string"/>
             <column name="desc_en" type="string"/>
             <column name="center_id" type="numeric"/>
+            <column name="status" type="numeric"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here, do not remove-->
         </loadData>
     </changeSet>

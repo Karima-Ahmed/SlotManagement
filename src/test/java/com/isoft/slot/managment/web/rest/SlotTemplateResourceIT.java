@@ -61,6 +61,9 @@ public class SlotTemplateResourceIT {
     private static final BigDecimal DEFAULT_CENTER_ID = new BigDecimal(1);
     private static final BigDecimal UPDATED_CENTER_ID = new BigDecimal(2);
 
+    private static final BigDecimal DEFAULT_STATUS = new BigDecimal(1);
+    private static final BigDecimal UPDATED_STATUS = new BigDecimal(2);
+
     @Autowired
     private SlotTemplateRepository slotTemplateRepository;
 
@@ -110,7 +113,8 @@ public class SlotTemplateResourceIT {
             .dayEndTime(DEFAULT_DAY_END_TIME)
             .descAr(DEFAULT_DESC_AR)
             .descEn(DEFAULT_DESC_EN)
-            .centerId(DEFAULT_CENTER_ID);
+            .centerId(DEFAULT_CENTER_ID)
+            .status(DEFAULT_STATUS);
         return slotTemplate;
     }
     /**
@@ -128,7 +132,8 @@ public class SlotTemplateResourceIT {
             .dayEndTime(UPDATED_DAY_END_TIME)
             .descAr(UPDATED_DESC_AR)
             .descEn(UPDATED_DESC_EN)
-            .centerId(UPDATED_CENTER_ID);
+            .centerId(UPDATED_CENTER_ID)
+            .status(UPDATED_STATUS);
         return slotTemplate;
     }
 
@@ -160,6 +165,7 @@ public class SlotTemplateResourceIT {
         assertThat(testSlotTemplate.getDescAr()).isEqualTo(DEFAULT_DESC_AR);
         assertThat(testSlotTemplate.getDescEn()).isEqualTo(DEFAULT_DESC_EN);
         assertThat(testSlotTemplate.getCenterId()).isEqualTo(DEFAULT_CENTER_ID);
+        assertThat(testSlotTemplate.getStatus()).isEqualTo(DEFAULT_STATUS);
     }
 
     @Test
@@ -200,7 +206,8 @@ public class SlotTemplateResourceIT {
             .andExpect(jsonPath("$.[*].dayEndTime").value(hasItem(DEFAULT_DAY_END_TIME.toString())))
             .andExpect(jsonPath("$.[*].descAr").value(hasItem(DEFAULT_DESC_AR)))
             .andExpect(jsonPath("$.[*].descEn").value(hasItem(DEFAULT_DESC_EN)))
-            .andExpect(jsonPath("$.[*].centerId").value(hasItem(DEFAULT_CENTER_ID.intValue())));
+            .andExpect(jsonPath("$.[*].centerId").value(hasItem(DEFAULT_CENTER_ID.intValue())))
+            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.intValue())));
     }
     
     @Test
@@ -221,7 +228,8 @@ public class SlotTemplateResourceIT {
             .andExpect(jsonPath("$.dayEndTime").value(DEFAULT_DAY_END_TIME.toString()))
             .andExpect(jsonPath("$.descAr").value(DEFAULT_DESC_AR))
             .andExpect(jsonPath("$.descEn").value(DEFAULT_DESC_EN))
-            .andExpect(jsonPath("$.centerId").value(DEFAULT_CENTER_ID.intValue()));
+            .andExpect(jsonPath("$.centerId").value(DEFAULT_CENTER_ID.intValue()))
+            .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.intValue()));
     }
 
     @Test
@@ -252,7 +260,8 @@ public class SlotTemplateResourceIT {
             .dayEndTime(UPDATED_DAY_END_TIME)
             .descAr(UPDATED_DESC_AR)
             .descEn(UPDATED_DESC_EN)
-            .centerId(UPDATED_CENTER_ID);
+            .centerId(UPDATED_CENTER_ID)
+            .status(UPDATED_STATUS);
 
         restSlotTemplateMockMvc.perform(put("/api/slot-templates")
             .contentType(TestUtil.APPLICATION_JSON)
@@ -271,6 +280,7 @@ public class SlotTemplateResourceIT {
         assertThat(testSlotTemplate.getDescAr()).isEqualTo(UPDATED_DESC_AR);
         assertThat(testSlotTemplate.getDescEn()).isEqualTo(UPDATED_DESC_EN);
         assertThat(testSlotTemplate.getCenterId()).isEqualTo(UPDATED_CENTER_ID);
+        assertThat(testSlotTemplate.getStatus()).isEqualTo(UPDATED_STATUS);
     }
 
     @Test
