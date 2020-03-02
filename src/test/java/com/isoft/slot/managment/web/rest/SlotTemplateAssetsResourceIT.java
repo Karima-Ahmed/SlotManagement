@@ -38,8 +38,8 @@ public class SlotTemplateAssetsResourceIT {
     private static final BigDecimal DEFAULT_COUNT = new BigDecimal(1);
     private static final BigDecimal UPDATED_COUNT = new BigDecimal(2);
 
-    private static final BigDecimal DEFAULT_TYPE = new BigDecimal(1);
-    private static final BigDecimal UPDATED_TYPE = new BigDecimal(2);
+    private static final BigDecimal DEFAULT_ASSET_TYPE = new BigDecimal(1);
+    private static final BigDecimal UPDATED_ASSET_TYPE = new BigDecimal(2);
 
     @Autowired
     private SlotTemplateAssetsRepository slotTemplateAssetsRepository;
@@ -84,7 +84,7 @@ public class SlotTemplateAssetsResourceIT {
     public static SlotTemplateAssets createEntity(EntityManager em) {
         SlotTemplateAssets slotTemplateAssets = new SlotTemplateAssets()
             .count(DEFAULT_COUNT)
-            .type(DEFAULT_TYPE);
+            .assetType(DEFAULT_ASSET_TYPE);
         return slotTemplateAssets;
     }
     /**
@@ -96,7 +96,7 @@ public class SlotTemplateAssetsResourceIT {
     public static SlotTemplateAssets createUpdatedEntity(EntityManager em) {
         SlotTemplateAssets slotTemplateAssets = new SlotTemplateAssets()
             .count(UPDATED_COUNT)
-            .type(UPDATED_TYPE);
+            .assetType(UPDATED_ASSET_TYPE);
         return slotTemplateAssets;
     }
 
@@ -121,7 +121,7 @@ public class SlotTemplateAssetsResourceIT {
         assertThat(slotTemplateAssetsList).hasSize(databaseSizeBeforeCreate + 1);
         SlotTemplateAssets testSlotTemplateAssets = slotTemplateAssetsList.get(slotTemplateAssetsList.size() - 1);
         assertThat(testSlotTemplateAssets.getCount()).isEqualTo(DEFAULT_COUNT);
-        assertThat(testSlotTemplateAssets.getType()).isEqualTo(DEFAULT_TYPE);
+        assertThat(testSlotTemplateAssets.getAssetType()).isEqualTo(DEFAULT_ASSET_TYPE);
     }
 
     @Test
@@ -156,7 +156,7 @@ public class SlotTemplateAssetsResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(slotTemplateAssets.getId().intValue())))
             .andExpect(jsonPath("$.[*].count").value(hasItem(DEFAULT_COUNT.intValue())))
-            .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE.intValue())));
+            .andExpect(jsonPath("$.[*].assetType").value(hasItem(DEFAULT_ASSET_TYPE.intValue())));
     }
     
     @Test
@@ -171,7 +171,7 @@ public class SlotTemplateAssetsResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(slotTemplateAssets.getId().intValue()))
             .andExpect(jsonPath("$.count").value(DEFAULT_COUNT.intValue()))
-            .andExpect(jsonPath("$.type").value(DEFAULT_TYPE.intValue()));
+            .andExpect(jsonPath("$.assetType").value(DEFAULT_ASSET_TYPE.intValue()));
     }
 
     @Test
@@ -196,7 +196,7 @@ public class SlotTemplateAssetsResourceIT {
         em.detach(updatedSlotTemplateAssets);
         updatedSlotTemplateAssets
             .count(UPDATED_COUNT)
-            .type(UPDATED_TYPE);
+            .assetType(UPDATED_ASSET_TYPE);
 
         restSlotTemplateAssetsMockMvc.perform(put("/api/slot-template-assets")
             .contentType(TestUtil.APPLICATION_JSON)
@@ -208,7 +208,7 @@ public class SlotTemplateAssetsResourceIT {
         assertThat(slotTemplateAssetsList).hasSize(databaseSizeBeforeUpdate);
         SlotTemplateAssets testSlotTemplateAssets = slotTemplateAssetsList.get(slotTemplateAssetsList.size() - 1);
         assertThat(testSlotTemplateAssets.getCount()).isEqualTo(UPDATED_COUNT);
-        assertThat(testSlotTemplateAssets.getType()).isEqualTo(UPDATED_TYPE);
+        assertThat(testSlotTemplateAssets.getAssetType()).isEqualTo(UPDATED_ASSET_TYPE);
     }
 
     @Test

@@ -36,8 +36,8 @@ public class SlotTemplateFacilitators implements Serializable {
     @Column(name = "count", precision = 21, scale = 2)
     private BigDecimal count;
 
-    @Column(name = "type", precision = 21, scale = 2)
-    private BigDecimal type;
+    @Column(name = "facilitator_type", precision = 21, scale = 2)
+    private BigDecimal facilitatorType;
 
     @ManyToOne
     @JsonIgnoreProperties("slotTemplateFacilitators")
@@ -65,17 +65,17 @@ public class SlotTemplateFacilitators implements Serializable {
         this.count = count;
     }
 
-    public BigDecimal getType() {
-        return type;
+    public BigDecimal getFacilitatorType() {
+        return facilitatorType;
     }
 
-    public SlotTemplateFacilitators type(BigDecimal type) {
-        this.type = type;
+    public SlotTemplateFacilitators facilitatorType(BigDecimal facilitatorType) {
+        this.facilitatorType = facilitatorType;
         return this;
     }
 
-    public void setType(BigDecimal type) {
-        this.type = type;
+    public void setFacilitatorType(BigDecimal facilitatorType) {
+        this.facilitatorType = facilitatorType;
     }
 
     public SlotTemplate getSlotTemp() {
@@ -113,7 +113,7 @@ public class SlotTemplateFacilitators implements Serializable {
         return "SlotTemplateFacilitators{" +
             "id=" + getId() +
             ", count=" + getCount() +
-            ", type=" + getType() +
+            ", facilitatorType=" + getFacilitatorType() +
             "}";
     }
 }

@@ -36,8 +36,8 @@ public class SlotTemplateAssets implements Serializable {
     @Column(name = "count", precision = 21, scale = 2)
     private BigDecimal count;
 
-    @Column(name = "type", precision = 21, scale = 2)
-    private BigDecimal type;
+    @Column(name = "asset_type", precision = 21, scale = 2)
+    private BigDecimal assetType;
 
     @ManyToOne
     @JsonIgnoreProperties("slotTemplateAssets")
@@ -65,17 +65,17 @@ public class SlotTemplateAssets implements Serializable {
         this.count = count;
     }
 
-    public BigDecimal getType() {
-        return type;
+    public BigDecimal getAssetType() {
+        return assetType;
     }
 
-    public SlotTemplateAssets type(BigDecimal type) {
-        this.type = type;
+    public SlotTemplateAssets assetType(BigDecimal assetType) {
+        this.assetType = assetType;
         return this;
     }
 
-    public void setType(BigDecimal type) {
-        this.type = type;
+    public void setAssetType(BigDecimal assetType) {
+        this.assetType = assetType;
     }
 
     public SlotTemplate getSlotTemp() {
@@ -113,7 +113,7 @@ public class SlotTemplateAssets implements Serializable {
         return "SlotTemplateAssets{" +
             "id=" + getId() +
             ", count=" + getCount() +
-            ", type=" + getType() +
+            ", assetType=" + getAssetType() +
             "}";
     }
 }

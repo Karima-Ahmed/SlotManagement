@@ -6,7 +6,7 @@
             "fieldType": "BigDecimal"
         },
         {
-            "fieldName": "type",
+            "fieldName": "facilitatorType",
             "fieldType": "BigDecimal"
         }
     ],
