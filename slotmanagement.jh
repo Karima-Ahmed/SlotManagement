@@ -12,7 +12,7 @@ entity SlotTemplate {
 
 entity SlotTemplateAssets {
 count BigDecimal,
-type BigDecimal
+assetType BigDecimal
 }
 
 relationship ManyToOne {
@@ -21,7 +21,7 @@ relationship ManyToOne {
 
 entity SlotTemplateFacilitators{
 count BigDecimal,
-type BigDecimal
+facilitatorType BigDecimal
 }
 
 relationship ManyToOne {
