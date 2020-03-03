@@ -4,6 +4,9 @@ import com.isoft.slot.managment.SlotManagementApp;
 import com.isoft.slot.managment.config.SecurityBeanOverrideConfiguration;
 import com.isoft.slot.managment.domain.SlotFacilitators;
 import com.isoft.slot.managment.repository.SlotFacilitatorsRepository;
+import com.isoft.slot.managment.service.SlotFacilitatorsService;
+import com.isoft.slot.managment.service.dto.SlotFacilitatorsDTO;
+import com.isoft.slot.managment.service.mapper.SlotFacilitatorsMapper;
 import com.isoft.slot.managment.web.rest.errors.ExceptionTranslator;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -42,6 +45,12 @@ public class SlotFacilitatorsResourceIT {
     private SlotFacilitatorsRepository slotFacilitatorsRepository;
 
     @Autowired
+    private SlotFacilitatorsMapper slotFacilitatorsMapper;
+
+    @Autowired
+    private SlotFacilitatorsService slotFacilitatorsService;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -63,7 +72,7 @@ public class SlotFacilitatorsResourceIT {
     @BeforeEach
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final SlotFacilitatorsResource slotFacilitatorsResource = new SlotFacilitatorsResource(slotFacilitatorsRepository);
+        final SlotFacilitatorsResource slotFacilitatorsResource = new SlotFacilitatorsResource(slotFacilitatorsService);
         this.restSlotFacilitatorsMockMvc = MockMvcBuilders.standaloneSetup(slotFacilitatorsResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -106,9 +115,10 @@ public class SlotFacilitatorsResourceIT {
         int databaseSizeBeforeCreate = slotFacilitatorsRepository.findAll().size();
 
         // Create the SlotFacilitators
+        SlotFacilitatorsDTO slotFacilitatorsDTO = slotFacilitatorsMapper.toDto(slotFacilitators);
         restSlotFacilitatorsMockMvc.perform(post("/api/slot-facilitators")
             .contentType(TestUtil.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(slotFacilitators)))
+            .content(TestUtil.convertObjectToJsonBytes(slotFacilitatorsDTO)))
             .andExpect(status().isCreated());
 
         // Validate the SlotFacilitators in the database
@@ -125,11 +135,12 @@ public class SlotFacilitatorsResourceIT {
 
         // Create the SlotFacilitators with an existing ID
         slotFacilitators.setId(1L);
+        SlotFacilitatorsDTO slotFacilitatorsDTO = slotFacilitatorsMapper.toDto(slotFacilitators);
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restSlotFacilitatorsMockMvc.perform(post("/api/slot-facilitators")
             .contentType(TestUtil.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(slotFacilitators)))
+            .content(TestUtil.convertObjectToJsonBytes(slotFacilitatorsDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the SlotFacilitators in the database
@@ -188,10 +199,11 @@ public class SlotFacilitatorsResourceIT {
         em.detach(updatedSlotFacilitators);
         updatedSlotFacilitators
             .userId(UPDATED_USER_ID);
+        SlotFacilitatorsDTO slotFacilitatorsDTO = slotFacilitatorsMapper.toDto(updatedSlotFacilitators);
 
         restSlotFacilitatorsMockMvc.perform(put("/api/slot-facilitators")
             .contentType(TestUtil.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(updatedSlotFacilitators)))
+            .content(TestUtil.convertObjectToJsonBytes(slotFacilitatorsDTO)))
             .andExpect(status().isOk());
 
         // Validate the SlotFacilitators in the database
@@ -207,11 +219,12 @@ public class SlotFacilitatorsResourceIT {
         int databaseSizeBeforeUpdate = slotFacilitatorsRepository.findAll().size();
 
         // Create the SlotFacilitators
+        SlotFacilitatorsDTO slotFacilitatorsDTO = slotFacilitatorsMapper.toDto(slotFacilitators);
 
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restSlotFacilitatorsMockMvc.perform(put("/api/slot-facilitators")
             .contentType(TestUtil.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(slotFacilitators)))
+            .content(TestUtil.convertObjectToJsonBytes(slotFacilitatorsDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the SlotFacilitators in the database

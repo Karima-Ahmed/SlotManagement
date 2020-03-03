@@ -4,6 +4,9 @@ import com.isoft.slot.managment.SlotManagementApp;
 import com.isoft.slot.managment.config.SecurityBeanOverrideConfiguration;
 import com.isoft.slot.managment.domain.Assets;
 import com.isoft.slot.managment.repository.AssetsRepository;
+import com.isoft.slot.managment.service.AssetsService;
+import com.isoft.slot.managment.service.dto.AssetsDTO;
+import com.isoft.slot.managment.service.mapper.AssetsMapper;
 import com.isoft.slot.managment.web.rest.errors.ExceptionTranslator;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -45,6 +48,12 @@ public class AssetsResourceIT {
     private AssetsRepository assetsRepository;
 
     @Autowired
+    private AssetsMapper assetsMapper;
+
+    @Autowired
+    private AssetsService assetsService;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -66,7 +75,7 @@ public class AssetsResourceIT {
     @BeforeEach
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final AssetsResource assetsResource = new AssetsResource(assetsRepository);
+        final AssetsResource assetsResource = new AssetsResource(assetsService);
         this.restAssetsMockMvc = MockMvcBuilders.standaloneSetup(assetsResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -111,9 +120,10 @@ public class AssetsResourceIT {
         int databaseSizeBeforeCreate = assetsRepository.findAll().size();
 
         // Create the Assets
+        AssetsDTO assetsDTO = assetsMapper.toDto(assets);
         restAssetsMockMvc.perform(post("/api/assets")
             .contentType(TestUtil.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(assets)))
+            .content(TestUtil.convertObjectToJsonBytes(assetsDTO)))
             .andExpect(status().isCreated());
 
         // Validate the Assets in the database
@@ -131,11 +141,12 @@ public class AssetsResourceIT {
 
         // Create the Assets with an existing ID
         assets.setId(1L);
+        AssetsDTO assetsDTO = assetsMapper.toDto(assets);
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restAssetsMockMvc.perform(post("/api/assets")
             .contentType(TestUtil.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(assets)))
+            .content(TestUtil.convertObjectToJsonBytes(assetsDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the Assets in the database
@@ -197,10 +208,11 @@ public class AssetsResourceIT {
         updatedAssets
             .type(UPDATED_TYPE)
             .centerId(UPDATED_CENTER_ID);
+        AssetsDTO assetsDTO = assetsMapper.toDto(updatedAssets);
 
         restAssetsMockMvc.perform(put("/api/assets")
             .contentType(TestUtil.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(updatedAssets)))
+            .content(TestUtil.convertObjectToJsonBytes(assetsDTO)))
             .andExpect(status().isOk());
 
         // Validate the Assets in the database
@@ -217,11 +229,12 @@ public class AssetsResourceIT {
         int databaseSizeBeforeUpdate = assetsRepository.findAll().size();
 
         // Create the Assets
+        AssetsDTO assetsDTO = assetsMapper.toDto(assets);
 
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restAssetsMockMvc.perform(put("/api/assets")
             .contentType(TestUtil.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(assets)))
+            .content(TestUtil.convertObjectToJsonBytes(assetsDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the Assets in the database

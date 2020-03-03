@@ -4,6 +4,9 @@ import com.isoft.slot.managment.SlotManagementApp;
 import com.isoft.slot.managment.config.SecurityBeanOverrideConfiguration;
 import com.isoft.slot.managment.domain.SlotReservationDetails;
 import com.isoft.slot.managment.repository.SlotReservationDetailsRepository;
+import com.isoft.slot.managment.service.SlotReservationDetailsService;
+import com.isoft.slot.managment.service.dto.SlotReservationDetailsDTO;
+import com.isoft.slot.managment.service.mapper.SlotReservationDetailsMapper;
 import com.isoft.slot.managment.web.rest.errors.ExceptionTranslator;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -56,6 +59,12 @@ public class SlotReservationDetailsResourceIT {
     private SlotReservationDetailsRepository slotReservationDetailsRepository;
 
     @Autowired
+    private SlotReservationDetailsMapper slotReservationDetailsMapper;
+
+    @Autowired
+    private SlotReservationDetailsService slotReservationDetailsService;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -77,7 +86,7 @@ public class SlotReservationDetailsResourceIT {
     @BeforeEach
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final SlotReservationDetailsResource slotReservationDetailsResource = new SlotReservationDetailsResource(slotReservationDetailsRepository);
+        final SlotReservationDetailsResource slotReservationDetailsResource = new SlotReservationDetailsResource(slotReservationDetailsService);
         this.restSlotReservationDetailsMockMvc = MockMvcBuilders.standaloneSetup(slotReservationDetailsResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -128,9 +137,10 @@ public class SlotReservationDetailsResourceIT {
         int databaseSizeBeforeCreate = slotReservationDetailsRepository.findAll().size();
 
         // Create the SlotReservationDetails
+        SlotReservationDetailsDTO slotReservationDetailsDTO = slotReservationDetailsMapper.toDto(slotReservationDetails);
         restSlotReservationDetailsMockMvc.perform(post("/api/slot-reservation-details")
             .contentType(TestUtil.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(slotReservationDetails)))
+            .content(TestUtil.convertObjectToJsonBytes(slotReservationDetailsDTO)))
             .andExpect(status().isCreated());
 
         // Validate the SlotReservationDetails in the database
@@ -151,11 +161,12 @@ public class SlotReservationDetailsResourceIT {
 
         // Create the SlotReservationDetails with an existing ID
         slotReservationDetails.setId(1L);
+        SlotReservationDetailsDTO slotReservationDetailsDTO = slotReservationDetailsMapper.toDto(slotReservationDetails);
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restSlotReservationDetailsMockMvc.perform(post("/api/slot-reservation-details")
             .contentType(TestUtil.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(slotReservationDetails)))
+            .content(TestUtil.convertObjectToJsonBytes(slotReservationDetailsDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the SlotReservationDetails in the database
@@ -226,10 +237,11 @@ public class SlotReservationDetailsResourceIT {
             .timeFrom(UPDATED_TIME_FROM)
             .timeTo(UPDATED_TIME_TO)
             .requestNo(UPDATED_REQUEST_NO);
+        SlotReservationDetailsDTO slotReservationDetailsDTO = slotReservationDetailsMapper.toDto(updatedSlotReservationDetails);
 
         restSlotReservationDetailsMockMvc.perform(put("/api/slot-reservation-details")
             .contentType(TestUtil.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(updatedSlotReservationDetails)))
+            .content(TestUtil.convertObjectToJsonBytes(slotReservationDetailsDTO)))
             .andExpect(status().isOk());
 
         // Validate the SlotReservationDetails in the database
@@ -249,11 +261,12 @@ public class SlotReservationDetailsResourceIT {
         int databaseSizeBeforeUpdate = slotReservationDetailsRepository.findAll().size();
 
         // Create the SlotReservationDetails
+        SlotReservationDetailsDTO slotReservationDetailsDTO = slotReservationDetailsMapper.toDto(slotReservationDetails);
 
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restSlotReservationDetailsMockMvc.perform(put("/api/slot-reservation-details")
             .contentType(TestUtil.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(slotReservationDetails)))
+            .content(TestUtil.convertObjectToJsonBytes(slotReservationDetailsDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the SlotReservationDetails in the database

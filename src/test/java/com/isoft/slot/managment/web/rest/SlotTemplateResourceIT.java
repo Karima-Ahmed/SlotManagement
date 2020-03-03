@@ -4,6 +4,9 @@ import com.isoft.slot.managment.SlotManagementApp;
 import com.isoft.slot.managment.config.SecurityBeanOverrideConfiguration;
 import com.isoft.slot.managment.domain.SlotTemplate;
 import com.isoft.slot.managment.repository.SlotTemplateRepository;
+import com.isoft.slot.managment.service.SlotTemplateService;
+import com.isoft.slot.managment.service.dto.SlotTemplateDTO;
+import com.isoft.slot.managment.service.mapper.SlotTemplateMapper;
 import com.isoft.slot.managment.web.rest.errors.ExceptionTranslator;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -68,6 +71,12 @@ public class SlotTemplateResourceIT {
     private SlotTemplateRepository slotTemplateRepository;
 
     @Autowired
+    private SlotTemplateMapper slotTemplateMapper;
+
+    @Autowired
+    private SlotTemplateService slotTemplateService;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -89,7 +98,7 @@ public class SlotTemplateResourceIT {
     @BeforeEach
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final SlotTemplateResource slotTemplateResource = new SlotTemplateResource(slotTemplateRepository);
+        final SlotTemplateResource slotTemplateResource = new SlotTemplateResource(slotTemplateService);
         this.restSlotTemplateMockMvc = MockMvcBuilders.standaloneSetup(slotTemplateResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -148,9 +157,10 @@ public class SlotTemplateResourceIT {
         int databaseSizeBeforeCreate = slotTemplateRepository.findAll().size();
 
         // Create the SlotTemplate
+        SlotTemplateDTO slotTemplateDTO = slotTemplateMapper.toDto(slotTemplate);
         restSlotTemplateMockMvc.perform(post("/api/slot-templates")
             .contentType(TestUtil.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(slotTemplate)))
+            .content(TestUtil.convertObjectToJsonBytes(slotTemplateDTO)))
             .andExpect(status().isCreated());
 
         // Validate the SlotTemplate in the database
@@ -175,11 +185,12 @@ public class SlotTemplateResourceIT {
 
         // Create the SlotTemplate with an existing ID
         slotTemplate.setId(1L);
+        SlotTemplateDTO slotTemplateDTO = slotTemplateMapper.toDto(slotTemplate);
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restSlotTemplateMockMvc.perform(post("/api/slot-templates")
             .contentType(TestUtil.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(slotTemplate)))
+            .content(TestUtil.convertObjectToJsonBytes(slotTemplateDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the SlotTemplate in the database
@@ -262,10 +273,11 @@ public class SlotTemplateResourceIT {
             .descEn(UPDATED_DESC_EN)
             .centerId(UPDATED_CENTER_ID)
             .status(UPDATED_STATUS);
+        SlotTemplateDTO slotTemplateDTO = slotTemplateMapper.toDto(updatedSlotTemplate);
 
         restSlotTemplateMockMvc.perform(put("/api/slot-templates")
             .contentType(TestUtil.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(updatedSlotTemplate)))
+            .content(TestUtil.convertObjectToJsonBytes(slotTemplateDTO)))
             .andExpect(status().isOk());
 
         // Validate the SlotTemplate in the database
@@ -289,11 +301,12 @@ public class SlotTemplateResourceIT {
         int databaseSizeBeforeUpdate = slotTemplateRepository.findAll().size();
 
         // Create the SlotTemplate
+        SlotTemplateDTO slotTemplateDTO = slotTemplateMapper.toDto(slotTemplate);
 
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restSlotTemplateMockMvc.perform(put("/api/slot-templates")
             .contentType(TestUtil.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(slotTemplate)))
+            .content(TestUtil.convertObjectToJsonBytes(slotTemplateDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the SlotTemplate in the database

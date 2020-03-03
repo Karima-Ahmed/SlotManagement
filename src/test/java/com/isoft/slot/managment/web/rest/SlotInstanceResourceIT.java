@@ -4,6 +4,9 @@ import com.isoft.slot.managment.SlotManagementApp;
 import com.isoft.slot.managment.config.SecurityBeanOverrideConfiguration;
 import com.isoft.slot.managment.domain.SlotInstance;
 import com.isoft.slot.managment.repository.SlotInstanceRepository;
+import com.isoft.slot.managment.service.SlotInstanceService;
+import com.isoft.slot.managment.service.dto.SlotInstanceDTO;
+import com.isoft.slot.managment.service.mapper.SlotInstanceMapper;
 import com.isoft.slot.managment.web.rest.errors.ExceptionTranslator;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -65,6 +68,12 @@ public class SlotInstanceResourceIT {
     private SlotInstanceRepository slotInstanceRepository;
 
     @Autowired
+    private SlotInstanceMapper slotInstanceMapper;
+
+    @Autowired
+    private SlotInstanceService slotInstanceService;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -86,7 +95,7 @@ public class SlotInstanceResourceIT {
     @BeforeEach
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final SlotInstanceResource slotInstanceResource = new SlotInstanceResource(slotInstanceRepository);
+        final SlotInstanceResource slotInstanceResource = new SlotInstanceResource(slotInstanceService);
         this.restSlotInstanceMockMvc = MockMvcBuilders.standaloneSetup(slotInstanceResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -143,9 +152,10 @@ public class SlotInstanceResourceIT {
         int databaseSizeBeforeCreate = slotInstanceRepository.findAll().size();
 
         // Create the SlotInstance
+        SlotInstanceDTO slotInstanceDTO = slotInstanceMapper.toDto(slotInstance);
         restSlotInstanceMockMvc.perform(post("/api/slot-instances")
             .contentType(TestUtil.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(slotInstance)))
+            .content(TestUtil.convertObjectToJsonBytes(slotInstanceDTO)))
             .andExpect(status().isCreated());
 
         // Validate the SlotInstance in the database
@@ -169,11 +179,12 @@ public class SlotInstanceResourceIT {
 
         // Create the SlotInstance with an existing ID
         slotInstance.setId(1L);
+        SlotInstanceDTO slotInstanceDTO = slotInstanceMapper.toDto(slotInstance);
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restSlotInstanceMockMvc.perform(post("/api/slot-instances")
             .contentType(TestUtil.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(slotInstance)))
+            .content(TestUtil.convertObjectToJsonBytes(slotInstanceDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the SlotInstance in the database
@@ -253,10 +264,11 @@ public class SlotInstanceResourceIT {
             .timeTo(UPDATED_TIME_TO)
             .centerId(UPDATED_CENTER_ID)
             .availableCapacity(UPDATED_AVAILABLE_CAPACITY);
+        SlotInstanceDTO slotInstanceDTO = slotInstanceMapper.toDto(updatedSlotInstance);
 
         restSlotInstanceMockMvc.perform(put("/api/slot-instances")
             .contentType(TestUtil.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(updatedSlotInstance)))
+            .content(TestUtil.convertObjectToJsonBytes(slotInstanceDTO)))
             .andExpect(status().isOk());
 
         // Validate the SlotInstance in the database
@@ -279,11 +291,12 @@ public class SlotInstanceResourceIT {
         int databaseSizeBeforeUpdate = slotInstanceRepository.findAll().size();
 
         // Create the SlotInstance
+        SlotInstanceDTO slotInstanceDTO = slotInstanceMapper.toDto(slotInstance);
 
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restSlotInstanceMockMvc.perform(put("/api/slot-instances")
             .contentType(TestUtil.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(slotInstance)))
+            .content(TestUtil.convertObjectToJsonBytes(slotInstanceDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the SlotInstance in the database

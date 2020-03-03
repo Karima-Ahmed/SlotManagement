@@ -4,6 +4,9 @@ import com.isoft.slot.managment.SlotManagementApp;
 import com.isoft.slot.managment.config.SecurityBeanOverrideConfiguration;
 import com.isoft.slot.managment.domain.SlotTemplateFacilitators;
 import com.isoft.slot.managment.repository.SlotTemplateFacilitatorsRepository;
+import com.isoft.slot.managment.service.SlotTemplateFacilitatorsService;
+import com.isoft.slot.managment.service.dto.SlotTemplateFacilitatorsDTO;
+import com.isoft.slot.managment.service.mapper.SlotTemplateFacilitatorsMapper;
 import com.isoft.slot.managment.web.rest.errors.ExceptionTranslator;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -45,6 +48,12 @@ public class SlotTemplateFacilitatorsResourceIT {
     private SlotTemplateFacilitatorsRepository slotTemplateFacilitatorsRepository;
 
     @Autowired
+    private SlotTemplateFacilitatorsMapper slotTemplateFacilitatorsMapper;
+
+    @Autowired
+    private SlotTemplateFacilitatorsService slotTemplateFacilitatorsService;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -66,7 +75,7 @@ public class SlotTemplateFacilitatorsResourceIT {
     @BeforeEach
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final SlotTemplateFacilitatorsResource slotTemplateFacilitatorsResource = new SlotTemplateFacilitatorsResource(slotTemplateFacilitatorsRepository);
+        final SlotTemplateFacilitatorsResource slotTemplateFacilitatorsResource = new SlotTemplateFacilitatorsResource(slotTemplateFacilitatorsService);
         this.restSlotTemplateFacilitatorsMockMvc = MockMvcBuilders.standaloneSetup(slotTemplateFacilitatorsResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -111,9 +120,10 @@ public class SlotTemplateFacilitatorsResourceIT {
         int databaseSizeBeforeCreate = slotTemplateFacilitatorsRepository.findAll().size();
 
         // Create the SlotTemplateFacilitators
+        SlotTemplateFacilitatorsDTO slotTemplateFacilitatorsDTO = slotTemplateFacilitatorsMapper.toDto(slotTemplateFacilitators);
         restSlotTemplateFacilitatorsMockMvc.perform(post("/api/slot-template-facilitators")
             .contentType(TestUtil.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(slotTemplateFacilitators)))
+            .content(TestUtil.convertObjectToJsonBytes(slotTemplateFacilitatorsDTO)))
             .andExpect(status().isCreated());
 
         // Validate the SlotTemplateFacilitators in the database
@@ -131,11 +141,12 @@ public class SlotTemplateFacilitatorsResourceIT {
 
         // Create the SlotTemplateFacilitators with an existing ID
         slotTemplateFacilitators.setId(1L);
+        SlotTemplateFacilitatorsDTO slotTemplateFacilitatorsDTO = slotTemplateFacilitatorsMapper.toDto(slotTemplateFacilitators);
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restSlotTemplateFacilitatorsMockMvc.perform(post("/api/slot-template-facilitators")
             .contentType(TestUtil.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(slotTemplateFacilitators)))
+            .content(TestUtil.convertObjectToJsonBytes(slotTemplateFacilitatorsDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the SlotTemplateFacilitators in the database
@@ -197,10 +208,11 @@ public class SlotTemplateFacilitatorsResourceIT {
         updatedSlotTemplateFacilitators
             .count(UPDATED_COUNT)
             .facilitatorType(UPDATED_FACILITATOR_TYPE);
+        SlotTemplateFacilitatorsDTO slotTemplateFacilitatorsDTO = slotTemplateFacilitatorsMapper.toDto(updatedSlotTemplateFacilitators);
 
         restSlotTemplateFacilitatorsMockMvc.perform(put("/api/slot-template-facilitators")
             .contentType(TestUtil.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(updatedSlotTemplateFacilitators)))
+            .content(TestUtil.convertObjectToJsonBytes(slotTemplateFacilitatorsDTO)))
             .andExpect(status().isOk());
 
         // Validate the SlotTemplateFacilitators in the database
@@ -217,11 +229,12 @@ public class SlotTemplateFacilitatorsResourceIT {
         int databaseSizeBeforeUpdate = slotTemplateFacilitatorsRepository.findAll().size();
 
         // Create the SlotTemplateFacilitators
+        SlotTemplateFacilitatorsDTO slotTemplateFacilitatorsDTO = slotTemplateFacilitatorsMapper.toDto(slotTemplateFacilitators);
 
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restSlotTemplateFacilitatorsMockMvc.perform(put("/api/slot-template-facilitators")
             .contentType(TestUtil.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(slotTemplateFacilitators)))
+            .content(TestUtil.convertObjectToJsonBytes(slotTemplateFacilitatorsDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the SlotTemplateFacilitators in the database
