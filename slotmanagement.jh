@@ -2,8 +2,8 @@ entity SlotTemplate {
     capacity BigDecimal,
     timeFrame BigDecimal,
     breakTime BigDecimal,
-    dayStartTime LocalDate,
-    dayEndTime   LocalDate,
+    dayStartTime LocalDateTime,
+    dayEndTime   LocalDateTime,
     descAr String,
     descEn String,
     centerId BigDecimal,
@@ -33,8 +33,8 @@ entity SlotInstance {
     descEn String,
     timeFrame BigDecimal,
     breakTime BigDecimal,
-    timeFrom LocalDate ,
-    timeTo LocalDate ,
+    timeFrom LocalDateTime,
+    timeTo LocalDateTime,
     centerId BigDecimal,
     availableCapacity BigDecimal
 }
@@ -67,8 +67,8 @@ relationship ManyToOne {
 entity SlotReservationDetails {
 	applicantId BigDecimal,
     status BigDecimal,
-    timeFrom LocalDate ,
-    timeTo LocalDate ,
+    timeFrom LocalDateTime,
+    timeTo LocalDateTime,
     requestNo BigDecimal
 }
 relationship ManyToOne {
@@ -78,3 +78,7 @@ relationship ManyToOne {
 relationship ManyToOne {
   SlotReservationDetails{slot} to SlotInstance
 }
+
+dto all with mapstruct
+
+service all with serviceClass
