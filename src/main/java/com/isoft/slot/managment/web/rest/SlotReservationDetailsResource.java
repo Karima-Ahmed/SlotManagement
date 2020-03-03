@@ -1,8 +1,8 @@
 package com.isoft.slot.managment.web.rest;
 
-import com.isoft.slot.managment.domain.SlotReservationDetails;
-import com.isoft.slot.managment.repository.SlotReservationDetailsRepository;
+import com.isoft.slot.managment.service.SlotReservationDetailsService;
 import com.isoft.slot.managment.web.rest.errors.BadRequestAlertException;
+import com.isoft.slot.managment.service.dto.SlotReservationDetailsDTO;
 
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -10,7 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -23,7 +22,6 @@ import java.util.Optional;
  */
 @RestController
 @RequestMapping("/api")
-@Transactional
 public class SlotReservationDetailsResource {
 
     private final Logger log = LoggerFactory.getLogger(SlotReservationDetailsResource.class);
@@ -33,26 +31,26 @@ public class SlotReservationDetailsResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
-    private final SlotReservationDetailsRepository slotReservationDetailsRepository;
+    private final SlotReservationDetailsService slotReservationDetailsService;
 
-    public SlotReservationDetailsResource(SlotReservationDetailsRepository slotReservationDetailsRepository) {
-        this.slotReservationDetailsRepository = slotReservationDetailsRepository;
+    public SlotReservationDetailsResource(SlotReservationDetailsService slotReservationDetailsService) {
+        this.slotReservationDetailsService = slotReservationDetailsService;
     }
 
     /**
      * {@code POST  /slot-reservation-details} : Create a new slotReservationDetails.
      *
-     * @param slotReservationDetails the slotReservationDetails to create.
-     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new slotReservationDetails, or with status {@code 400 (Bad Request)} if the slotReservationDetails has already an ID.
+     * @param slotReservationDetailsDTO the slotReservationDetailsDTO to create.
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new slotReservationDetailsDTO, or with status {@code 400 (Bad Request)} if the slotReservationDetails has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/slot-reservation-details")
-    public ResponseEntity<SlotReservationDetails> createSlotReservationDetails(@RequestBody SlotReservationDetails slotReservationDetails) throws URISyntaxException {
-        log.debug("REST request to save SlotReservationDetails : {}", slotReservationDetails);
-        if (slotReservationDetails.getId() != null) {
+    public ResponseEntity<SlotReservationDetailsDTO> createSlotReservationDetails(@RequestBody SlotReservationDetailsDTO slotReservationDetailsDTO) throws URISyntaxException {
+        log.debug("REST request to save SlotReservationDetails : {}", slotReservationDetailsDTO);
+        if (slotReservationDetailsDTO.getId() != null) {
             throw new BadRequestAlertException("A new slotReservationDetails cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        SlotReservationDetails result = slotReservationDetailsRepository.save(slotReservationDetails);
+        SlotReservationDetailsDTO result = slotReservationDetailsService.save(slotReservationDetailsDTO);
         return ResponseEntity.created(new URI("/api/slot-reservation-details/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -61,21 +59,21 @@ public class SlotReservationDetailsResource {
     /**
      * {@code PUT  /slot-reservation-details} : Updates an existing slotReservationDetails.
      *
-     * @param slotReservationDetails the slotReservationDetails to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated slotReservationDetails,
-     * or with status {@code 400 (Bad Request)} if the slotReservationDetails is not valid,
-     * or with status {@code 500 (Internal Server Error)} if the slotReservationDetails couldn't be updated.
+     * @param slotReservationDetailsDTO the slotReservationDetailsDTO to update.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated slotReservationDetailsDTO,
+     * or with status {@code 400 (Bad Request)} if the slotReservationDetailsDTO is not valid,
+     * or with status {@code 500 (Internal Server Error)} if the slotReservationDetailsDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/slot-reservation-details")
-    public ResponseEntity<SlotReservationDetails> updateSlotReservationDetails(@RequestBody SlotReservationDetails slotReservationDetails) throws URISyntaxException {
-        log.debug("REST request to update SlotReservationDetails : {}", slotReservationDetails);
-        if (slotReservationDetails.getId() == null) {
+    public ResponseEntity<SlotReservationDetailsDTO> updateSlotReservationDetails(@RequestBody SlotReservationDetailsDTO slotReservationDetailsDTO) throws URISyntaxException {
+        log.debug("REST request to update SlotReservationDetails : {}", slotReservationDetailsDTO);
+        if (slotReservationDetailsDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        SlotReservationDetails result = slotReservationDetailsRepository.save(slotReservationDetails);
+        SlotReservationDetailsDTO result = slotReservationDetailsService.save(slotReservationDetailsDTO);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, slotReservationDetails.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, slotReservationDetailsDTO.getId().toString()))
             .body(result);
     }
 
@@ -85,34 +83,34 @@ public class SlotReservationDetailsResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of slotReservationDetails in body.
      */
     @GetMapping("/slot-reservation-details")
-    public List<SlotReservationDetails> getAllSlotReservationDetails() {
+    public List<SlotReservationDetailsDTO> getAllSlotReservationDetails() {
         log.debug("REST request to get all SlotReservationDetails");
-        return slotReservationDetailsRepository.findAll();
+        return slotReservationDetailsService.findAll();
     }
 
     /**
      * {@code GET  /slot-reservation-details/:id} : get the "id" slotReservationDetails.
      *
-     * @param id the id of the slotReservationDetails to retrieve.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the slotReservationDetails, or with status {@code 404 (Not Found)}.
+     * @param id the id of the slotReservationDetailsDTO to retrieve.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the slotReservationDetailsDTO, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/slot-reservation-details/{id}")
-    public ResponseEntity<SlotReservationDetails> getSlotReservationDetails(@PathVariable Long id) {
+    public ResponseEntity<SlotReservationDetailsDTO> getSlotReservationDetails(@PathVariable Long id) {
         log.debug("REST request to get SlotReservationDetails : {}", id);
-        Optional<SlotReservationDetails> slotReservationDetails = slotReservationDetailsRepository.findById(id);
-        return ResponseUtil.wrapOrNotFound(slotReservationDetails);
+        Optional<SlotReservationDetailsDTO> slotReservationDetailsDTO = slotReservationDetailsService.findOne(id);
+        return ResponseUtil.wrapOrNotFound(slotReservationDetailsDTO);
     }
 
     /**
      * {@code DELETE  /slot-reservation-details/:id} : delete the "id" slotReservationDetails.
      *
-     * @param id the id of the slotReservationDetails to delete.
+     * @param id the id of the slotReservationDetailsDTO to delete.
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/slot-reservation-details/{id}")
     public ResponseEntity<Void> deleteSlotReservationDetails(@PathVariable Long id) {
         log.debug("REST request to delete SlotReservationDetails : {}", id);
-        slotReservationDetailsRepository.deleteById(id);
+        slotReservationDetailsService.delete(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
 }

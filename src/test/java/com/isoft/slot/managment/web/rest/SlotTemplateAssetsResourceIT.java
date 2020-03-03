@@ -4,6 +4,9 @@ import com.isoft.slot.managment.SlotManagementApp;
 import com.isoft.slot.managment.config.SecurityBeanOverrideConfiguration;
 import com.isoft.slot.managment.domain.SlotTemplateAssets;
 import com.isoft.slot.managment.repository.SlotTemplateAssetsRepository;
+import com.isoft.slot.managment.service.SlotTemplateAssetsService;
+import com.isoft.slot.managment.service.dto.SlotTemplateAssetsDTO;
+import com.isoft.slot.managment.service.mapper.SlotTemplateAssetsMapper;
 import com.isoft.slot.managment.web.rest.errors.ExceptionTranslator;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -45,6 +48,12 @@ public class SlotTemplateAssetsResourceIT {
     private SlotTemplateAssetsRepository slotTemplateAssetsRepository;
 
     @Autowired
+    private SlotTemplateAssetsMapper slotTemplateAssetsMapper;
+
+    @Autowired
+    private SlotTemplateAssetsService slotTemplateAssetsService;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -66,7 +75,7 @@ public class SlotTemplateAssetsResourceIT {
     @BeforeEach
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final SlotTemplateAssetsResource slotTemplateAssetsResource = new SlotTemplateAssetsResource(slotTemplateAssetsRepository);
+        final SlotTemplateAssetsResource slotTemplateAssetsResource = new SlotTemplateAssetsResource(slotTemplateAssetsService);
         this.restSlotTemplateAssetsMockMvc = MockMvcBuilders.standaloneSetup(slotTemplateAssetsResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -111,9 +120,10 @@ public class SlotTemplateAssetsResourceIT {
         int databaseSizeBeforeCreate = slotTemplateAssetsRepository.findAll().size();
 
         // Create the SlotTemplateAssets
+        SlotTemplateAssetsDTO slotTemplateAssetsDTO = slotTemplateAssetsMapper.toDto(slotTemplateAssets);
         restSlotTemplateAssetsMockMvc.perform(post("/api/slot-template-assets")
             .contentType(TestUtil.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(slotTemplateAssets)))
+            .content(TestUtil.convertObjectToJsonBytes(slotTemplateAssetsDTO)))
             .andExpect(status().isCreated());
 
         // Validate the SlotTemplateAssets in the database
@@ -131,11 +141,12 @@ public class SlotTemplateAssetsResourceIT {
 
         // Create the SlotTemplateAssets with an existing ID
         slotTemplateAssets.setId(1L);
+        SlotTemplateAssetsDTO slotTemplateAssetsDTO = slotTemplateAssetsMapper.toDto(slotTemplateAssets);
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restSlotTemplateAssetsMockMvc.perform(post("/api/slot-template-assets")
             .contentType(TestUtil.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(slotTemplateAssets)))
+            .content(TestUtil.convertObjectToJsonBytes(slotTemplateAssetsDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the SlotTemplateAssets in the database
@@ -197,10 +208,11 @@ public class SlotTemplateAssetsResourceIT {
         updatedSlotTemplateAssets
             .count(UPDATED_COUNT)
             .assetType(UPDATED_ASSET_TYPE);
+        SlotTemplateAssetsDTO slotTemplateAssetsDTO = slotTemplateAssetsMapper.toDto(updatedSlotTemplateAssets);
 
         restSlotTemplateAssetsMockMvc.perform(put("/api/slot-template-assets")
             .contentType(TestUtil.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(updatedSlotTemplateAssets)))
+            .content(TestUtil.convertObjectToJsonBytes(slotTemplateAssetsDTO)))
             .andExpect(status().isOk());
 
         // Validate the SlotTemplateAssets in the database
@@ -217,11 +229,12 @@ public class SlotTemplateAssetsResourceIT {
         int databaseSizeBeforeUpdate = slotTemplateAssetsRepository.findAll().size();
 
         // Create the SlotTemplateAssets
+        SlotTemplateAssetsDTO slotTemplateAssetsDTO = slotTemplateAssetsMapper.toDto(slotTemplateAssets);
 
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restSlotTemplateAssetsMockMvc.perform(put("/api/slot-template-assets")
             .contentType(TestUtil.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(slotTemplateAssets)))
+            .content(TestUtil.convertObjectToJsonBytes(slotTemplateAssetsDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the SlotTemplateAssets in the database
