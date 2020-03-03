@@ -1,8 +1,8 @@
 package com.isoft.slot.managment.web.rest;
 
-import com.isoft.slot.managment.domain.SlotFacilitators;
-import com.isoft.slot.managment.repository.SlotFacilitatorsRepository;
+import com.isoft.slot.managment.service.SlotFacilitatorsService;
 import com.isoft.slot.managment.web.rest.errors.BadRequestAlertException;
+import com.isoft.slot.managment.service.dto.SlotFacilitatorsDTO;
 
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -10,7 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -23,7 +22,6 @@ import java.util.Optional;
  */
 @RestController
 @RequestMapping("/api")
-@Transactional
 public class SlotFacilitatorsResource {
 
     private final Logger log = LoggerFactory.getLogger(SlotFacilitatorsResource.class);
@@ -33,26 +31,26 @@ public class SlotFacilitatorsResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
-    private final SlotFacilitatorsRepository slotFacilitatorsRepository;
+    private final SlotFacilitatorsService slotFacilitatorsService;
 
-    public SlotFacilitatorsResource(SlotFacilitatorsRepository slotFacilitatorsRepository) {
-        this.slotFacilitatorsRepository = slotFacilitatorsRepository;
+    public SlotFacilitatorsResource(SlotFacilitatorsService slotFacilitatorsService) {
+        this.slotFacilitatorsService = slotFacilitatorsService;
     }
 
     /**
      * {@code POST  /slot-facilitators} : Create a new slotFacilitators.
      *
-     * @param slotFacilitators the slotFacilitators to create.
-     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new slotFacilitators, or with status {@code 400 (Bad Request)} if the slotFacilitators has already an ID.
+     * @param slotFacilitatorsDTO the slotFacilitatorsDTO to create.
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new slotFacilitatorsDTO, or with status {@code 400 (Bad Request)} if the slotFacilitators has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/slot-facilitators")
-    public ResponseEntity<SlotFacilitators> createSlotFacilitators(@RequestBody SlotFacilitators slotFacilitators) throws URISyntaxException {
-        log.debug("REST request to save SlotFacilitators : {}", slotFacilitators);
-        if (slotFacilitators.getId() != null) {
+    public ResponseEntity<SlotFacilitatorsDTO> createSlotFacilitators(@RequestBody SlotFacilitatorsDTO slotFacilitatorsDTO) throws URISyntaxException {
+        log.debug("REST request to save SlotFacilitators : {}", slotFacilitatorsDTO);
+        if (slotFacilitatorsDTO.getId() != null) {
             throw new BadRequestAlertException("A new slotFacilitators cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        SlotFacilitators result = slotFacilitatorsRepository.save(slotFacilitators);
+        SlotFacilitatorsDTO result = slotFacilitatorsService.save(slotFacilitatorsDTO);
         return ResponseEntity.created(new URI("/api/slot-facilitators/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -61,21 +59,21 @@ public class SlotFacilitatorsResource {
     /**
      * {@code PUT  /slot-facilitators} : Updates an existing slotFacilitators.
      *
-     * @param slotFacilitators the slotFacilitators to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated slotFacilitators,
-     * or with status {@code 400 (Bad Request)} if the slotFacilitators is not valid,
-     * or with status {@code 500 (Internal Server Error)} if the slotFacilitators couldn't be updated.
+     * @param slotFacilitatorsDTO the slotFacilitatorsDTO to update.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated slotFacilitatorsDTO,
+     * or with status {@code 400 (Bad Request)} if the slotFacilitatorsDTO is not valid,
+     * or with status {@code 500 (Internal Server Error)} if the slotFacilitatorsDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/slot-facilitators")
-    public ResponseEntity<SlotFacilitators> updateSlotFacilitators(@RequestBody SlotFacilitators slotFacilitators) throws URISyntaxException {
-        log.debug("REST request to update SlotFacilitators : {}", slotFacilitators);
-        if (slotFacilitators.getId() == null) {
+    public ResponseEntity<SlotFacilitatorsDTO> updateSlotFacilitators(@RequestBody SlotFacilitatorsDTO slotFacilitatorsDTO) throws URISyntaxException {
+        log.debug("REST request to update SlotFacilitators : {}", slotFacilitatorsDTO);
+        if (slotFacilitatorsDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        SlotFacilitators result = slotFacilitatorsRepository.save(slotFacilitators);
+        SlotFacilitatorsDTO result = slotFacilitatorsService.save(slotFacilitatorsDTO);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, slotFacilitators.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, slotFacilitatorsDTO.getId().toString()))
             .body(result);
     }
 
@@ -85,34 +83,34 @@ public class SlotFacilitatorsResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of slotFacilitators in body.
      */
     @GetMapping("/slot-facilitators")
-    public List<SlotFacilitators> getAllSlotFacilitators() {
+    public List<SlotFacilitatorsDTO> getAllSlotFacilitators() {
         log.debug("REST request to get all SlotFacilitators");
-        return slotFacilitatorsRepository.findAll();
+        return slotFacilitatorsService.findAll();
     }
 
     /**
      * {@code GET  /slot-facilitators/:id} : get the "id" slotFacilitators.
      *
-     * @param id the id of the slotFacilitators to retrieve.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the slotFacilitators, or with status {@code 404 (Not Found)}.
+     * @param id the id of the slotFacilitatorsDTO to retrieve.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the slotFacilitatorsDTO, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/slot-facilitators/{id}")
-    public ResponseEntity<SlotFacilitators> getSlotFacilitators(@PathVariable Long id) {
+    public ResponseEntity<SlotFacilitatorsDTO> getSlotFacilitators(@PathVariable Long id) {
         log.debug("REST request to get SlotFacilitators : {}", id);
-        Optional<SlotFacilitators> slotFacilitators = slotFacilitatorsRepository.findById(id);
-        return ResponseUtil.wrapOrNotFound(slotFacilitators);
+        Optional<SlotFacilitatorsDTO> slotFacilitatorsDTO = slotFacilitatorsService.findOne(id);
+        return ResponseUtil.wrapOrNotFound(slotFacilitatorsDTO);
     }
 
     /**
      * {@code DELETE  /slot-facilitators/:id} : delete the "id" slotFacilitators.
      *
-     * @param id the id of the slotFacilitators to delete.
+     * @param id the id of the slotFacilitatorsDTO to delete.
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/slot-facilitators/{id}")
     public ResponseEntity<Void> deleteSlotFacilitators(@PathVariable Long id) {
         log.debug("REST request to delete SlotFacilitators : {}", id);
-        slotFacilitatorsRepository.deleteById(id);
+        slotFacilitatorsService.delete(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
 }

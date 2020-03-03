@@ -4,6 +4,9 @@ import com.isoft.slot.managment.SlotManagementApp;
 import com.isoft.slot.managment.config.SecurityBeanOverrideConfiguration;
 import com.isoft.slot.managment.domain.SlotAssets;
 import com.isoft.slot.managment.repository.SlotAssetsRepository;
+import com.isoft.slot.managment.service.SlotAssetsService;
+import com.isoft.slot.managment.service.dto.SlotAssetsDTO;
+import com.isoft.slot.managment.service.mapper.SlotAssetsMapper;
 import com.isoft.slot.managment.web.rest.errors.ExceptionTranslator;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -38,6 +41,12 @@ public class SlotAssetsResourceIT {
     private SlotAssetsRepository slotAssetsRepository;
 
     @Autowired
+    private SlotAssetsMapper slotAssetsMapper;
+
+    @Autowired
+    private SlotAssetsService slotAssetsService;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -59,7 +68,7 @@ public class SlotAssetsResourceIT {
     @BeforeEach
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final SlotAssetsResource slotAssetsResource = new SlotAssetsResource(slotAssetsRepository);
+        final SlotAssetsResource slotAssetsResource = new SlotAssetsResource(slotAssetsService);
         this.restSlotAssetsMockMvc = MockMvcBuilders.standaloneSetup(slotAssetsResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -100,9 +109,10 @@ public class SlotAssetsResourceIT {
         int databaseSizeBeforeCreate = slotAssetsRepository.findAll().size();
 
         // Create the SlotAssets
+        SlotAssetsDTO slotAssetsDTO = slotAssetsMapper.toDto(slotAssets);
         restSlotAssetsMockMvc.perform(post("/api/slot-assets")
             .contentType(TestUtil.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(slotAssets)))
+            .content(TestUtil.convertObjectToJsonBytes(slotAssetsDTO)))
             .andExpect(status().isCreated());
 
         // Validate the SlotAssets in the database
@@ -118,11 +128,12 @@ public class SlotAssetsResourceIT {
 
         // Create the SlotAssets with an existing ID
         slotAssets.setId(1L);
+        SlotAssetsDTO slotAssetsDTO = slotAssetsMapper.toDto(slotAssets);
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restSlotAssetsMockMvc.perform(post("/api/slot-assets")
             .contentType(TestUtil.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(slotAssets)))
+            .content(TestUtil.convertObjectToJsonBytes(slotAssetsDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the SlotAssets in the database
@@ -177,10 +188,11 @@ public class SlotAssetsResourceIT {
         SlotAssets updatedSlotAssets = slotAssetsRepository.findById(slotAssets.getId()).get();
         // Disconnect from session so that the updates on updatedSlotAssets are not directly saved in db
         em.detach(updatedSlotAssets);
+        SlotAssetsDTO slotAssetsDTO = slotAssetsMapper.toDto(updatedSlotAssets);
 
         restSlotAssetsMockMvc.perform(put("/api/slot-assets")
             .contentType(TestUtil.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(updatedSlotAssets)))
+            .content(TestUtil.convertObjectToJsonBytes(slotAssetsDTO)))
             .andExpect(status().isOk());
 
         // Validate the SlotAssets in the database
@@ -195,11 +207,12 @@ public class SlotAssetsResourceIT {
         int databaseSizeBeforeUpdate = slotAssetsRepository.findAll().size();
 
         // Create the SlotAssets
+        SlotAssetsDTO slotAssetsDTO = slotAssetsMapper.toDto(slotAssets);
 
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restSlotAssetsMockMvc.perform(put("/api/slot-assets")
             .contentType(TestUtil.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(slotAssets)))
+            .content(TestUtil.convertObjectToJsonBytes(slotAssetsDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the SlotAssets in the database
