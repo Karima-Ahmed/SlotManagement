@@ -15,8 +15,8 @@ public interface SlotAssetsMapper extends EntityMapper<SlotAssetsDTO, SlotAssets
     @Mapping(source = "slotInstance.id", target = "slotInstanceId")
     SlotAssetsDTO toDto(SlotAssets slotAssets);
 
-    @Mapping(target = "slotAssets", ignore = true)
-    @Mapping(target = "removeSlotAssets", ignore = true)
+    @Mapping(target = "assets", ignore = true)
+    @Mapping(target = "removeAssets", ignore = true)
     @Mapping(source = "slotInstanceId", target = "slotInstance")
     SlotAssets toEntity(SlotAssetsDTO slotAssetsDTO);
 
