@@ -31,7 +31,7 @@ public class Assets implements Serializable {
     private BigDecimal assetRefId;
 
     @ManyToOne
-    @JsonIgnoreProperties("slotAssets")
+    @JsonIgnoreProperties("assets")
     private SlotAssets slotAssets;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove

@@ -6,7 +6,7 @@
             "relationshipType": "one-to-many",
             "otherEntityName": "assets",
             "otherEntityRelationshipName": "slotAssets",
-            "relationshipName": "slotAssets"
+            "relationshipName": "assets"
         },
         {
             "relationshipType": "many-to-one",

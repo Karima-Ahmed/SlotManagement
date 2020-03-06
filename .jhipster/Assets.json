@@ -18,7 +18,7 @@
         {
             "relationshipType": "many-to-one",
             "otherEntityName": "slotAssets",
-            "otherEntityRelationshipName": "slotAssets",
+            "otherEntityRelationshipName": "assets",
             "relationshipName": "slotAssets",
             "otherEntityField": "id"
         }

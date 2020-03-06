@@ -23,7 +23,7 @@ public class SlotAssets implements Serializable {
     private Long id;
 
     @OneToMany(mappedBy = "slotAssets")
-    private Set<Assets> slotAssets = new HashSet<>();
+    private Set<Assets> assets = new HashSet<>();
 
     @ManyToOne
     @JsonIgnoreProperties("slotAssets")
@@ -38,29 +38,29 @@ public class SlotAssets implements Serializable {
         this.id = id;
     }
 
-    public Set<Assets> getSlotAssets() {
-        return slotAssets;
+    public Set<Assets> getAssets() {
+        return assets;
     }
 
-    public SlotAssets slotAssets(Set<Assets> assets) {
-        this.slotAssets = assets;
+    public SlotAssets assets(Set<Assets> assets) {
+        this.assets = assets;
         return this;
     }
 
-    public SlotAssets addSlotAssets(Assets assets) {
-        this.slotAssets.add(assets);
+    public SlotAssets addAssets(Assets assets) {
+        this.assets.add(assets);
         assets.setSlotAssets(this);
         return this;
     }
 
-    public SlotAssets removeSlotAssets(Assets assets) {
-        this.slotAssets.remove(assets);
+    public SlotAssets removeAssets(Assets assets) {
+        this.assets.remove(assets);
         assets.setSlotAssets(null);
         return this;
     }
 
-    public void setSlotAssets(Set<Assets> assets) {
-        this.slotAssets = assets;
+    public void setAssets(Set<Assets> assets) {
+        this.assets = assets;
     }
 
     public SlotInstance getSlotInstance() {
