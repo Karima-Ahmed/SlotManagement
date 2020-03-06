@@ -62,7 +62,7 @@ assetRefId BigDecimal
 }
 
 relationship OneToMany {
- SlotAssets {slotAssets} to Assets
+ SlotAssets {assets} to Assets
 }
 
 entity SlotReservationDetails {
