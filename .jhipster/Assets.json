@@ -8,14 +8,18 @@
         {
             "fieldName": "centerId",
             "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "assetRefId",
+            "fieldType": "BigDecimal"
         }
     ],
     "relationships": [
         {
             "relationshipType": "many-to-one",
             "otherEntityName": "slotAssets",
-            "otherEntityRelationshipName": "assets",
-            "relationshipName": "slotAsset",
+            "otherEntityRelationshipName": "slotAssets",
+            "relationshipName": "slotAssets",
             "otherEntityField": "id"
         }
     ],

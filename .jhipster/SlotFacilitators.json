@@ -11,7 +11,7 @@
             "relationshipType": "many-to-one",
             "otherEntityName": "slotInstance",
             "otherEntityRelationshipName": "slotFacilitators",
-            "relationshipName": "slot",
+            "relationshipName": "slotInstance",
             "otherEntityField": "id"
         }
     ],

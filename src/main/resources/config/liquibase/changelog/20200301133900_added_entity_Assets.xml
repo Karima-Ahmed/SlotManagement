@@ -21,7 +21,10 @@
             <column name="center_id" type="decimal(21,2)">
                 <constraints nullable="true" />
             </column>
-            <column name="slot_asset_id" type="bigint">
+            <column name="asset_ref_id" type="decimal(21,2)">
+                <constraints nullable="true" />
+            </column>
+            <column name="slot_assets_id" type="bigint">
                 <constraints nullable="true" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
@@ -49,6 +52,7 @@
             <column name="id" type="numeric"/>
             <column name="type" type="numeric"/>
             <column name="center_id" type="numeric"/>
+            <column name="asset_ref_id" type="numeric"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here, do not remove-->
         </loadData>
     </changeSet>

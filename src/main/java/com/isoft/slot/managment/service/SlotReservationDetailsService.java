@@ -1,8 +1,6 @@
 package com.isoft.slot.managment.service;
 
-import com.isoft.slot.managment.domain.SlotInstance;
 import com.isoft.slot.managment.domain.SlotReservationDetails;
-import com.isoft.slot.managment.repository.SlotInstanceRepository;
 import com.isoft.slot.managment.repository.SlotReservationDetailsRepository;
 import com.isoft.slot.managment.service.dto.SlotReservationDetailsDTO;
 import com.isoft.slot.managment.service.mapper.SlotReservationDetailsMapper;
@@ -12,7 +10,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -84,12 +81,4 @@ public class SlotReservationDetailsService {
         log.debug("Request to delete SlotReservationDetails : {}", id);
         slotReservationDetailsRepository.deleteById(id);
     }
-
-    public Optional<SlotReservationDetailsDTO> findByIdAndApplicantId(Long id, BigDecimal applicantId){
-        log.debug("Request to get SlotReservationDetails : {}", id);
-        return slotReservationDetailsRepository.findByIdAndApplicantId(id, applicantId)
-            .map(slotReservationDetailsMapper::toDto);
-    }
-
-
 }

@@ -12,13 +12,13 @@ import java.math.BigDecimal;
  */
 @Entity
 @Table(name = "assets")
-public class Assets extends AbstractAuditingEntity implements Serializable {
+public class Assets implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "assets_s")
-    @SequenceGenerator(name = "assets_s")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
+    @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
 
     @Column(name = "type", precision = 21, scale = 2)
@@ -27,9 +27,12 @@ public class Assets extends AbstractAuditingEntity implements Serializable {
     @Column(name = "center_id", precision = 21, scale = 2)
     private BigDecimal centerId;
 
+    @Column(name = "asset_ref_id", precision = 21, scale = 2)
+    private BigDecimal assetRefId;
+
     @ManyToOne
-    @JsonIgnoreProperties("assets")
-    private SlotAssets slotAsset;
+    @JsonIgnoreProperties("slotAssets")
+    private SlotAssets slotAssets;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -66,17 +69,30 @@ public class Assets extends AbstractAuditingEntity implements Serializable {
         this.centerId = centerId;
     }
 
-    public SlotAssets getSlotAsset() {
-        return slotAsset;
+    public BigDecimal getAssetRefId() {
+        return assetRefId;
     }
 
-    public Assets slotAsset(SlotAssets slotAssets) {
-        this.slotAsset = slotAssets;
+    public Assets assetRefId(BigDecimal assetRefId) {
+        this.assetRefId = assetRefId;
         return this;
     }
 
-    public void setSlotAsset(SlotAssets slotAssets) {
-        this.slotAsset = slotAssets;
+    public void setAssetRefId(BigDecimal assetRefId) {
+        this.assetRefId = assetRefId;
+    }
+
+    public SlotAssets getSlotAssets() {
+        return slotAssets;
+    }
+
+    public Assets slotAssets(SlotAssets slotAssets) {
+        this.slotAssets = slotAssets;
+        return this;
+    }
+
+    public void setSlotAssets(SlotAssets slotAssets) {
+        this.slotAssets = slotAssets;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
@@ -102,6 +118,7 @@ public class Assets extends AbstractAuditingEntity implements Serializable {
             "id=" + getId() +
             ", type=" + getType() +
             ", centerId=" + getCenterId() +
+            ", assetRefId=" + getAssetRefId() +
             "}";
     }
 }

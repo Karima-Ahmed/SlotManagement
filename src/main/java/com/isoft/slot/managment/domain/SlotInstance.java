@@ -6,21 +6,22 @@ import javax.persistence.*;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.List;
+import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * A SlotInstance.
  */
 @Entity
 @Table(name = "slot_instance")
-public class SlotInstance extends AbstractAuditingEntity implements Serializable {
+public class SlotInstance implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "slot_instance_s")
-    @SequenceGenerator(name = "slot_instance_s")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
+    @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
 
     @Column(name = "desc_ar")
@@ -36,10 +37,10 @@ public class SlotInstance extends AbstractAuditingEntity implements Serializable
     private BigDecimal breakTime;
 
     @Column(name = "time_from")
-    private LocalDateTime timeFrom;
+    private LocalDate timeFrom;
 
     @Column(name = "time_to")
-    private LocalDateTime timeTo;
+    private LocalDate timeTo;
 
     @Column(name = "center_id", precision = 21, scale = 2)
     private BigDecimal centerId;
@@ -47,17 +48,18 @@ public class SlotInstance extends AbstractAuditingEntity implements Serializable
     @Column(name = "available_capacity", precision = 21, scale = 2)
     private BigDecimal availableCapacity;
 
+    @OneToMany(mappedBy = "slotInstance")
+    private Set<SlotFacilitators> slotFacilitators = new HashSet<>();
+
+    @OneToMany(mappedBy = "slotInstance")
+    private Set<SlotAssets> slotAssets = new HashSet<>();
+
+    @OneToMany(mappedBy = "slotInstance")
+    private Set<SlotReservationDetails> slotReservations = new HashSet<>();
+
     @ManyToOne
     @JsonIgnoreProperties("slotInstances")
-    private SlotTemplate temp;
-
-    @OneToMany(mappedBy = "slot")
-    @JsonIgnoreProperties("slotAssets")
-    private List<SlotAssets> slotAssets;
-
-    @OneToMany(mappedBy = "slot")
-    @JsonIgnoreProperties("slotFacilitators")
-    private List<SlotFacilitators> slotFacilitators;
+    private SlotTemplate slotTemplate;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -120,29 +122,29 @@ public class SlotInstance extends AbstractAuditingEntity implements Serializable
         this.breakTime = breakTime;
     }
 
-    public LocalDateTime getTimeFrom() {
+    public LocalDate getTimeFrom() {
         return timeFrom;
     }
 
-    public SlotInstance timeFrom(LocalDateTime timeFrom) {
+    public SlotInstance timeFrom(LocalDate timeFrom) {
         this.timeFrom = timeFrom;
         return this;
     }
 
-    public void setTimeFrom(LocalDateTime timeFrom) {
+    public void setTimeFrom(LocalDate timeFrom) {
         this.timeFrom = timeFrom;
     }
 
-    public LocalDateTime getTimeTo() {
+    public LocalDate getTimeTo() {
         return timeTo;
     }
 
-    public SlotInstance timeTo(LocalDateTime timeTo) {
+    public SlotInstance timeTo(LocalDate timeTo) {
         this.timeTo = timeTo;
         return this;
     }
 
-    public void setTimeTo(LocalDateTime timeTo) {
+    public void setTimeTo(LocalDate timeTo) {
         this.timeTo = timeTo;
     }
 
@@ -172,35 +174,94 @@ public class SlotInstance extends AbstractAuditingEntity implements Serializable
         this.availableCapacity = availableCapacity;
     }
 
-    public SlotTemplate getTemp() {
-        return temp;
-    }
-
-    public SlotInstance temp(SlotTemplate slotTemplate) {
-        this.temp = slotTemplate;
-        return this;
-    }
-
-    public void setTemp(SlotTemplate slotTemplate) {
-        this.temp = slotTemplate;
-    }
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
-
-    public List<SlotAssets> getSlotAssets() {
-        return slotAssets;
-    }
-
-    public void setSlotAssets(List<SlotAssets> slotAssets) {
-        this.slotAssets = slotAssets;
-    }
-
-    public List<SlotFacilitators> getSlotFacilitators() {
+    public Set<SlotFacilitators> getSlotFacilitators() {
         return slotFacilitators;
     }
 
-    public void setSlotFacilitators(List<SlotFacilitators> slotFacilitators) {
+    public SlotInstance slotFacilitators(Set<SlotFacilitators> slotFacilitators) {
+        this.slotFacilitators = slotFacilitators;
+        return this;
+    }
+
+    public SlotInstance addSlotFacilitators(SlotFacilitators slotFacilitators) {
+        this.slotFacilitators.add(slotFacilitators);
+        slotFacilitators.setSlotInstance(this);
+        return this;
+    }
+
+    public SlotInstance removeSlotFacilitators(SlotFacilitators slotFacilitators) {
+        this.slotFacilitators.remove(slotFacilitators);
+        slotFacilitators.setSlotInstance(null);
+        return this;
+    }
+
+    public void setSlotFacilitators(Set<SlotFacilitators> slotFacilitators) {
         this.slotFacilitators = slotFacilitators;
     }
+
+    public Set<SlotAssets> getSlotAssets() {
+        return slotAssets;
+    }
+
+    public SlotInstance slotAssets(Set<SlotAssets> slotAssets) {
+        this.slotAssets = slotAssets;
+        return this;
+    }
+
+    public SlotInstance addSlotAssets(SlotAssets slotAssets) {
+        this.slotAssets.add(slotAssets);
+        slotAssets.setSlotInstance(this);
+        return this;
+    }
+
+    public SlotInstance removeSlotAssets(SlotAssets slotAssets) {
+        this.slotAssets.remove(slotAssets);
+        slotAssets.setSlotInstance(null);
+        return this;
+    }
+
+    public void setSlotAssets(Set<SlotAssets> slotAssets) {
+        this.slotAssets = slotAssets;
+    }
+
+    public Set<SlotReservationDetails> getSlotReservations() {
+        return slotReservations;
+    }
+
+    public SlotInstance slotReservations(Set<SlotReservationDetails> slotReservationDetails) {
+        this.slotReservations = slotReservationDetails;
+        return this;
+    }
+
+    public SlotInstance addSlotReservations(SlotReservationDetails slotReservationDetails) {
+        this.slotReservations.add(slotReservationDetails);
+        slotReservationDetails.setSlotInstance(this);
+        return this;
+    }
+
+    public SlotInstance removeSlotReservations(SlotReservationDetails slotReservationDetails) {
+        this.slotReservations.remove(slotReservationDetails);
+        slotReservationDetails.setSlotInstance(null);
+        return this;
+    }
+
+    public void setSlotReservations(Set<SlotReservationDetails> slotReservationDetails) {
+        this.slotReservations = slotReservationDetails;
+    }
+
+    public SlotTemplate getSlotTemplate() {
+        return slotTemplate;
+    }
+
+    public SlotInstance slotTemplate(SlotTemplate slotTemplate) {
+        this.slotTemplate = slotTemplate;
+        return this;
+    }
+
+    public void setSlotTemplate(SlotTemplate slotTemplate) {
+        this.slotTemplate = slotTemplate;
+    }
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
     public boolean equals(Object o) {

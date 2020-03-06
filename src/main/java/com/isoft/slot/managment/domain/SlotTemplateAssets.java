@@ -12,25 +12,13 @@ import java.math.BigDecimal;
  */
 @Entity
 @Table(name = "slot_template_assets")
-public class SlotTemplateAssets extends AbstractAuditingEntity implements Serializable {
+public class SlotTemplateAssets implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    public enum AssetType{
-        CAR(new BigDecimal(1)),
-        COMPUTER(new BigDecimal(2)),
-        LECTURE(new BigDecimal(3));
-
-        public static final String DOMAIN_CODE = "AssetType";
-
-        private BigDecimal value;
-        AssetType(BigDecimal value) {this.value = value;}
-        public BigDecimal getValue() {return value;}
-    }
-
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "slot_template_assets_s")
-    @SequenceGenerator(name = "slot_template_assets_s")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
+    @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
 
     @Column(name = "count", precision = 21, scale = 2)
@@ -40,8 +28,8 @@ public class SlotTemplateAssets extends AbstractAuditingEntity implements Serial
     private BigDecimal assetType;
 
     @ManyToOne
-    @JsonIgnoreProperties("slotTemplateAssets")
-    private SlotTemplate slotTemp;
+    @JsonIgnoreProperties("tempAssets")
+    private SlotTemplate slotTemplate;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -78,17 +66,17 @@ public class SlotTemplateAssets extends AbstractAuditingEntity implements Serial
         this.assetType = assetType;
     }
 
-    public SlotTemplate getSlotTemp() {
-        return slotTemp;
+    public SlotTemplate getSlotTemplate() {
+        return slotTemplate;
     }
 
-    public SlotTemplateAssets slotTemp(SlotTemplate slotTemplate) {
-        this.slotTemp = slotTemplate;
+    public SlotTemplateAssets slotTemplate(SlotTemplate slotTemplate) {
+        this.slotTemplate = slotTemplate;
         return this;
     }
 
-    public void setSlotTemp(SlotTemplate slotTemplate) {
-        this.slotTemp = slotTemplate;
+    public void setSlotTemplate(SlotTemplate slotTemplate) {
+        this.slotTemplate = slotTemplate;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

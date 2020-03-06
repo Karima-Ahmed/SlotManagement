@@ -5,30 +5,22 @@ import javax.persistence.*;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * A SlotTemplate.
  */
 @Entity
 @Table(name = "slot_template")
-public class SlotTemplate extends AbstractAuditingEntity implements Serializable {
+public class SlotTemplate implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    public enum slotTempStatus{
-        Active(new BigDecimal(1)),
-        INACTIVE(new BigDecimal(2));
-
-        public static final String DOMAIN_CODE = "slotTempStatus";
-
-        private BigDecimal value;
-        slotTempStatus(BigDecimal value) {this.value = value;}
-        public BigDecimal getValue() {return value;}
-    }
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "slot_template_s")
-    @SequenceGenerator(name = "slot_template_s")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
+    @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
 
     @Column(name = "capacity", precision = 21, scale = 2)
@@ -41,10 +33,10 @@ public class SlotTemplate extends AbstractAuditingEntity implements Serializable
     private BigDecimal breakTime;
 
     @Column(name = "day_start_time")
-    private LocalDateTime dayStartTime;
+    private LocalDate dayStartTime;
 
     @Column(name = "day_end_time")
-    private LocalDateTime dayEndTime;
+    private LocalDate dayEndTime;
 
     @Column(name = "desc_ar")
     private String descAr;
@@ -57,6 +49,15 @@ public class SlotTemplate extends AbstractAuditingEntity implements Serializable
 
     @Column(name = "status", precision = 21, scale = 2)
     private BigDecimal status;
+
+    @OneToMany(mappedBy = "slotTemplate")
+    private Set<SlotTemplateAssets> tempAssets = new HashSet<>();
+
+    @OneToMany(mappedBy = "slotTemplate")
+    private Set<SlotTemplateFacilitators> tempFacilitators = new HashSet<>();
+
+    @OneToMany(mappedBy = "slotTemplate")
+    private Set<SlotInstance> slotInstances = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -106,29 +107,29 @@ public class SlotTemplate extends AbstractAuditingEntity implements Serializable
         this.breakTime = breakTime;
     }
 
-    public LocalDateTime getDayStartTime() {
+    public LocalDate getDayStartTime() {
         return dayStartTime;
     }
 
-    public SlotTemplate dayStartTime(LocalDateTime dayStartTime) {
+    public SlotTemplate dayStartTime(LocalDate dayStartTime) {
         this.dayStartTime = dayStartTime;
         return this;
     }
 
-    public void setDayStartTime(LocalDateTime dayStartTime) {
+    public void setDayStartTime(LocalDate dayStartTime) {
         this.dayStartTime = dayStartTime;
     }
 
-    public LocalDateTime getDayEndTime() {
+    public LocalDate getDayEndTime() {
         return dayEndTime;
     }
 
-    public SlotTemplate dayEndTime(LocalDateTime dayEndTime) {
+    public SlotTemplate dayEndTime(LocalDate dayEndTime) {
         this.dayEndTime = dayEndTime;
         return this;
     }
 
-    public void setDayEndTime(LocalDateTime dayEndTime) {
+    public void setDayEndTime(LocalDate dayEndTime) {
         this.dayEndTime = dayEndTime;
     }
 
@@ -182,6 +183,81 @@ public class SlotTemplate extends AbstractAuditingEntity implements Serializable
 
     public void setStatus(BigDecimal status) {
         this.status = status;
+    }
+
+    public Set<SlotTemplateAssets> getTempAssets() {
+        return tempAssets;
+    }
+
+    public SlotTemplate tempAssets(Set<SlotTemplateAssets> slotTemplateAssets) {
+        this.tempAssets = slotTemplateAssets;
+        return this;
+    }
+
+    public SlotTemplate addTempAssets(SlotTemplateAssets slotTemplateAssets) {
+        this.tempAssets.add(slotTemplateAssets);
+        slotTemplateAssets.setSlotTemplate(this);
+        return this;
+    }
+
+    public SlotTemplate removeTempAssets(SlotTemplateAssets slotTemplateAssets) {
+        this.tempAssets.remove(slotTemplateAssets);
+        slotTemplateAssets.setSlotTemplate(null);
+        return this;
+    }
+
+    public void setTempAssets(Set<SlotTemplateAssets> slotTemplateAssets) {
+        this.tempAssets = slotTemplateAssets;
+    }
+
+    public Set<SlotTemplateFacilitators> getTempFacilitators() {
+        return tempFacilitators;
+    }
+
+    public SlotTemplate tempFacilitators(Set<SlotTemplateFacilitators> slotTemplateFacilitators) {
+        this.tempFacilitators = slotTemplateFacilitators;
+        return this;
+    }
+
+    public SlotTemplate addTempFacilitators(SlotTemplateFacilitators slotTemplateFacilitators) {
+        this.tempFacilitators.add(slotTemplateFacilitators);
+        slotTemplateFacilitators.setSlotTemplate(this);
+        return this;
+    }
+
+    public SlotTemplate removeTempFacilitators(SlotTemplateFacilitators slotTemplateFacilitators) {
+        this.tempFacilitators.remove(slotTemplateFacilitators);
+        slotTemplateFacilitators.setSlotTemplate(null);
+        return this;
+    }
+
+    public void setTempFacilitators(Set<SlotTemplateFacilitators> slotTemplateFacilitators) {
+        this.tempFacilitators = slotTemplateFacilitators;
+    }
+
+    public Set<SlotInstance> getSlotInstances() {
+        return slotInstances;
+    }
+
+    public SlotTemplate slotInstances(Set<SlotInstance> slotInstances) {
+        this.slotInstances = slotInstances;
+        return this;
+    }
+
+    public SlotTemplate addSlotInstances(SlotInstance slotInstance) {
+        this.slotInstances.add(slotInstance);
+        slotInstance.setSlotTemplate(this);
+        return this;
+    }
+
+    public SlotTemplate removeSlotInstances(SlotInstance slotInstance) {
+        this.slotInstances.remove(slotInstance);
+        slotInstance.setSlotTemplate(null);
+        return this;
+    }
+
+    public void setSlotInstances(Set<SlotInstance> slotInstances) {
+        this.slotInstances = slotInstances;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

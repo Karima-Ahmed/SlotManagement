@@ -15,11 +15,11 @@
         },
         {
             "fieldName": "dayStartTime",
-            "fieldType": "LocalDateTime"
+            "fieldType": "LocalDate"
         },
         {
             "fieldName": "dayEndTime",
-            "fieldType": "LocalDateTime"
+            "fieldType": "LocalDate"
         },
         {
             "fieldName": "descAr",
@@ -38,7 +38,26 @@
             "fieldType": "BigDecimal"
         }
     ],
-    "relationships": [],
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "slotTemplateAssets",
+            "otherEntityRelationshipName": "slotTemplate",
+            "relationshipName": "tempAssets"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "slotTemplateFacilitators",
+            "otherEntityRelationshipName": "slotTemplate",
+            "relationshipName": "tempFacilitators"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "slotInstance",
+            "otherEntityRelationshipName": "slotTemplate",
+            "relationshipName": "slotInstances"
+        }
+    ],
     "changelogDate": "20200227080400",
     "entityTableName": "slot_template",
     "dto": "mapstruct",

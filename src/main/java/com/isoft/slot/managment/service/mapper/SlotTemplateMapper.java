@@ -13,6 +13,13 @@ import org.mapstruct.*;
 public interface SlotTemplateMapper extends EntityMapper<SlotTemplateDTO, SlotTemplate> {
 
 
+    @Mapping(target = "tempAssets", ignore = true)
+    @Mapping(target = "removeTempAssets", ignore = true)
+    @Mapping(target = "tempFacilitators", ignore = true)
+    @Mapping(target = "removeTempFacilitators", ignore = true)
+    @Mapping(target = "slotInstances", ignore = true)
+    @Mapping(target = "removeSlotInstances", ignore = true)
+    SlotTemplate toEntity(SlotTemplateDTO slotTemplateDTO);
 
     default SlotTemplate fromId(Long id) {
         if (id == null) {

@@ -15,8 +15,10 @@ public class AssetsDTO implements Serializable {
 
     private BigDecimal centerId;
 
+    private BigDecimal assetRefId;
 
-    private Long slotAssetId;
+
+    private Long slotAssetsId;
 
     public Long getId() {
         return id;
@@ -42,12 +44,20 @@ public class AssetsDTO implements Serializable {
         this.centerId = centerId;
     }
 
-    public Long getSlotAssetId() {
-        return slotAssetId;
+    public BigDecimal getAssetRefId() {
+        return assetRefId;
     }
 
-    public void setSlotAssetId(Long slotAssetsId) {
-        this.slotAssetId = slotAssetsId;
+    public void setAssetRefId(BigDecimal assetRefId) {
+        this.assetRefId = assetRefId;
+    }
+
+    public Long getSlotAssetsId() {
+        return slotAssetsId;
+    }
+
+    public void setSlotAssetsId(Long slotAssetsId) {
+        this.slotAssetsId = slotAssetsId;
     }
 
     @Override
@@ -77,7 +87,8 @@ public class AssetsDTO implements Serializable {
             "id=" + getId() +
             ", type=" + getType() +
             ", centerId=" + getCenterId() +
-            ", slotAssetId=" + getSlotAssetId() +
+            ", assetRefId=" + getAssetRefId() +
+            ", slotAssetsId=" + getSlotAssetsId() +
             "}";
     }
 }

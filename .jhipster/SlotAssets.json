@@ -3,10 +3,16 @@
     "fields": [],
     "relationships": [
         {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "assets",
+            "otherEntityRelationshipName": "slotAssets",
+            "relationshipName": "slotAssets"
+        },
+        {
             "relationshipType": "many-to-one",
             "otherEntityName": "slotInstance",
             "otherEntityRelationshipName": "slotAssets",
-            "relationshipName": "slot",
+            "relationshipName": "slotInstance",
             "otherEntityField": "id"
         }
     ],
