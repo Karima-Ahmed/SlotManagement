@@ -5,7 +5,8 @@ import javax.persistence.*;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.time.Duration;
+import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,29 +15,40 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "slot_template")
-public class SlotTemplate implements Serializable {
+public class SlotTemplate extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    public enum slotTempStatus{
+        Active(new BigDecimal(1)),
+        INACTIVE(new BigDecimal(2));
+
+        public static final String DOMAIN_CODE = "slotTempStatus";
+
+        private BigDecimal value;
+        slotTempStatus(BigDecimal value) {this.value = value;}
+        public BigDecimal getValue() {return value;}
+    }
+
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
-    @SequenceGenerator(name = "sequenceGenerator")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "slot_template_s")
+    @SequenceGenerator(name = "slot_template_s")
     private Long id;
 
     @Column(name = "capacity", precision = 21, scale = 2)
     private BigDecimal capacity;
 
     @Column(name = "time_frame", precision = 21, scale = 2)
-    private BigDecimal timeFrame;
+    private Duration timeFrame;
 
     @Column(name = "break_time", precision = 21, scale = 2)
-    private BigDecimal breakTime;
+    private Duration breakTime;
 
     @Column(name = "day_start_time")
-    private LocalDate dayStartTime;
+    private LocalTime dayStartTime;
 
     @Column(name = "day_end_time")
-    private LocalDate dayEndTime;
+    private LocalTime dayEndTime;
 
     @Column(name = "desc_ar")
     private String descAr;
@@ -81,55 +93,55 @@ public class SlotTemplate implements Serializable {
         this.capacity = capacity;
     }
 
-    public BigDecimal getTimeFrame() {
+    public Duration getTimeFrame() {
         return timeFrame;
     }
 
-    public SlotTemplate timeFrame(BigDecimal timeFrame) {
+    public SlotTemplate timeFrame(Duration timeFrame) {
         this.timeFrame = timeFrame;
         return this;
     }
 
-    public void setTimeFrame(BigDecimal timeFrame) {
+    public void setTimeFrame(Duration timeFrame) {
         this.timeFrame = timeFrame;
     }
 
-    public BigDecimal getBreakTime() {
+    public Duration getBreakTime() {
         return breakTime;
     }
 
-    public SlotTemplate breakTime(BigDecimal breakTime) {
+    public SlotTemplate breakTime(Duration breakTime) {
         this.breakTime = breakTime;
         return this;
     }
 
-    public void setBreakTime(BigDecimal breakTime) {
+    public void setBreakTime(Duration breakTime) {
         this.breakTime = breakTime;
     }
 
-    public LocalDate getDayStartTime() {
+    public LocalTime getDayStartTime() {
         return dayStartTime;
     }
 
-    public SlotTemplate dayStartTime(LocalDate dayStartTime) {
+    public SlotTemplate dayStartTime(LocalTime dayStartTime) {
         this.dayStartTime = dayStartTime;
         return this;
     }
 
-    public void setDayStartTime(LocalDate dayStartTime) {
+    public void setDayStartTime(LocalTime dayStartTime) {
         this.dayStartTime = dayStartTime;
     }
 
-    public LocalDate getDayEndTime() {
+    public LocalTime getDayEndTime() {
         return dayEndTime;
     }
 
-    public SlotTemplate dayEndTime(LocalDate dayEndTime) {
+    public SlotTemplate dayEndTime(LocalTime dayEndTime) {
         this.dayEndTime = dayEndTime;
         return this;
     }
 
-    public void setDayEndTime(LocalDate dayEndTime) {
+    public void setDayEndTime(LocalTime dayEndTime) {
         this.dayEndTime = dayEndTime;
     }
 

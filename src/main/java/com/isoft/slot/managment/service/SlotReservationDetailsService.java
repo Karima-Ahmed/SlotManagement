@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -80,5 +81,11 @@ public class SlotReservationDetailsService {
     public void delete(Long id) {
         log.debug("Request to delete SlotReservationDetails : {}", id);
         slotReservationDetailsRepository.deleteById(id);
+    }
+
+    public Optional<SlotReservationDetailsDTO> findByIdAndApplicantId(Long id, BigDecimal applicantId){
+        log.debug("Request to get SlotReservationDetails : {}", id);
+        return slotReservationDetailsRepository.findByIdAndApplicantId(id, applicantId)
+            .map(slotReservationDetailsMapper::toDto);
     }
 }

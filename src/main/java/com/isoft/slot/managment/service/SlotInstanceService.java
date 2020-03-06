@@ -81,4 +81,10 @@ public class SlotInstanceService {
         log.debug("Request to delete SlotInstance : {}", id);
         slotInstanceRepository.deleteById(id);
     }
+
+    public List<SlotInstanceDTO> getAvailableSlots(SlotInstanceDTO slotInstanceDTO) {
+        log.debug("request to get availableSlots");
+        return slotInstanceRepository.getAvailableSlots(slotInstanceDTO.getSlotTemplateId(), slotInstanceDTO.getTimeFrom(), slotInstanceDTO.getTimeTo(), slotInstanceDTO.getCenterId())
+            .stream().map(slotInstanceMapper::toDto).collect(Collectors.toCollection(LinkedList::new));
+    }
 }

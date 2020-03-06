@@ -4,6 +4,7 @@ import com.isoft.slot.managment.SlotManagementApp;
 import com.isoft.slot.managment.config.SecurityBeanOverrideConfiguration;
 import com.isoft.slot.managment.domain.SlotReservationDetails;
 import com.isoft.slot.managment.repository.SlotReservationDetailsRepository;
+import com.isoft.slot.managment.service.SlotInstanceService;
 import com.isoft.slot.managment.service.SlotReservationDetailsService;
 import com.isoft.slot.managment.service.dto.SlotReservationDetailsDTO;
 import com.isoft.slot.managment.service.mapper.SlotReservationDetailsMapper;
@@ -25,7 +26,9 @@ import org.springframework.validation.Validator;
 import javax.persistence.EntityManager;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.List;
 
 import static com.isoft.slot.managment.web.rest.TestUtil.createFormattingConversionService;
@@ -46,11 +49,11 @@ public class SlotReservationDetailsResourceIT {
     private static final BigDecimal DEFAULT_STATUS = new BigDecimal(1);
     private static final BigDecimal UPDATED_STATUS = new BigDecimal(2);
 
-    private static final LocalDate DEFAULT_TIME_FROM = LocalDate.ofEpochDay(0L);
-    private static final LocalDate UPDATED_TIME_FROM = LocalDate.now(ZoneId.systemDefault());
+    private static final LocalDateTime DEFAULT_TIME_FROM = LocalDateTime.ofEpochSecond(10000, 0, ZoneOffset.UTC);
+    private static final LocalDateTime UPDATED_TIME_FROM = LocalDateTime.now(ZoneId.systemDefault());
 
-    private static final LocalDate DEFAULT_TIME_TO = LocalDate.ofEpochDay(0L);
-    private static final LocalDate UPDATED_TIME_TO = LocalDate.now(ZoneId.systemDefault());
+    private static final LocalDateTime DEFAULT_TIME_TO = LocalDateTime.ofEpochSecond(10000, 0, ZoneOffset.UTC);
+    private static final LocalDateTime UPDATED_TIME_TO = LocalDateTime.now(ZoneId.systemDefault());
 
     private static final BigDecimal DEFAULT_REQUEST_NO = new BigDecimal(1);
     private static final BigDecimal UPDATED_REQUEST_NO = new BigDecimal(2);
@@ -63,6 +66,9 @@ public class SlotReservationDetailsResourceIT {
 
     @Autowired
     private SlotReservationDetailsService slotReservationDetailsService;
+
+    @Autowired
+    private SlotInstanceService slotInstanceService;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -86,7 +92,7 @@ public class SlotReservationDetailsResourceIT {
     @BeforeEach
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final SlotReservationDetailsResource slotReservationDetailsResource = new SlotReservationDetailsResource(slotReservationDetailsService);
+        final SlotReservationDetailsResource slotReservationDetailsResource = new SlotReservationDetailsResource(slotReservationDetailsService, slotInstanceService);
         this.restSlotReservationDetailsMockMvc = MockMvcBuilders.standaloneSetup(slotReservationDetailsResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)

@@ -24,8 +24,7 @@ import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
 import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.ZoneId;
+import java.time.*;
 import java.util.List;
 
 import static com.isoft.slot.managment.web.rest.TestUtil.createFormattingConversionService;
@@ -43,17 +42,17 @@ public class SlotTemplateResourceIT {
     private static final BigDecimal DEFAULT_CAPACITY = new BigDecimal(1);
     private static final BigDecimal UPDATED_CAPACITY = new BigDecimal(2);
 
-    private static final BigDecimal DEFAULT_TIME_FRAME = new BigDecimal(1);
-    private static final BigDecimal UPDATED_TIME_FRAME = new BigDecimal(2);
+    private static final Duration DEFAULT_TIME_FRAME = Duration.ofMinutes(1);
+    private static final Duration UPDATED_TIME_FRAME = Duration.ofMinutes(2);
 
-    private static final BigDecimal DEFAULT_BREAK_TIME = new BigDecimal(1);
-    private static final BigDecimal UPDATED_BREAK_TIME = new BigDecimal(2);
+    private static final Duration DEFAULT_BREAK_TIME = Duration.ofMinutes(1);
+    private static final Duration UPDATED_BREAK_TIME = Duration.ofMinutes(2);
 
-    private static final LocalDate DEFAULT_DAY_START_TIME = LocalDate.ofEpochDay(0L);
-    private static final LocalDate UPDATED_DAY_START_TIME = LocalDate.now(ZoneId.systemDefault());
+    private static final LocalTime DEFAULT_DAY_START_TIME = LocalTime.of(1, 0);
+    private static final LocalTime UPDATED_DAY_START_TIME = LocalTime.now(ZoneId.systemDefault());
 
-    private static final LocalDate DEFAULT_DAY_END_TIME = LocalDate.ofEpochDay(0L);
-    private static final LocalDate UPDATED_DAY_END_TIME = LocalDate.now(ZoneId.systemDefault());
+    private static final LocalTime DEFAULT_DAY_END_TIME = LocalTime.of(1, 0);
+    private static final LocalTime UPDATED_DAY_END_TIME = LocalTime.now(ZoneId.systemDefault());
 
     private static final String DEFAULT_DESC_AR = "AAAAAAAAAA";
     private static final String UPDATED_DESC_AR = "BBBBBBBBBB";
@@ -211,8 +210,8 @@ public class SlotTemplateResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(slotTemplate.getId().intValue())))
             .andExpect(jsonPath("$.[*].capacity").value(hasItem(DEFAULT_CAPACITY.intValue())))
-            .andExpect(jsonPath("$.[*].timeFrame").value(hasItem(DEFAULT_TIME_FRAME.intValue())))
-            .andExpect(jsonPath("$.[*].breakTime").value(hasItem(DEFAULT_BREAK_TIME.intValue())))
+            .andExpect(jsonPath("$.[*].timeFrame").value(hasItem(DEFAULT_TIME_FRAME)))
+            .andExpect(jsonPath("$.[*].breakTime").value(hasItem(DEFAULT_BREAK_TIME)))
             .andExpect(jsonPath("$.[*].dayStartTime").value(hasItem(DEFAULT_DAY_START_TIME.toString())))
             .andExpect(jsonPath("$.[*].dayEndTime").value(hasItem(DEFAULT_DAY_END_TIME.toString())))
             .andExpect(jsonPath("$.[*].descAr").value(hasItem(DEFAULT_DESC_AR)))
@@ -233,8 +232,8 @@ public class SlotTemplateResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(slotTemplate.getId().intValue()))
             .andExpect(jsonPath("$.capacity").value(DEFAULT_CAPACITY.intValue()))
-            .andExpect(jsonPath("$.timeFrame").value(DEFAULT_TIME_FRAME.intValue()))
-            .andExpect(jsonPath("$.breakTime").value(DEFAULT_BREAK_TIME.intValue()))
+            .andExpect(jsonPath("$.timeFrame").value(DEFAULT_TIME_FRAME))
+            .andExpect(jsonPath("$.breakTime").value(DEFAULT_BREAK_TIME))
             .andExpect(jsonPath("$.dayStartTime").value(DEFAULT_DAY_START_TIME.toString()))
             .andExpect(jsonPath("$.dayEndTime").value(DEFAULT_DAY_END_TIME.toString()))
             .andExpect(jsonPath("$.descAr").value(DEFAULT_DESC_AR))

@@ -24,6 +24,12 @@ import java.util.Optional;
 @RequestMapping("/api")
 public class SlotInstanceResource {
 
+    private static class SlotInstanceResourceException extends RuntimeException {
+        private SlotInstanceResourceException(String message) {
+            super(message);
+        }
+    }
+
     private final Logger log = LoggerFactory.getLogger(SlotInstanceResource.class);
 
     private static final String ENTITY_NAME = "slotManagementSlotInstance";
@@ -112,5 +118,12 @@ public class SlotInstanceResource {
         log.debug("REST request to delete SlotInstance : {}", id);
         slotInstanceService.delete(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
+    }
+
+    @GetMapping("/slot-instances/availableSlots")
+    public List<SlotInstanceDTO> getAvailableSlots(@RequestBody SlotInstanceDTO slotInstanceDTO) {
+        log.debug("REST request to get availableSlots");
+        List<SlotInstanceDTO> slotInstances = slotInstanceService.getAvailableSlots(slotInstanceDTO);
+        return slotInstances;
     }
 }

@@ -12,13 +12,25 @@ import java.math.BigDecimal;
  */
 @Entity
 @Table(name = "slot_template_facilitators")
-public class SlotTemplateFacilitators implements Serializable {
+public class SlotTemplateFacilitators extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    public enum FacilitatorTypes{
+        LECTURER(new BigDecimal(1)),
+        ASSISTANT(new BigDecimal(2)),
+        TRAINER(new BigDecimal(3));
+
+        public static final String DOMAIN_CODE = "FacilitatorType";
+
+        private BigDecimal value;
+        FacilitatorTypes(BigDecimal value) {this.value = value;}
+        public BigDecimal getValue() {return value;}
+    }
+
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
-    @SequenceGenerator(name = "sequenceGenerator")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "slot_template_facilitators_s")
+    @SequenceGenerator(name = "slot_template_facilitators_S")
     private Long id;
 
     @Column(name = "count", precision = 21, scale = 2)

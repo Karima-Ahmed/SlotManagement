@@ -25,7 +25,9 @@ import org.springframework.validation.Validator;
 import javax.persistence.EntityManager;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.List;
 
 import static com.isoft.slot.managment.web.rest.TestUtil.createFormattingConversionService;
@@ -52,11 +54,11 @@ public class SlotInstanceResourceIT {
     private static final BigDecimal DEFAULT_BREAK_TIME = new BigDecimal(1);
     private static final BigDecimal UPDATED_BREAK_TIME = new BigDecimal(2);
 
-    private static final LocalDate DEFAULT_TIME_FROM = LocalDate.ofEpochDay(0L);
-    private static final LocalDate UPDATED_TIME_FROM = LocalDate.now(ZoneId.systemDefault());
+    private static final LocalDateTime DEFAULT_TIME_FROM = LocalDateTime.ofEpochSecond(10000, 0, ZoneOffset.UTC);
+    private static final LocalDateTime UPDATED_TIME_FROM = LocalDateTime.now(ZoneId.systemDefault());
 
-    private static final LocalDate DEFAULT_TIME_TO = LocalDate.ofEpochDay(0L);
-    private static final LocalDate UPDATED_TIME_TO = LocalDate.now(ZoneId.systemDefault());
+    private static final LocalDateTime DEFAULT_TIME_TO = LocalDateTime.ofEpochSecond(10000, 0, ZoneOffset.UTC);
+    private static final LocalDateTime UPDATED_TIME_TO = LocalDateTime.now(ZoneId.systemDefault());
 
     private static final BigDecimal DEFAULT_CENTER_ID = new BigDecimal(1);
     private static final BigDecimal UPDATED_CENTER_ID = new BigDecimal(2);

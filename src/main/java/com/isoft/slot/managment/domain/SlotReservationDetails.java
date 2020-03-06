@@ -7,19 +7,33 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  * A SlotReservationDetails.
  */
 @Entity
 @Table(name = "slot_reservation_details")
-public class SlotReservationDetails implements Serializable {
+public class SlotReservationDetails extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    public enum SlotStatus{
+        AVAILABLE(new BigDecimal(1)),
+        PARTIAL_RESERVED(new BigDecimal(2)),
+        RESERVED(new BigDecimal(3)),
+        BUSY(new BigDecimal(4));
+
+        public static final String DOMAIN_CODE = "SlotStatus";
+
+        private BigDecimal value;
+        SlotStatus(BigDecimal value) {this.value = value;}
+        public BigDecimal getValue() {return value;}
+    }
+
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
-    @SequenceGenerator(name = "sequenceGenerator")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "slot_reservation_details_s")
+    @SequenceGenerator(name = "slot_reservation_details_s")
     private Long id;
 
     @Column(name = "applicant_id", precision = 21, scale = 2)
@@ -29,10 +43,10 @@ public class SlotReservationDetails implements Serializable {
     private BigDecimal status;
 
     @Column(name = "time_from")
-    private LocalDate timeFrom;
+    private LocalDateTime timeFrom;
 
     @Column(name = "time_to")
-    private LocalDate timeTo;
+    private LocalDateTime timeTo;
 
     @Column(name = "request_no", precision = 21, scale = 2)
     private BigDecimal requestNo;
@@ -76,29 +90,29 @@ public class SlotReservationDetails implements Serializable {
         this.status = status;
     }
 
-    public LocalDate getTimeFrom() {
+    public LocalDateTime getTimeFrom() {
         return timeFrom;
     }
 
-    public SlotReservationDetails timeFrom(LocalDate timeFrom) {
+    public SlotReservationDetails timeFrom(LocalDateTime timeFrom) {
         this.timeFrom = timeFrom;
         return this;
     }
 
-    public void setTimeFrom(LocalDate timeFrom) {
+    public void setTimeFrom(LocalDateTime timeFrom) {
         this.timeFrom = timeFrom;
     }
 
-    public LocalDate getTimeTo() {
+    public LocalDateTime getTimeTo() {
         return timeTo;
     }
 
-    public SlotReservationDetails timeTo(LocalDate timeTo) {
+    public SlotReservationDetails timeTo(LocalDateTime timeTo) {
         this.timeTo = timeTo;
         return this;
     }
 
-    public void setTimeTo(LocalDate timeTo) {
+    public void setTimeTo(LocalDateTime timeTo) {
         this.timeTo = timeTo;
     }
 

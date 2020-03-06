@@ -1,8 +1,10 @@
 package com.isoft.slot.managment.service.dto;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalTime;
 import java.util.Objects;
 
 /**
@@ -14,13 +16,13 @@ public class SlotTemplateDTO implements Serializable {
 
     private BigDecimal capacity;
 
-    private BigDecimal timeFrame;
+    private Duration timeFrame;
 
-    private BigDecimal breakTime;
+    private Duration breakTime;
 
-    private LocalDate dayStartTime;
+    private LocalTime dayStartTime;
 
-    private LocalDate dayEndTime;
+    private LocalTime dayEndTime;
 
     private String descAr;
 
@@ -47,35 +49,35 @@ public class SlotTemplateDTO implements Serializable {
         this.capacity = capacity;
     }
 
-    public BigDecimal getTimeFrame() {
+    public Duration getTimeFrame() {
         return timeFrame;
     }
 
-    public void setTimeFrame(BigDecimal timeFrame) {
+    public void setTimeFrame(Duration timeFrame) {
         this.timeFrame = timeFrame;
     }
 
-    public BigDecimal getBreakTime() {
+    public Duration getBreakTime() {
         return breakTime;
     }
 
-    public void setBreakTime(BigDecimal breakTime) {
+    public void setBreakTime(Duration breakTime) {
         this.breakTime = breakTime;
     }
 
-    public LocalDate getDayStartTime() {
+    public LocalTime getDayStartTime() {
         return dayStartTime;
     }
 
-    public void setDayStartTime(LocalDate dayStartTime) {
+    public void setDayStartTime(LocalTime dayStartTime) {
         this.dayStartTime = dayStartTime;
     }
 
-    public LocalDate getDayEndTime() {
+    public LocalTime getDayEndTime() {
         return dayEndTime;
     }
 
-    public void setDayEndTime(LocalDate dayEndTime) {
+    public void setDayEndTime(LocalTime dayEndTime) {
         this.dayEndTime = dayEndTime;
     }
 

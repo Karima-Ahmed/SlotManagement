@@ -3,6 +3,7 @@ package com.isoft.slot.managment.service.dto;
 import java.time.LocalDate;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 /**
@@ -20,9 +21,9 @@ public class SlotInstanceDTO implements Serializable {
 
     private BigDecimal breakTime;
 
-    private LocalDate timeFrom;
+    private LocalDateTime timeFrom;
 
-    private LocalDate timeTo;
+    private LocalDateTime timeTo;
 
     private BigDecimal centerId;
 
@@ -71,19 +72,19 @@ public class SlotInstanceDTO implements Serializable {
         this.breakTime = breakTime;
     }
 
-    public LocalDate getTimeFrom() {
+    public LocalDateTime getTimeFrom() {
         return timeFrom;
     }
 
-    public void setTimeFrom(LocalDate timeFrom) {
+    public void setTimeFrom(LocalDateTime timeFrom) {
         this.timeFrom = timeFrom;
     }
 
-    public LocalDate getTimeTo() {
+    public LocalDateTime getTimeTo() {
         return timeTo;
     }
 
-    public void setTimeTo(LocalDate timeTo) {
+    public void setTimeTo(LocalDateTime timeTo) {
         this.timeTo = timeTo;
     }
 

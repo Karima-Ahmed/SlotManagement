@@ -12,13 +12,13 @@ import java.math.BigDecimal;
  */
 @Entity
 @Table(name = "assets")
-public class Assets implements Serializable {
+public class Assets extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
-    @SequenceGenerator(name = "sequenceGenerator")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "assets_s")
+    @SequenceGenerator(name = "assets_s")
     private Long id;
 
     @Column(name = "type", precision = 21, scale = 2)
@@ -32,7 +32,7 @@ public class Assets implements Serializable {
 
     @ManyToOne
     @JsonIgnoreProperties("assets")
-    private SlotAssets slotAssets;
+    private SlotAssets slotAsset;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -83,16 +83,16 @@ public class Assets implements Serializable {
     }
 
     public SlotAssets getSlotAssets() {
-        return slotAssets;
+        return slotAsset;
     }
 
     public Assets slotAssets(SlotAssets slotAssets) {
-        this.slotAssets = slotAssets;
+        this.slotAsset = slotAssets;
         return this;
     }
 
     public void setSlotAssets(SlotAssets slotAssets) {
-        this.slotAssets = slotAssets;
+        this.slotAsset = slotAssets;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

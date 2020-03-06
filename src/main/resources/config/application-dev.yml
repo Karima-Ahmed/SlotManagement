@@ -63,7 +63,7 @@ spring:
       hibernate.jdbc.time_zone: UTC
     hibernate:
       default_schema: slotmgmnt
-      ddl-auto: validate
+      ddl-auto: create
   liquibase:
     # Remove 'faker' if you do not want the sample data to be loaded automatically
     contexts: dev, faker
