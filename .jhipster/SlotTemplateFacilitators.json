@@ -14,8 +14,8 @@
         {
             "relationshipType": "many-to-one",
             "otherEntityName": "slotTemplate",
-            "otherEntityRelationshipName": "slotTemplateFacilitators",
-            "relationshipName": "slotTemp",
+            "otherEntityRelationshipName": "tempFacilitators",
+            "relationshipName": "slotTemplate",
             "otherEntityField": "id"
         }
     ],

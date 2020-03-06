@@ -6,33 +6,20 @@ import javax.persistence.*;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 /**
  * A SlotReservationDetails.
  */
 @Entity
 @Table(name = "slot_reservation_details")
-public class SlotReservationDetails extends AbstractAuditingEntity implements Serializable {
+public class SlotReservationDetails implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    public enum SlotStatus{
-        AVAILABLE(new BigDecimal(1)),
-        PARTIAL_RESERVED(new BigDecimal(2)),
-        RESERVED(new BigDecimal(3)),
-        BUSY(new BigDecimal(4));
-
-        public static final String DOMAIN_CODE = "SlotStatus";
-
-        private BigDecimal value;
-        SlotStatus(BigDecimal value) {this.value = value;}
-        public BigDecimal getValue() {return value;}
-    }
-
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "slot_reservation_details_s")
-    @SequenceGenerator(name = "slot_reservation_details_s")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
+    @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
 
     @Column(name = "applicant_id", precision = 21, scale = 2)
@@ -42,17 +29,17 @@ public class SlotReservationDetails extends AbstractAuditingEntity implements Se
     private BigDecimal status;
 
     @Column(name = "time_from")
-    private LocalDateTime timeFrom;
+    private LocalDate timeFrom;
 
     @Column(name = "time_to")
-    private LocalDateTime timeTo;
+    private LocalDate timeTo;
 
     @Column(name = "request_no", precision = 21, scale = 2)
     private BigDecimal requestNo;
 
     @ManyToOne
-    @JsonIgnoreProperties("slotReservationDetails")
-    private SlotInstance slot;
+    @JsonIgnoreProperties("slotReservations")
+    private SlotInstance slotInstance;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -89,29 +76,29 @@ public class SlotReservationDetails extends AbstractAuditingEntity implements Se
         this.status = status;
     }
 
-    public LocalDateTime getTimeFrom() {
+    public LocalDate getTimeFrom() {
         return timeFrom;
     }
 
-    public SlotReservationDetails timeFrom(LocalDateTime timeFrom) {
+    public SlotReservationDetails timeFrom(LocalDate timeFrom) {
         this.timeFrom = timeFrom;
         return this;
     }
 
-    public void setTimeFrom(LocalDateTime timeFrom) {
+    public void setTimeFrom(LocalDate timeFrom) {
         this.timeFrom = timeFrom;
     }
 
-    public LocalDateTime getTimeTo() {
+    public LocalDate getTimeTo() {
         return timeTo;
     }
 
-    public SlotReservationDetails timeTo(LocalDateTime timeTo) {
+    public SlotReservationDetails timeTo(LocalDate timeTo) {
         this.timeTo = timeTo;
         return this;
     }
 
-    public void setTimeTo(LocalDateTime timeTo) {
+    public void setTimeTo(LocalDate timeTo) {
         this.timeTo = timeTo;
     }
 
@@ -128,17 +115,17 @@ public class SlotReservationDetails extends AbstractAuditingEntity implements Se
         this.requestNo = requestNo;
     }
 
-    public SlotInstance getSlot() {
-        return slot;
+    public SlotInstance getSlotInstance() {
+        return slotInstance;
     }
 
-    public SlotReservationDetails slot(SlotInstance slotInstance) {
-        this.slot = slotInstance;
+    public SlotReservationDetails slotInstance(SlotInstance slotInstance) {
+        this.slotInstance = slotInstance;
         return this;
     }
 
-    public void setSlot(SlotInstance slotInstance) {
-        this.slot = slotInstance;
+    public void setSlotInstance(SlotInstance slotInstance) {
+        this.slotInstance = slotInstance;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

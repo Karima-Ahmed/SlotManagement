@@ -1,15 +1,9 @@
 package com.isoft.slot.managment.service.dto;
 
-import com.isoft.slot.managment.domain.SlotInstance;
-
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 /**
  * A DTO for the {@link com.isoft.slot.managment.domain.SlotInstance} entity.
@@ -26,38 +20,16 @@ public class SlotInstanceDTO implements Serializable {
 
     private BigDecimal breakTime;
 
-    private LocalDateTime timeFrom;
+    private LocalDate timeFrom;
 
-    private LocalDateTime timeTo;
+    private LocalDate timeTo;
 
     private BigDecimal centerId;
 
     private BigDecimal availableCapacity;
 
-    private Long tempId;
 
-    private List<SlotAssetsDTO> slotAssets;
-
-    private List<SlotFacilitatorsDTO> slotFacilitators;
-
-
-    public SlotInstanceDTO() {
-    }
-
-    public SlotInstanceDTO(SlotInstance slotInstance) {
-        this.id = slotInstance.getId();
-        this.descAr = slotInstance.getDescAr();
-        this.descEn = slotInstance.getDescEn();
-        this.timeFrame = slotInstance.getTimeFrame();
-        this.breakTime = slotInstance.getBreakTime();
-        this.timeFrom = slotInstance.getTimeFrom();
-        this.timeTo = slotInstance.getTimeTo();
-        this.centerId = slotInstance.getCenterId();
-        this.availableCapacity = slotInstance.getAvailableCapacity();
-        this.tempId = slotInstance.getTemp().getId();
-        this.slotAssets = slotInstance.getSlotAssets().stream().map(SlotAssetsDTO::new).collect(Collectors.toList());
-        this.slotFacilitators = slotInstance.getSlotFacilitators().stream().map(SlotFacilitatorsDTO::new).collect(Collectors.toList());
-    }
+    private Long slotTemplateId;
 
     public Long getId() {
         return id;
@@ -99,19 +71,19 @@ public class SlotInstanceDTO implements Serializable {
         this.breakTime = breakTime;
     }
 
-    public LocalDateTime getTimeFrom() {
+    public LocalDate getTimeFrom() {
         return timeFrom;
     }
 
-    public void setTimeFrom(LocalDateTime timeFrom) {
+    public void setTimeFrom(LocalDate timeFrom) {
         this.timeFrom = timeFrom;
     }
 
-    public LocalDateTime getTimeTo() {
+    public LocalDate getTimeTo() {
         return timeTo;
     }
 
-    public void setTimeTo(LocalDateTime timeTo) {
+    public void setTimeTo(LocalDate timeTo) {
         this.timeTo = timeTo;
     }
 
@@ -131,28 +103,12 @@ public class SlotInstanceDTO implements Serializable {
         this.availableCapacity = availableCapacity;
     }
 
-    public Long getTempId() {
-        return tempId;
+    public Long getSlotTemplateId() {
+        return slotTemplateId;
     }
 
-    public void setTempId(Long slotTemplateId) {
-        this.tempId = slotTemplateId;
-    }
-
-    public List<SlotAssetsDTO> getSlotAssets() {
-        return slotAssets;
-    }
-
-    public void setSlotAssets(List<SlotAssetsDTO> slotAssets) {
-        this.slotAssets = slotAssets;
-    }
-
-    public List<SlotFacilitatorsDTO> getSlotFacilitators() {
-        return slotFacilitators;
-    }
-
-    public void setSlotFacilitators(List<SlotFacilitatorsDTO> slotFacilitators) {
-        this.slotFacilitators = slotFacilitators;
+    public void setSlotTemplateId(Long slotTemplateId) {
+        this.slotTemplateId = slotTemplateId;
     }
 
     @Override
@@ -188,7 +144,7 @@ public class SlotInstanceDTO implements Serializable {
             ", timeTo='" + getTimeTo() + "'" +
             ", centerId=" + getCenterId() +
             ", availableCapacity=" + getAvailableCapacity() +
-            ", tempId=" + getTempId() +
+            ", slotTemplateId=" + getSlotTemplateId() +
             "}";
     }
 }

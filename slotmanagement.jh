@@ -2,8 +2,8 @@ entity SlotTemplate {
     capacity BigDecimal,
     timeFrame BigDecimal,
     breakTime BigDecimal,
-    dayStartTime LocalDateTime,
-    dayEndTime   LocalDateTime,
+    dayStartTime LocalDate,
+    dayEndTime  LocalDate,
     descAr String,
     descEn String,
     centerId BigDecimal,
@@ -15,8 +15,8 @@ count BigDecimal,
 assetType BigDecimal
 }
 
-relationship ManyToOne {
-  SlotTemplateAssets{slotTemp} to SlotTemplate
+relationship OneToMany {
+ SlotTemplate {tempAssets} to SlotTemplateAssets
 }
 
 entity SlotTemplateFacilitators{
@@ -24,8 +24,8 @@ count BigDecimal,
 facilitatorType BigDecimal
 }
 
-relationship ManyToOne {
-  SlotTemplateFacilitators{slotTemp} to SlotTemplate
+relationship OneToMany {
+  SlotTemplate {tempFacilitators} to SlotTemplateFacilitators
 }
 
 entity SlotInstance {
@@ -33,8 +33,8 @@ entity SlotInstance {
     descEn String,
     timeFrame BigDecimal,
     breakTime BigDecimal,
-    timeFrom LocalDateTime,
-    timeTo LocalDateTime,
+    timeFrom LocalDate,
+    timeTo LocalDate,
     centerId BigDecimal,
     availableCapacity BigDecimal
 }
@@ -43,40 +43,41 @@ entity SlotFacilitators{
 userId BigDecimal
 }
 
-relationship ManyToOne {
-  SlotFacilitators{slot} to SlotInstance
+relationship OneToMany {
+  SlotInstance {slotFacilitators} to SlotFacilitators
 }
 
 entity SlotAssets{
 
 }
 
-relationship ManyToOne {
-  SlotAssets{slot} to SlotInstance
+relationship OneToMany {
+  SlotInstance {slotAssets} to SlotAssets
 }
 
 entity Assets{
 type BigDecimal,
-centerId BigDecimal
+centerId BigDecimal,
+assetRefId BigDecimal
 }
 
-relationship ManyToOne {
-  Assets{slotAsset} to SlotAssets
+relationship OneToMany {
+ SlotAssets {slotAssets} to Assets
 }
 
 entity SlotReservationDetails {
 	applicantId BigDecimal,
     status BigDecimal,
-    timeFrom LocalDateTime,
-    timeTo LocalDateTime,
+    timeFrom LocalDate,
+    timeTo LocalDate,
     requestNo BigDecimal
 }
-relationship ManyToOne {
-  SlotInstance{temp} to SlotTemplate
+relationship OneToMany {
+ SlotTemplate {slotInstances} to SlotInstance
 }
 
-relationship ManyToOne {
-  SlotReservationDetails{slot} to SlotInstance
+relationship OneToMany {
+  SlotInstance {slotReservations} to SlotReservationDetails
 }
 
 dto all with mapstruct

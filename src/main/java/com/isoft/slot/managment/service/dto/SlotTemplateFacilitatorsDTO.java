@@ -16,7 +16,7 @@ public class SlotTemplateFacilitatorsDTO implements Serializable {
     private BigDecimal facilitatorType;
 
 
-    private Long slotTempId;
+    private Long slotTemplateId;
 
     public Long getId() {
         return id;
@@ -42,12 +42,12 @@ public class SlotTemplateFacilitatorsDTO implements Serializable {
         this.facilitatorType = facilitatorType;
     }
 
-    public Long getSlotTempId() {
-        return slotTempId;
+    public Long getSlotTemplateId() {
+        return slotTemplateId;
     }
 
-    public void setSlotTempId(Long slotTemplateId) {
-        this.slotTempId = slotTemplateId;
+    public void setSlotTemplateId(Long slotTemplateId) {
+        this.slotTemplateId = slotTemplateId;
     }
 
     @Override
@@ -77,7 +77,7 @@ public class SlotTemplateFacilitatorsDTO implements Serializable {
             "id=" + getId() +
             ", count=" + getCount() +
             ", facilitatorType=" + getFacilitatorType() +
-            ", slotTempId=" + getSlotTempId() +
+            ", slotTemplateId=" + getSlotTemplateId() +
             "}";
     }
 }

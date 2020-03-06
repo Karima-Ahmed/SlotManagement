@@ -44,6 +44,9 @@ public class AssetsResourceIT {
     private static final BigDecimal DEFAULT_CENTER_ID = new BigDecimal(1);
     private static final BigDecimal UPDATED_CENTER_ID = new BigDecimal(2);
 
+    private static final BigDecimal DEFAULT_ASSET_REF_ID = new BigDecimal(1);
+    private static final BigDecimal UPDATED_ASSET_REF_ID = new BigDecimal(2);
+
     @Autowired
     private AssetsRepository assetsRepository;
 
@@ -93,7 +96,8 @@ public class AssetsResourceIT {
     public static Assets createEntity(EntityManager em) {
         Assets assets = new Assets()
             .type(DEFAULT_TYPE)
-            .centerId(DEFAULT_CENTER_ID);
+            .centerId(DEFAULT_CENTER_ID)
+            .assetRefId(DEFAULT_ASSET_REF_ID);
         return assets;
     }
     /**
@@ -105,7 +109,8 @@ public class AssetsResourceIT {
     public static Assets createUpdatedEntity(EntityManager em) {
         Assets assets = new Assets()
             .type(UPDATED_TYPE)
-            .centerId(UPDATED_CENTER_ID);
+            .centerId(UPDATED_CENTER_ID)
+            .assetRefId(UPDATED_ASSET_REF_ID);
         return assets;
     }
 
@@ -132,6 +137,7 @@ public class AssetsResourceIT {
         Assets testAssets = assetsList.get(assetsList.size() - 1);
         assertThat(testAssets.getType()).isEqualTo(DEFAULT_TYPE);
         assertThat(testAssets.getCenterId()).isEqualTo(DEFAULT_CENTER_ID);
+        assertThat(testAssets.getAssetRefId()).isEqualTo(DEFAULT_ASSET_REF_ID);
     }
 
     @Test
@@ -167,7 +173,8 @@ public class AssetsResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(assets.getId().intValue())))
             .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE.intValue())))
-            .andExpect(jsonPath("$.[*].centerId").value(hasItem(DEFAULT_CENTER_ID.intValue())));
+            .andExpect(jsonPath("$.[*].centerId").value(hasItem(DEFAULT_CENTER_ID.intValue())))
+            .andExpect(jsonPath("$.[*].assetRefId").value(hasItem(DEFAULT_ASSET_REF_ID.intValue())));
     }
     
     @Test
@@ -182,7 +189,8 @@ public class AssetsResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(assets.getId().intValue()))
             .andExpect(jsonPath("$.type").value(DEFAULT_TYPE.intValue()))
-            .andExpect(jsonPath("$.centerId").value(DEFAULT_CENTER_ID.intValue()));
+            .andExpect(jsonPath("$.centerId").value(DEFAULT_CENTER_ID.intValue()))
+            .andExpect(jsonPath("$.assetRefId").value(DEFAULT_ASSET_REF_ID.intValue()));
     }
 
     @Test
@@ -207,7 +215,8 @@ public class AssetsResourceIT {
         em.detach(updatedAssets);
         updatedAssets
             .type(UPDATED_TYPE)
-            .centerId(UPDATED_CENTER_ID);
+            .centerId(UPDATED_CENTER_ID)
+            .assetRefId(UPDATED_ASSET_REF_ID);
         AssetsDTO assetsDTO = assetsMapper.toDto(updatedAssets);
 
         restAssetsMockMvc.perform(put("/api/assets")
@@ -221,6 +230,7 @@ public class AssetsResourceIT {
         Assets testAssets = assetsList.get(assetsList.size() - 1);
         assertThat(testAssets.getType()).isEqualTo(UPDATED_TYPE);
         assertThat(testAssets.getCenterId()).isEqualTo(UPDATED_CENTER_ID);
+        assertThat(testAssets.getAssetRefId()).isEqualTo(UPDATED_ASSET_REF_ID);
     }
 
     @Test

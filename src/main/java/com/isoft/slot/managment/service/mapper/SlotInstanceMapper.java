@@ -12,10 +12,16 @@ import org.mapstruct.*;
 @Mapper(componentModel = "spring", uses = {SlotTemplateMapper.class})
 public interface SlotInstanceMapper extends EntityMapper<SlotInstanceDTO, SlotInstance> {
 
-    @Mapping(source = "temp.id", target = "tempId")
+    @Mapping(source = "slotTemplate.id", target = "slotTemplateId")
     SlotInstanceDTO toDto(SlotInstance slotInstance);
 
-    @Mapping(source = "tempId", target = "temp")
+    @Mapping(target = "slotFacilitators", ignore = true)
+    @Mapping(target = "removeSlotFacilitators", ignore = true)
+    @Mapping(target = "slotAssets", ignore = true)
+    @Mapping(target = "removeSlotAssets", ignore = true)
+    @Mapping(target = "slotReservations", ignore = true)
+    @Mapping(target = "removeSlotReservations", ignore = true)
+    @Mapping(source = "slotTemplateId", target = "slotTemplate")
     SlotInstance toEntity(SlotInstanceDTO slotInstanceDTO);
 
     default SlotInstance fromId(Long id) {

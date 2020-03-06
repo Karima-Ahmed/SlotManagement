@@ -21,7 +21,7 @@
             <column name="facilitator_type" type="decimal(21,2)">
                 <constraints nullable="true" />
             </column>
-            <column name="slot_temp_id" type="bigint">
+            <column name="slot_template_id" type="bigint">
                 <constraints nullable="true" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->

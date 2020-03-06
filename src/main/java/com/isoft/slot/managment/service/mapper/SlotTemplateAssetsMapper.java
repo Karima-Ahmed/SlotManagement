@@ -12,10 +12,10 @@ import org.mapstruct.*;
 @Mapper(componentModel = "spring", uses = {SlotTemplateMapper.class})
 public interface SlotTemplateAssetsMapper extends EntityMapper<SlotTemplateAssetsDTO, SlotTemplateAssets> {
 
-    @Mapping(source = "slotTemp.id", target = "slotTempId")
+    @Mapping(source = "slotTemplate.id", target = "slotTemplateId")
     SlotTemplateAssetsDTO toDto(SlotTemplateAssets slotTemplateAssets);
 
-    @Mapping(source = "slotTempId", target = "slotTemp")
+    @Mapping(source = "slotTemplateId", target = "slotTemplate")
     SlotTemplateAssets toEntity(SlotTemplateAssetsDTO slotTemplateAssetsDTO);
 
     default SlotTemplateAssets fromId(Long id) {

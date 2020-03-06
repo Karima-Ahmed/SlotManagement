@@ -12,10 +12,10 @@ import org.mapstruct.*;
 @Mapper(componentModel = "spring", uses = {SlotInstanceMapper.class})
 public interface SlotReservationDetailsMapper extends EntityMapper<SlotReservationDetailsDTO, SlotReservationDetails> {
 
-    @Mapping(source = "slot.id", target = "slotId")
+    @Mapping(source = "slotInstance.id", target = "slotInstanceId")
     SlotReservationDetailsDTO toDto(SlotReservationDetails slotReservationDetails);
 
-    @Mapping(source = "slotId", target = "slot")
+    @Mapping(source = "slotInstanceId", target = "slotInstance")
     SlotReservationDetails toEntity(SlotReservationDetailsDTO slotReservationDetailsDTO);
 
     default SlotReservationDetails fromId(Long id) {

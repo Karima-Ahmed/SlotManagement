@@ -24,9 +24,8 @@ import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.time.ZoneId;
-import java.time.ZoneOffset;
 import java.util.List;
 
 import static com.isoft.slot.managment.web.rest.TestUtil.createFormattingConversionService;
@@ -50,11 +49,11 @@ public class SlotTemplateResourceIT {
     private static final BigDecimal DEFAULT_BREAK_TIME = new BigDecimal(1);
     private static final BigDecimal UPDATED_BREAK_TIME = new BigDecimal(2);
 
-    private static final LocalDateTime DEFAULT_DAY_START_TIME = LocalDateTime.ofEpochSecond(10000, 0, ZoneOffset.UTC);
-    private static final LocalDateTime UPDATED_DAY_START_TIME = LocalDateTime.now(ZoneId.systemDefault());
+    private static final LocalDate DEFAULT_DAY_START_TIME = LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_DAY_START_TIME = LocalDate.now(ZoneId.systemDefault());
 
-    private static final LocalDateTime DEFAULT_DAY_END_TIME = LocalDateTime.ofEpochSecond(10000, 0, ZoneOffset.UTC);
-    private static final LocalDateTime UPDATED_DAY_END_TIME = LocalDateTime.now(ZoneId.systemDefault());
+    private static final LocalDate DEFAULT_DAY_END_TIME = LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_DAY_END_TIME = LocalDate.now(ZoneId.systemDefault());
 
     private static final String DEFAULT_DESC_AR = "AAAAAAAAAA";
     private static final String UPDATED_DESC_AR = "BBBBBBBBBB";

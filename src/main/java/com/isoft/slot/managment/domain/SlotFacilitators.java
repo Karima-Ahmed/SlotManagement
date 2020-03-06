@@ -12,13 +12,13 @@ import java.math.BigDecimal;
  */
 @Entity
 @Table(name = "slot_facilitators")
-public class SlotFacilitators extends AbstractAuditingEntity implements Serializable {
+public class SlotFacilitators implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "slot_facilitators_s")
-    @SequenceGenerator(name = "slot_facilitators_s")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
+    @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
 
     @Column(name = "user_id", precision = 21, scale = 2)
@@ -26,7 +26,7 @@ public class SlotFacilitators extends AbstractAuditingEntity implements Serializ
 
     @ManyToOne
     @JsonIgnoreProperties("slotFacilitators")
-    private SlotInstance slot;
+    private SlotInstance slotInstance;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -41,9 +41,6 @@ public class SlotFacilitators extends AbstractAuditingEntity implements Serializ
         return userId;
     }
 
-    public SlotFacilitators() {
-    }
-
     public SlotFacilitators userId(BigDecimal userId) {
         this.userId = userId;
         return this;
@@ -53,17 +50,17 @@ public class SlotFacilitators extends AbstractAuditingEntity implements Serializ
         this.userId = userId;
     }
 
-    public SlotInstance getSlot() {
-        return slot;
+    public SlotInstance getSlotInstance() {
+        return slotInstance;
     }
 
-    public SlotFacilitators slot(SlotInstance slotInstance) {
-        this.slot = slotInstance;
+    public SlotFacilitators slotInstance(SlotInstance slotInstance) {
+        this.slotInstance = slotInstance;
         return this;
     }
 
-    public void setSlot(SlotInstance slotInstance) {
-        this.slot = slotInstance;
+    public void setSlotInstance(SlotInstance slotInstance) {
+        this.slotInstance = slotInstance;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

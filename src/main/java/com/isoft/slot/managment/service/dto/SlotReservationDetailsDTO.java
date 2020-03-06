@@ -1,6 +1,6 @@
 package com.isoft.slot.managment.service.dto;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -16,14 +16,14 @@ public class SlotReservationDetailsDTO implements Serializable {
 
     private BigDecimal status;
 
-    private LocalDateTime timeFrom;
+    private LocalDate timeFrom;
 
-    private LocalDateTime timeTo;
+    private LocalDate timeTo;
 
     private BigDecimal requestNo;
 
 
-    private Long slotId;
+    private Long slotInstanceId;
 
     public Long getId() {
         return id;
@@ -49,19 +49,19 @@ public class SlotReservationDetailsDTO implements Serializable {
         this.status = status;
     }
 
-    public LocalDateTime getTimeFrom() {
+    public LocalDate getTimeFrom() {
         return timeFrom;
     }
 
-    public void setTimeFrom(LocalDateTime timeFrom) {
+    public void setTimeFrom(LocalDate timeFrom) {
         this.timeFrom = timeFrom;
     }
 
-    public LocalDateTime getTimeTo() {
+    public LocalDate getTimeTo() {
         return timeTo;
     }
 
-    public void setTimeTo(LocalDateTime timeTo) {
+    public void setTimeTo(LocalDate timeTo) {
         this.timeTo = timeTo;
     }
 
@@ -73,12 +73,12 @@ public class SlotReservationDetailsDTO implements Serializable {
         this.requestNo = requestNo;
     }
 
-    public Long getSlotId() {
-        return slotId;
+    public Long getSlotInstanceId() {
+        return slotInstanceId;
     }
 
-    public void setSlotId(Long slotInstanceId) {
-        this.slotId = slotInstanceId;
+    public void setSlotInstanceId(Long slotInstanceId) {
+        this.slotInstanceId = slotInstanceId;
     }
 
     @Override
@@ -111,7 +111,7 @@ public class SlotReservationDetailsDTO implements Serializable {
             ", timeFrom='" + getTimeFrom() + "'" +
             ", timeTo='" + getTimeTo() + "'" +
             ", requestNo=" + getRequestNo() +
-            ", slotId=" + getSlotId() +
+            ", slotInstanceId=" + getSlotInstanceId() +
             "}";
     }
 }

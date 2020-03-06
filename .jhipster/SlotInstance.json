@@ -19,11 +19,11 @@
         },
         {
             "fieldName": "timeFrom",
-            "fieldType": "LocalDateTime"
+            "fieldType": "LocalDate"
         },
         {
             "fieldName": "timeTo",
-            "fieldType": "LocalDateTime"
+            "fieldType": "LocalDate"
         },
         {
             "fieldName": "centerId",
@@ -36,10 +36,28 @@
     ],
     "relationships": [
         {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "slotFacilitators",
+            "otherEntityRelationshipName": "slotInstance",
+            "relationshipName": "slotFacilitators"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "slotAssets",
+            "otherEntityRelationshipName": "slotInstance",
+            "relationshipName": "slotAssets"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "slotReservationDetails",
+            "otherEntityRelationshipName": "slotInstance",
+            "relationshipName": "slotReservations"
+        },
+        {
             "relationshipType": "many-to-one",
             "otherEntityName": "slotTemplate",
-            "otherEntityRelationshipName": "slotInstance",
-            "relationshipName": "temp",
+            "otherEntityRelationshipName": "slotInstances",
+            "relationshipName": "slotTemplate",
             "otherEntityField": "id"
         }
     ],

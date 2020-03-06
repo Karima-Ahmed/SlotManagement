@@ -5,24 +5,29 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.*;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * A SlotAssets.
  */
 @Entity
 @Table(name = "slot_assets")
-public class SlotAssets extends AbstractAuditingEntity implements Serializable {
+public class SlotAssets implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "slot_assets_s")
-    @SequenceGenerator(name = "slot_assets_s")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
+    @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
+
+    @OneToMany(mappedBy = "slotAssets")
+    private Set<Assets> slotAssets = new HashSet<>();
 
     @ManyToOne
     @JsonIgnoreProperties("slotAssets")
-    private SlotInstance slot;
+    private SlotInstance slotInstance;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -33,17 +38,42 @@ public class SlotAssets extends AbstractAuditingEntity implements Serializable {
         this.id = id;
     }
 
-    public SlotInstance getSlot() {
-        return slot;
+    public Set<Assets> getSlotAssets() {
+        return slotAssets;
     }
 
-    public SlotAssets slot(SlotInstance slotInstance) {
-        this.slot = slotInstance;
+    public SlotAssets slotAssets(Set<Assets> assets) {
+        this.slotAssets = assets;
         return this;
     }
 
-    public void setSlot(SlotInstance slotInstance) {
-        this.slot = slotInstance;
+    public SlotAssets addSlotAssets(Assets assets) {
+        this.slotAssets.add(assets);
+        assets.setSlotAssets(this);
+        return this;
+    }
+
+    public SlotAssets removeSlotAssets(Assets assets) {
+        this.slotAssets.remove(assets);
+        assets.setSlotAssets(null);
+        return this;
+    }
+
+    public void setSlotAssets(Set<Assets> assets) {
+        this.slotAssets = assets;
+    }
+
+    public SlotInstance getSlotInstance() {
+        return slotInstance;
+    }
+
+    public SlotAssets slotInstance(SlotInstance slotInstance) {
+        this.slotInstance = slotInstance;
+        return this;
+    }
+
+    public void setSlotInstance(SlotInstance slotInstance) {
+        this.slotInstance = slotInstance;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

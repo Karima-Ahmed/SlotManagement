@@ -1,7 +1,5 @@
 package com.isoft.slot.managment.service.dto;
 
-import com.isoft.slot.managment.domain.SlotFacilitators;
-
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -15,14 +13,8 @@ public class SlotFacilitatorsDTO implements Serializable {
 
     private BigDecimal userId;
 
-    private Long slotId;
 
-
-    public SlotFacilitatorsDTO() {
-    }
-
-    public SlotFacilitatorsDTO(SlotFacilitators slotFacilitators) {
-    }
+    private Long slotInstanceId;
 
     public Long getId() {
         return id;
@@ -40,12 +32,12 @@ public class SlotFacilitatorsDTO implements Serializable {
         this.userId = userId;
     }
 
-    public Long getSlotId() {
-        return slotId;
+    public Long getSlotInstanceId() {
+        return slotInstanceId;
     }
 
-    public void setSlotId(Long slotInstanceId) {
-        this.slotId = slotInstanceId;
+    public void setSlotInstanceId(Long slotInstanceId) {
+        this.slotInstanceId = slotInstanceId;
     }
 
     @Override
@@ -74,7 +66,7 @@ public class SlotFacilitatorsDTO implements Serializable {
         return "SlotFacilitatorsDTO{" +
             "id=" + getId() +
             ", userId=" + getUserId() +
-            ", slotId=" + getSlotId() +
+            ", slotInstanceId=" + getSlotInstanceId() +
             "}";
     }
 }
