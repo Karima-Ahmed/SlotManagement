@@ -1,5 +1,7 @@
 package com.isoft.slot.managment.service.dto;
 
+import com.isoft.slot.managment.domain.SlotAssets;
+
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -10,8 +12,13 @@ public class SlotAssetsDTO implements Serializable {
 
     private Long id;
 
-
     private Long slotId;
+
+    public SlotAssetsDTO() {
+    }
+
+    public SlotAssetsDTO(SlotAssets slotAssets) {
+    }
 
     public Long getId() {
         return id;

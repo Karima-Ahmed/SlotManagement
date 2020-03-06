@@ -12,13 +12,13 @@ import java.math.BigDecimal;
  */
 @Entity
 @Table(name = "assets")
-public class Assets implements Serializable {
+public class Assets extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
-    @SequenceGenerator(name = "sequenceGenerator")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "assets_s")
+    @SequenceGenerator(name = "assets_s")
     private Long id;
 
     @Column(name = "type", precision = 21, scale = 2)

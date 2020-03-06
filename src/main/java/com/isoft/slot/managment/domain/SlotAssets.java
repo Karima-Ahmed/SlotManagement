@@ -11,13 +11,13 @@ import java.io.Serializable;
  */
 @Entity
 @Table(name = "slot_assets")
-public class SlotAssets implements Serializable {
+public class SlotAssets extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
-    @SequenceGenerator(name = "sequenceGenerator")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "slot_assets_s")
+    @SequenceGenerator(name = "slot_assets_s")
     private Long id;
 
     @ManyToOne

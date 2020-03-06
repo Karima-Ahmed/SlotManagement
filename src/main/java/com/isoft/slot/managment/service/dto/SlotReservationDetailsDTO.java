@@ -1,6 +1,6 @@
 package com.isoft.slot.managment.service.dto;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -16,9 +16,9 @@ public class SlotReservationDetailsDTO implements Serializable {
 
     private BigDecimal status;
 
-    private LocalDate timeFrom;
+    private LocalDateTime timeFrom;
 
-    private LocalDate timeTo;
+    private LocalDateTime timeTo;
 
     private BigDecimal requestNo;
 
@@ -49,19 +49,19 @@ public class SlotReservationDetailsDTO implements Serializable {
         this.status = status;
     }
 
-    public LocalDate getTimeFrom() {
+    public LocalDateTime getTimeFrom() {
         return timeFrom;
     }
 
-    public void setTimeFrom(LocalDate timeFrom) {
+    public void setTimeFrom(LocalDateTime timeFrom) {
         this.timeFrom = timeFrom;
     }
 
-    public LocalDate getTimeTo() {
+    public LocalDateTime getTimeTo() {
         return timeTo;
     }
 
-    public void setTimeTo(LocalDate timeTo) {
+    public void setTimeTo(LocalDateTime timeTo) {
         this.timeTo = timeTo;
     }
 

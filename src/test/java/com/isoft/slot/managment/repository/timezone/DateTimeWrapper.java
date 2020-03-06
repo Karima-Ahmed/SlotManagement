@@ -35,7 +35,7 @@ public class DateTimeWrapper implements Serializable {
     private OffsetTime offsetTime;
 
     @Column(name = "local_date")
-    private LocalDate localDate;
+    private LocalDateTime localDate;
 
     public Long getId() {
         return id;
@@ -93,11 +93,11 @@ public class DateTimeWrapper implements Serializable {
         this.offsetTime = offsetTime;
     }
 
-    public LocalDate getLocalDate() {
+    public LocalDateTime getLocalDate() {
         return localDate;
     }
 
-    public void setLocalDate(LocalDate localDate) {
+    public void setLocalDate(LocalDateTime localDate) {
         this.localDate = localDate;
     }
 

@@ -107,8 +107,8 @@ jhipster:
   #     max-age: 1800
   security:
     client-authorization:
-      access-token-uri: http://../uaa/oauth/token
-      token-service-id: ../uaa
+      access-token-uri: http://uaa/oauth/token
+      token-service-id: uaa
       client-id: internal
       client-secret: internal
   mail: # specific JHipster mail property, for standard properties see MailProperties
@@ -116,7 +116,7 @@ jhipster:
   metrics:
     logs: # Reports metrics in the logs
       enabled: false
-      report-frequency: 60 # in seconds
+      report-frequency: 60 # in seconds9
   logging:
     use-json-format: false # By default, logs are not in Json format
     logstash: # Forward logs to logstash over a socket, used by LoggingConfiguration
@@ -128,7 +128,7 @@ jhipster:
     retention-period: 30 # Number of days before audit events are deleted.
 oauth2:
   signature-verification:
-    public-key-endpoint-uri: http://../uaa/oauth/token_key
+    public-key-endpoint-uri: http://uaa/oauth/token_key
     #ttl for public keys to verify JWT tokens (in ms)
     ttl: 3600000
     #max. rate at which public keys will be fetched (in ms)

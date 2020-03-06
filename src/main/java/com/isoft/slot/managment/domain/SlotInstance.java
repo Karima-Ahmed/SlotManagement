@@ -6,20 +6,21 @@ import javax.persistence.*;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * A SlotInstance.
  */
 @Entity
 @Table(name = "slot_instance")
-public class SlotInstance implements Serializable {
+public class SlotInstance extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
-    @SequenceGenerator(name = "sequenceGenerator")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "slot_instance_s")
+    @SequenceGenerator(name = "slot_instance_s")
     private Long id;
 
     @Column(name = "desc_ar")
@@ -35,10 +36,10 @@ public class SlotInstance implements Serializable {
     private BigDecimal breakTime;
 
     @Column(name = "time_from")
-    private LocalDate timeFrom;
+    private LocalDateTime timeFrom;
 
     @Column(name = "time_to")
-    private LocalDate timeTo;
+    private LocalDateTime timeTo;
 
     @Column(name = "center_id", precision = 21, scale = 2)
     private BigDecimal centerId;
@@ -49,6 +50,14 @@ public class SlotInstance implements Serializable {
     @ManyToOne
     @JsonIgnoreProperties("slotInstances")
     private SlotTemplate temp;
+
+    @OneToMany(mappedBy = "slot")
+    @JsonIgnoreProperties("slotAssets")
+    private List<SlotAssets> slotAssets;
+
+    @OneToMany(mappedBy = "slot")
+    @JsonIgnoreProperties("slotFacilitators")
+    private List<SlotFacilitators> slotFacilitators;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -111,29 +120,29 @@ public class SlotInstance implements Serializable {
         this.breakTime = breakTime;
     }
 
-    public LocalDate getTimeFrom() {
+    public LocalDateTime getTimeFrom() {
         return timeFrom;
     }
 
-    public SlotInstance timeFrom(LocalDate timeFrom) {
+    public SlotInstance timeFrom(LocalDateTime timeFrom) {
         this.timeFrom = timeFrom;
         return this;
     }
 
-    public void setTimeFrom(LocalDate timeFrom) {
+    public void setTimeFrom(LocalDateTime timeFrom) {
         this.timeFrom = timeFrom;
     }
 
-    public LocalDate getTimeTo() {
+    public LocalDateTime getTimeTo() {
         return timeTo;
     }
 
-    public SlotInstance timeTo(LocalDate timeTo) {
+    public SlotInstance timeTo(LocalDateTime timeTo) {
         this.timeTo = timeTo;
         return this;
     }
 
-    public void setTimeTo(LocalDate timeTo) {
+    public void setTimeTo(LocalDateTime timeTo) {
         this.timeTo = timeTo;
     }
 
@@ -176,6 +185,22 @@ public class SlotInstance implements Serializable {
         this.temp = slotTemplate;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
+
+    public List<SlotAssets> getSlotAssets() {
+        return slotAssets;
+    }
+
+    public void setSlotAssets(List<SlotAssets> slotAssets) {
+        this.slotAssets = slotAssets;
+    }
+
+    public List<SlotFacilitators> getSlotFacilitators() {
+        return slotFacilitators;
+    }
+
+    public void setSlotFacilitators(List<SlotFacilitators> slotFacilitators) {
+        this.slotFacilitators = slotFacilitators;
+    }
 
     @Override
     public boolean equals(Object o) {

@@ -16,6 +16,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * REST controller for managing {@link com.isoft.slot.managment.domain.SlotInstance}.
@@ -23,6 +24,12 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api")
 public class SlotInstanceResource {
+
+    private static class SlotInstanceException extends RuntimeException {
+        private SlotInstanceException(String message) {
+            super(message);
+        }
+    }
 
     private final Logger log = LoggerFactory.getLogger(SlotInstanceResource.class);
 
@@ -112,5 +119,12 @@ public class SlotInstanceResource {
         log.debug("REST request to delete SlotInstance : {}", id);
         slotInstanceService.delete(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
+    }
+
+    @GetMapping("/slot-instances/availableSlots")
+    public List<SlotInstanceDTO> getAvailableSlots(@RequestBody SlotInstanceDTO slotInstanceDTO) {
+        log.debug("REST request to get availableSlots");
+        List<SlotInstanceDTO> slotInstances = slotInstanceService.getAvailableSlots(slotInstanceDTO);
+        return slotInstances;
     }
 }

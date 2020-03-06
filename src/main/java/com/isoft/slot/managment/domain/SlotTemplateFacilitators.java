@@ -12,7 +12,7 @@ import java.math.BigDecimal;
  */
 @Entity
 @Table(name = "slot_template_facilitators")
-public class SlotTemplateFacilitators implements Serializable {
+public class SlotTemplateFacilitators extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -29,8 +29,8 @@ public class SlotTemplateFacilitators implements Serializable {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
-    @SequenceGenerator(name = "sequenceGenerator")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "slot_template_facilitators_s")
+    @SequenceGenerator(name = "slot_template_facilitators_s")
     private Long id;
 
     @Column(name = "count", precision = 21, scale = 2)

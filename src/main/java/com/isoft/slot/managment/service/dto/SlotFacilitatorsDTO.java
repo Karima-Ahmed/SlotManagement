@@ -1,5 +1,7 @@
 package com.isoft.slot.managment.service.dto;
 
+import com.isoft.slot.managment.domain.SlotFacilitators;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -13,8 +15,14 @@ public class SlotFacilitatorsDTO implements Serializable {
 
     private BigDecimal userId;
 
-
     private Long slotId;
+
+
+    public SlotFacilitatorsDTO() {
+    }
+
+    public SlotFacilitatorsDTO(SlotFacilitators slotFacilitators) {
+    }
 
     public Long getId() {
         return id;

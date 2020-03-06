@@ -19,11 +19,11 @@
         },
         {
             "fieldName": "timeFrom",
-            "fieldType": "LocalDate"
+            "fieldType": "LocalDateTime"
         },
         {
             "fieldName": "timeTo",
-            "fieldType": "LocalDate"
+            "fieldType": "LocalDateTime"
         },
         {
             "fieldName": "centerId",

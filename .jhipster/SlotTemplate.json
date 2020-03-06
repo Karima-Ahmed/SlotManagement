@@ -15,11 +15,11 @@
         },
         {
             "fieldName": "dayStartTime",
-            "fieldType": "LocalDate"
+            "fieldType": "LocalDateTime"
         },
         {
             "fieldName": "dayEndTime",
-            "fieldType": "LocalDate"
+            "fieldType": "LocalDateTime"
         },
         {
             "fieldName": "descAr",

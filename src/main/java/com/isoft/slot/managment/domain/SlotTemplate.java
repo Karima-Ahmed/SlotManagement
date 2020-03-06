@@ -5,14 +5,14 @@ import javax.persistence.*;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  * A SlotTemplate.
  */
 @Entity
 @Table(name = "slot_template")
-public class SlotTemplate implements Serializable {
+public class SlotTemplate extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -27,8 +27,8 @@ public class SlotTemplate implements Serializable {
         public BigDecimal getValue() {return value;}
     }
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
-    @SequenceGenerator(name = "sequenceGenerator")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "slot_template_s")
+    @SequenceGenerator(name = "slot_template_s")
     private Long id;
 
     @Column(name = "capacity", precision = 21, scale = 2)
@@ -41,10 +41,10 @@ public class SlotTemplate implements Serializable {
     private BigDecimal breakTime;
 
     @Column(name = "day_start_time")
-    private LocalDate dayStartTime;
+    private LocalDateTime dayStartTime;
 
     @Column(name = "day_end_time")
-    private LocalDate dayEndTime;
+    private LocalDateTime dayEndTime;
 
     @Column(name = "desc_ar")
     private String descAr;
@@ -106,29 +106,29 @@ public class SlotTemplate implements Serializable {
         this.breakTime = breakTime;
     }
 
-    public LocalDate getDayStartTime() {
+    public LocalDateTime getDayStartTime() {
         return dayStartTime;
     }
 
-    public SlotTemplate dayStartTime(LocalDate dayStartTime) {
+    public SlotTemplate dayStartTime(LocalDateTime dayStartTime) {
         this.dayStartTime = dayStartTime;
         return this;
     }
 
-    public void setDayStartTime(LocalDate dayStartTime) {
+    public void setDayStartTime(LocalDateTime dayStartTime) {
         this.dayStartTime = dayStartTime;
     }
 
-    public LocalDate getDayEndTime() {
+    public LocalDateTime getDayEndTime() {
         return dayEndTime;
     }
 
-    public SlotTemplate dayEndTime(LocalDate dayEndTime) {
+    public SlotTemplate dayEndTime(LocalDateTime dayEndTime) {
         this.dayEndTime = dayEndTime;
         return this;
     }
 
-    public void setDayEndTime(LocalDate dayEndTime) {
+    public void setDayEndTime(LocalDateTime dayEndTime) {
         this.dayEndTime = dayEndTime;
     }
 

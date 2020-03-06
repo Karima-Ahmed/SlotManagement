@@ -12,13 +12,13 @@ import java.math.BigDecimal;
  */
 @Entity
 @Table(name = "slot_facilitators")
-public class SlotFacilitators implements Serializable {
+public class SlotFacilitators extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
-    @SequenceGenerator(name = "sequenceGenerator")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "slot_facilitators_s")
+    @SequenceGenerator(name = "slot_facilitators_s")
     private Long id;
 
     @Column(name = "user_id", precision = 21, scale = 2)
@@ -39,6 +39,9 @@ public class SlotFacilitators implements Serializable {
 
     public BigDecimal getUserId() {
         return userId;
+    }
+
+    public SlotFacilitators() {
     }
 
     public SlotFacilitators userId(BigDecimal userId) {

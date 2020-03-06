@@ -14,7 +14,7 @@ import java.util.Map;
  */
 @Entity
 @Table(name = "jhi_persistent_audit_event")
-public class PersistentAuditEvent implements Serializable {
+public class PersistentAuditEvent extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

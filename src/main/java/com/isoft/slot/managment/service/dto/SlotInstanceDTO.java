@@ -1,9 +1,15 @@
 package com.isoft.slot.managment.service.dto;
 
-import java.time.LocalDate;
+import com.isoft.slot.managment.domain.SlotInstance;
+
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import java.time.LocalDateTime;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * A DTO for the {@link com.isoft.slot.managment.domain.SlotInstance} entity.
@@ -20,16 +26,38 @@ public class SlotInstanceDTO implements Serializable {
 
     private BigDecimal breakTime;
 
-    private LocalDate timeFrom;
+    private LocalDateTime timeFrom;
 
-    private LocalDate timeTo;
+    private LocalDateTime timeTo;
 
     private BigDecimal centerId;
 
     private BigDecimal availableCapacity;
 
-
     private Long tempId;
+
+    private List<SlotAssetsDTO> slotAssets;
+
+    private List<SlotFacilitatorsDTO> slotFacilitators;
+
+
+    public SlotInstanceDTO() {
+    }
+
+    public SlotInstanceDTO(SlotInstance slotInstance) {
+        this.id = slotInstance.getId();
+        this.descAr = slotInstance.getDescAr();
+        this.descEn = slotInstance.getDescEn();
+        this.timeFrame = slotInstance.getTimeFrame();
+        this.breakTime = slotInstance.getBreakTime();
+        this.timeFrom = slotInstance.getTimeFrom();
+        this.timeTo = slotInstance.getTimeTo();
+        this.centerId = slotInstance.getCenterId();
+        this.availableCapacity = slotInstance.getAvailableCapacity();
+        this.tempId = slotInstance.getTemp().getId();
+        this.slotAssets = slotInstance.getSlotAssets().stream().map(SlotAssetsDTO::new).collect(Collectors.toList());
+        this.slotFacilitators = slotInstance.getSlotFacilitators().stream().map(SlotFacilitatorsDTO::new).collect(Collectors.toList());
+    }
 
     public Long getId() {
         return id;
@@ -71,19 +99,19 @@ public class SlotInstanceDTO implements Serializable {
         this.breakTime = breakTime;
     }
 
-    public LocalDate getTimeFrom() {
+    public LocalDateTime getTimeFrom() {
         return timeFrom;
     }
 
-    public void setTimeFrom(LocalDate timeFrom) {
+    public void setTimeFrom(LocalDateTime timeFrom) {
         this.timeFrom = timeFrom;
     }
 
-    public LocalDate getTimeTo() {
+    public LocalDateTime getTimeTo() {
         return timeTo;
     }
 
-    public void setTimeTo(LocalDate timeTo) {
+    public void setTimeTo(LocalDateTime timeTo) {
         this.timeTo = timeTo;
     }
 
@@ -109,6 +137,22 @@ public class SlotInstanceDTO implements Serializable {
 
     public void setTempId(Long slotTemplateId) {
         this.tempId = slotTemplateId;
+    }
+
+    public List<SlotAssetsDTO> getSlotAssets() {
+        return slotAssets;
+    }
+
+    public void setSlotAssets(List<SlotAssetsDTO> slotAssets) {
+        this.slotAssets = slotAssets;
+    }
+
+    public List<SlotFacilitatorsDTO> getSlotFacilitators() {
+        return slotFacilitators;
+    }
+
+    public void setSlotFacilitators(List<SlotFacilitatorsDTO> slotFacilitators) {
+        this.slotFacilitators = slotFacilitators;
     }
 
     @Override
