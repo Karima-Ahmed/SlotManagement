@@ -1,5 +1,6 @@
 package com.isoft.slot.managment.service;
 
+import com.isoft.slot.managment.domain.SlotInstance;
 import com.isoft.slot.managment.domain.SlotReservationDetails;
 import com.isoft.slot.managment.repository.SlotReservationDetailsRepository;
 import com.isoft.slot.managment.service.dto.SlotReservationDetailsDTO;
@@ -84,8 +85,14 @@ public class SlotReservationDetailsService {
     }
 
     public Optional<SlotReservationDetailsDTO> findByIdAndApplicantId(Long id, BigDecimal applicantId){
-        log.debug("Request to get SlotReservationDetails : {}", id);
+        log.debug("Request to get SlotReservationDetails by reservationId and applicantId : {}", id, applicantId);
         return slotReservationDetailsRepository.findByIdAndApplicantId(id, applicantId)
+            .map(slotReservationDetailsMapper::toDto);
+    }
+
+    public Optional<SlotReservationDetailsDTO> findBySlotInstanceAndApplicantId(SlotInstance slot, BigDecimal applicantId){
+        log.debug("Request to get SlotReservationDetails by slotId and applicantId: {}", slot.getId(), applicantId);
+        return slotReservationDetailsRepository.findBySlotInstanceAndApplicantId(slot, applicantId)
             .map(slotReservationDetailsMapper::toDto);
     }
 }

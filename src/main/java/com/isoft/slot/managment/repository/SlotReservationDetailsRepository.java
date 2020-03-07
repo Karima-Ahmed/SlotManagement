@@ -1,5 +1,6 @@
 package com.isoft.slot.managment.repository;
 
+import com.isoft.slot.managment.domain.SlotInstance;
 import com.isoft.slot.managment.domain.SlotReservationDetails;
 
 import org.springframework.data.jpa.repository.*;
@@ -15,4 +16,6 @@ import java.util.Optional;
 @Repository
 public interface SlotReservationDetailsRepository extends JpaRepository<SlotReservationDetails, Long> {
     public Optional<SlotReservationDetails> findByIdAndApplicantId(Long id, BigDecimal applicantId);
+    public Optional<SlotReservationDetails> findBySlotInstanceAndApplicantId(SlotInstance slot, BigDecimal applicantId);
+
 }

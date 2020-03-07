@@ -1,5 +1,6 @@
 package com.isoft.slot.managment.web.rest;
 
+import com.isoft.slot.managment.domain.SlotInstance;
 import com.isoft.slot.managment.domain.SlotReservationDetails;
 import com.isoft.slot.managment.service.SlotInstanceService;
 import com.isoft.slot.managment.service.SlotReservationDetailsService;
@@ -132,10 +133,15 @@ public class SlotReservationDetailsResource {
         log.debug("REST request to partialReserveSlot : {}", slotReservationDetailsDTO);
 
         if (slotReservationDetailsDTO.getSlotInstanceId() == null || slotReservationDetailsDTO.getApplicantId() == null || slotReservationDetailsDTO.getRequestNo() == null)
-            throw new BadRequestAlertException("slotId, applicantId and requestNo are mandatory", ENTITY_NAME, "badRequest");
+            throw new BadRequestAlertException("slotId, applicantId and requestNo can not be null", ENTITY_NAME, "badRequest");
+
+        //check if slot is already reserved with applicant id
+        Optional<SlotReservationDetailsDTO> slotReservation = slotReservationDetailsService.findBySlotInstanceAndApplicantId(new SlotInstance(slotReservationDetailsDTO.getSlotInstanceId()), slotReservationDetailsDTO.getApplicantId());
+        if(slotReservation.isPresent())//TODO:ASK FOR THROW EXCEPTION
+            throw new SlotReservationDetailsResourceException("you have already reserved this slot " + slotReservation.get().toString());
 
         Optional<SlotInstanceDTO> slotInstance = slotInstanceService.findOne(slotReservationDetailsDTO.getSlotInstanceId());
-        if (!slotInstance.isPresent())
+        if (!slotInstance.isPresent())//TODO:ASK FOR THROW EXCEPTION
             throw new SlotReservationDetailsResourceException("there is no slots with id: " + slotReservationDetailsDTO.getSlotInstanceId());
 
         if (slotInstance.get().getAvailableCapacity().compareTo(BigDecimal.ZERO) > 0) {
@@ -144,17 +150,15 @@ public class SlotReservationDetailsResource {
             slotReservationDetailsDTO.setStatus(SlotReservationDetails.SlotStatus.PARTIAL_RESERVED.getValue());
             SlotReservationDetailsDTO result = slotReservationDetailsService.save(slotReservationDetailsDTO);
 
-
             BigDecimal availableCapacity = slotInstance.get().getAvailableCapacity().subtract(BigDecimal.ONE);
             slotInstance.get().setAvailableCapacity(availableCapacity);
             slotInstanceService.save(slotInstance.get());
 
-            return ResponseEntity.created(new URI("/api/slot-reservation-details/partialReserveSlot/" + result.getId()))
+            return ResponseEntity.ok()
                 .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
                 .body(result);
-        } else
-            throw new SlotReservationDetailsResourceException("there is no available slots");
-//            return ResponseEntity.noContent().headers(HeaderUtil.createFailureAlert(applicationName,  true, problem.getEntityName(), problem.getErrorKey(), problem.getMessage()));
+        } else//TODO:ASK FOR THROW EXCEPTION
+            throw new SlotReservationDetailsResourceException("there is no available slots.");
     }
 
     @PutMapping("/slot-reservation-details/confirmSlotReservation")
@@ -162,10 +166,10 @@ public class SlotReservationDetailsResource {
         log.debug("REST request to confirmSlotReservation : {}", slotReservationDetailsDTO);
 
         if(slotReservationDetailsDTO.getId() == null || slotReservationDetailsDTO.getApplicantId()== null)
-            throw new BadRequestAlertException("reservationSlotId and applicantId are mandatory", ENTITY_NAME, "badRequest");
+            throw new BadRequestAlertException("reservationSlotId and applicantId can not be null", ENTITY_NAME, "badRequest");
 
         Optional<SlotReservationDetailsDTO> slotReservation = slotReservationDetailsService.findByIdAndApplicantId(slotReservationDetailsDTO.getId(), slotReservationDetailsDTO.getApplicantId());
-        if(!slotReservation.isPresent())
+        if(!slotReservation.isPresent())//TODO:ASK FOR THROW EXCEPTION
             throw new SlotReservationDetailsResourceException("there is no slot Reservation with id: " + slotReservationDetailsDTO.getId() + " for applicant: " + slotReservationDetailsDTO.getApplicantId());
 
         slotReservation.get().setStatus(SlotReservationDetails.SlotStatus.RESERVED.getValue());

@@ -1,10 +1,11 @@
 package com.isoft.slot.managment.service.dto;
 
-import java.time.LocalDate;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * A DTO for the {@link com.isoft.slot.managment.domain.SlotInstance} entity.
@@ -29,8 +30,12 @@ public class SlotInstanceDTO implements Serializable {
 
     private BigDecimal availableCapacity;
 
-
     private Long slotTemplateId;
+
+    private Set<SlotFacilitatorsDTO> slotFacilitators = new HashSet<>();
+
+    private Set<SlotAssetsDTO> slotAssets = new HashSet<>();
+
 
     public Long getId() {
         return id;
@@ -110,6 +115,22 @@ public class SlotInstanceDTO implements Serializable {
 
     public void setSlotTemplateId(Long slotTemplateId) {
         this.slotTemplateId = slotTemplateId;
+    }
+
+    public Set<SlotFacilitatorsDTO> getSlotFacilitators() {
+        return slotFacilitators;
+    }
+
+    public void setSlotFacilitators(Set<SlotFacilitatorsDTO> slotFacilitators) {
+        this.slotFacilitators = slotFacilitators;
+    }
+
+    public Set<SlotAssetsDTO> getSlotAssets() {
+        return slotAssets;
+    }
+
+    public void setSlotAssets(Set<SlotAssetsDTO> slotAssets) {
+        this.slotAssets = slotAssets;
     }
 
     @Override
