@@ -125,7 +125,7 @@ public class SlotInstanceResource {
         log.debug("REST request to get availableSlots");
         if(slotInstanceDTO.getSlotTemplateId() == null || slotInstanceDTO.getTimeFrom()== null || slotInstanceDTO.getTimeTo() == null || slotInstanceDTO.getCenterId()== null)
             throw new BadRequestAlertException("slotTemplateId, timeFrom, timeTo and centerId can not be null", ENTITY_NAME, "badRequest");
-//TODO:ASK FOR PARAMATER MAP
+
         List<SlotInstanceDTO> slotInstances = slotInstanceService.getAvailableSlots(slotInstanceDTO);
         return slotInstances;
     }

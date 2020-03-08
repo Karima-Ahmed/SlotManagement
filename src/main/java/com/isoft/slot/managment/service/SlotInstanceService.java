@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -82,7 +83,8 @@ public class SlotInstanceService {
 
     public List<SlotInstanceDTO> getAvailableSlots(SlotInstanceDTO slotInstanceDTO) {
         log.debug("request to get availableSlots");
-        return slotInstanceRepository.getAvailableSlots(slotInstanceDTO.getSlotTemplateId(), slotInstanceDTO.getTimeFrom(), slotInstanceDTO.getTimeTo(), slotInstanceDTO.getCenterId())
+        return slotInstanceRepository.findBySlotTemplateIdAndTimeFromGreaterThanEqualAndTimeToLessThanEqualAndCenterIdAndAvailableCapacityGreaterThan(
+            slotInstanceDTO.getSlotTemplateId(), slotInstanceDTO.getTimeFrom(), slotInstanceDTO.getTimeTo(), slotInstanceDTO.getCenterId(), BigDecimal.ZERO)
             .stream().map(slotInstanceMapper::toDto).collect(Collectors.toCollection(LinkedList::new));
     }
 }

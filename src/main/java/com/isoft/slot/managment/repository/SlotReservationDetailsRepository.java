@@ -16,6 +16,6 @@ import java.util.Optional;
 @Repository
 public interface SlotReservationDetailsRepository extends JpaRepository<SlotReservationDetails, Long> {
     public Optional<SlotReservationDetails> findByIdAndApplicantId(Long id, BigDecimal applicantId);
-    public Optional<SlotReservationDetails> findBySlotInstanceAndApplicantId(SlotInstance slot, BigDecimal applicantId);
+    public Optional<SlotReservationDetails> findBySlotInstanceIdAndApplicantId(Long slotId, BigDecimal applicantId);
 
 }

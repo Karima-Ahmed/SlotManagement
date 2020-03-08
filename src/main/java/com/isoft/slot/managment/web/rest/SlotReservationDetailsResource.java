@@ -136,7 +136,7 @@ public class SlotReservationDetailsResource {
             throw new BadRequestAlertException("slotId, applicantId and requestNo can not be null", ENTITY_NAME, "badRequest");
 
         //check if slot is already reserved with applicant id
-        Optional<SlotReservationDetailsDTO> slotReservation = slotReservationDetailsService.findBySlotInstanceAndApplicantId(new SlotInstance(slotReservationDetailsDTO.getSlotInstanceId()), slotReservationDetailsDTO.getApplicantId());
+        Optional<SlotReservationDetailsDTO> slotReservation = slotReservationDetailsService.findBySlotInstanceAndApplicantId(slotReservationDetailsDTO.getSlotInstanceId(), slotReservationDetailsDTO.getApplicantId());
         if(slotReservation.isPresent())//TODO:ASK FOR THROW EXCEPTION
             throw new SlotReservationDetailsResourceException("you have already reserved this slot " + slotReservation.get().toString());
 

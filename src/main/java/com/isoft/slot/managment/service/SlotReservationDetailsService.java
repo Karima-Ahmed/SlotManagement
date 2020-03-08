@@ -90,9 +90,9 @@ public class SlotReservationDetailsService {
             .map(slotReservationDetailsMapper::toDto);
     }
 
-    public Optional<SlotReservationDetailsDTO> findBySlotInstanceAndApplicantId(SlotInstance slot, BigDecimal applicantId){
-        log.debug("Request to get SlotReservationDetails by slotId and applicantId: {}", slot.getId(), applicantId);
-        return slotReservationDetailsRepository.findBySlotInstanceAndApplicantId(slot, applicantId)
+    public Optional<SlotReservationDetailsDTO> findBySlotInstanceAndApplicantId(Long slotId, BigDecimal applicantId){
+        log.debug("Request to get SlotReservationDetails by slotId and applicantId: {}", slotId, applicantId);
+        return slotReservationDetailsRepository.findBySlotInstanceIdAndApplicantId(slotId, applicantId)
             .map(slotReservationDetailsMapper::toDto);
     }
 }
