@@ -1,18 +1,27 @@
 entity SlotTemplate {
-    capacity BigDecimal,
-    timeFrame BigDecimal,
-    breakTime BigDecimal,
-    dayStartTime LocalDate,
-    dayEndTime  LocalDate,
-    descAr String,
-    descEn String,
-    centerId BigDecimal,
-    status BigDecimal
+    capacity Integer,
+    timeFrame Duration required,
+    breakTime Duration,
+    dayStartTime Instant,//LocalTime
+    dayEndTime  Instant,//LocalTime
+    descAr String required,
+    descEn String required,
+    centerId Integer,
+    status Integer,
+	createdBy String required,
+    createdDate Instant required,
+	lastModifiedBy String ,
+    lastModifiedDate Instant 
+
 }
 
 entity SlotTemplateAssets {
-count BigDecimal,
-assetType BigDecimal
+    count Integer required,
+    assetType Integer required,
+	createdBy String required,
+    createdDate Instant required,
+	lastModifiedBy String ,
+    lastModifiedDate Instant 
 }
 
 relationship OneToMany {
@@ -20,8 +29,12 @@ relationship OneToMany {
 }
 
 entity SlotTemplateFacilitators{
-count BigDecimal,
-facilitatorType BigDecimal
+    count Integer required,
+    facilitatorType Integer required,
+	createdBy String required,
+    createdDate Instant required,
+	lastModifiedBy String ,
+    lastModifiedDate Instant 
 }
 
 relationship OneToMany {
@@ -29,18 +42,26 @@ relationship OneToMany {
 }
 
 entity SlotInstance {
-    descAr String,
-    descEn String,
-    timeFrame BigDecimal,
-    breakTime BigDecimal,
-    timeFrom LocalDate,
-    timeTo LocalDate,
-    centerId BigDecimal,
-    availableCapacity BigDecimal
+    descAr String required,
+    descEn String required,
+    timeFrame Duration required,
+    breakTime Duration,
+    timeFrom Instant required,
+    timeTo Instant required,
+    centerId Integer,
+    availableCapacity Integer,
+	createdBy String required,
+    createdDate Instant required,
+	lastModifiedBy String ,
+    lastModifiedDate Instant 
 }
 
 entity SlotFacilitators{
-userId BigDecimal
+    userId Integer required,
+	createdBy String required,
+    createdDate Instant required,
+	lastModifiedBy String ,
+    lastModifiedDate Instant 
 }
 
 relationship OneToMany {
@@ -48,7 +69,10 @@ relationship OneToMany {
 }
 
 entity SlotAssets{
-
+    createdBy String required,
+    createdDate Instant required,
+	lastModifiedBy String ,
+    lastModifiedDate Instant
 }
 
 relationship OneToMany {
@@ -56,9 +80,13 @@ relationship OneToMany {
 }
 
 entity Assets{
-type BigDecimal,
-centerId BigDecimal,
-assetRefId BigDecimal
+	type Integer required,
+	centerId Integer,
+	status Integer,
+	createdBy String required,
+    createdDate Instant required,
+	lastModifiedBy String ,
+    lastModifiedDate Instant
 }
 
 relationship OneToMany {
@@ -66,12 +94,17 @@ relationship OneToMany {
 }
 
 entity SlotReservationDetails {
-	applicantId BigDecimal,
-    status BigDecimal,
-    timeFrom LocalDate,
-    timeTo LocalDate,
-    requestNo BigDecimal
+	applicantId Integer required,
+    status Integer,
+    timeFrom Instant required,
+    timeTo Instant required,
+    requestNo Integer,
+	createdBy String required,
+    createdDate Instant required,
+	lastModifiedBy String ,
+    lastModifiedDate Instant
 }
+
 relationship OneToMany {
  SlotTemplate {slotInstances} to SlotInstance
 }
@@ -82,4 +115,13 @@ relationship OneToMany {
 
 dto all with mapstruct
 
-service all with serviceClass
+service all with serviceImpl
+
+paginate all with pagination
+
+filter all
+
+microservice * with SlotManagement
+
+clientRootFolder all with SlotManagement
+
