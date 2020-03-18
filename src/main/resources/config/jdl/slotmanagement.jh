@@ -1,0 +1,127 @@
+entity SlotTemplate {
+    capacity Integer,
+    timeFrame Duration required,
+    breakTime Duration,
+    dayStartTime Instant,//LocalTime
+    dayEndTime  Instant,//LocalTime
+    descAr String required,
+    descEn String required,
+    centerId Integer,
+    status Integer,
+	createdBy String required,
+    createdDate Instant required,
+	lastModifiedBy String ,
+    lastModifiedDate Instant 
+
+}
+
+entity SlotTemplateAssets {
+    count Integer required,
+    assetType Integer required,
+	createdBy String required,
+    createdDate Instant required,
+	lastModifiedBy String ,
+    lastModifiedDate Instant 
+}
+
+relationship OneToMany {
+ SlotTemplate {tempAssets} to SlotTemplateAssets
+}
+
+entity SlotTemplateFacilitators{
+    count Integer required,
+    facilitatorType Integer required,
+	createdBy String required,
+    createdDate Instant required,
+	lastModifiedBy String ,
+    lastModifiedDate Instant 
+}
+
+relationship OneToMany {
+  SlotTemplate {tempFacilitators} to SlotTemplateFacilitators
+}
+
+entity SlotInstance {
+    descAr String required,
+    descEn String required,
+    timeFrame Duration required,
+    breakTime Duration,
+    timeFrom Instant required,
+    timeTo Instant required,
+    centerId Integer,
+    availableCapacity Integer,
+	createdBy String required,
+    createdDate Instant required,
+	lastModifiedBy String ,
+    lastModifiedDate Instant 
+}
+
+entity SlotFacilitators{
+    userId Integer required,
+	createdBy String required,
+    createdDate Instant required,
+	lastModifiedBy String ,
+    lastModifiedDate Instant 
+}
+
+relationship OneToMany {
+  SlotInstance {slotFacilitators} to SlotFacilitators
+}
+
+entity SlotAssets{
+    createdBy String required,
+    createdDate Instant required,
+	lastModifiedBy String ,
+    lastModifiedDate Instant
+}
+
+relationship OneToMany {
+  SlotInstance {slotAssets} to SlotAssets
+}
+
+entity Assets{
+	type Integer required,
+	centerId Integer,
+	status Integer,
+	createdBy String required,
+    createdDate Instant required,
+	lastModifiedBy String ,
+    lastModifiedDate Instant
+}
+
+relationship OneToMany {
+ SlotAssets {assets} to Assets
+}
+
+entity SlotReservationDetails {
+	applicantId Integer required,
+    status Integer,
+    timeFrom Instant required,
+    timeTo Instant required,
+    requestNo Integer,
+	createdBy String required,
+    createdDate Instant required,
+	lastModifiedBy String ,
+    lastModifiedDate Instant
+}
+
+relationship OneToMany {
+ SlotTemplate {slotInstances} to SlotInstance
+}
+
+relationship OneToMany {
+  SlotInstance {slotReservations} to SlotReservationDetails
+}
+
+dto all with mapstruct
+
+service all with serviceImpl
+
+paginate all with pagination
+
+filter all
+
+microservice * with SlotManagement
+
+clientRootFolder all with SlotManagement
+
